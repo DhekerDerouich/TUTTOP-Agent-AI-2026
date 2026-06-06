@@ -1,0 +1,57 @@
+{
+  "sources": [
+    {
+      "id": "csv_france",
+      "type": "csv",
+      "pays": "France",
+      "description": "Annuaire France - Open Data Ministere Education",
+      "path": "france/fr-en-annuaire-education.csv",
+      "enabled": true,
+      "mapping": {
+        "nom": "Nom_etablissement",
+        "type": "Statut_public_prive",
+        "ville": "Nom_commune",
+        "departement": "Libelle_departement",
+        "site_web": "Web",
+        "email": "Mail",
+        "telephone": "Telephone"
+      }
+    },
+    {
+      "id": "csv_tunisie",
+      "type": "csv",
+      "pays": "Tunisie",
+      "description": "Annuaire Tunisie - Scrape ecoles.com.tn",
+      "path": "tunisie/tous_etablissements_avec_sites_web.csv",
+      "enabled": true,
+      "mapping": {
+        "nom": "nom",
+        "type": "statut",
+        "ville": "ville",
+        "site_web": "site_web",
+        "email": "email",
+        "telephone": "telephone"
+      }
+    },
+    {
+      "id": "api_france",
+      "type": "api",
+      "pays": "France",
+      "description": "API officielle data.education.gouv.fr",
+      "url": "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/records",
+      "params": {
+        "limit": 100
+      },
+      "enabled": true,
+      "mapping": {
+        "nom": "nom_etablissement",
+        "type": "statut_public_prive",
+        "ville": "nom_commune",
+        "departement": "libelle_departement",
+        "site_web": "web",
+        "email": "mail",
+        "telephone": "telephone"
+      }
+    }
+  ]
+}

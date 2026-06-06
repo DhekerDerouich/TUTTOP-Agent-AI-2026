@@ -12,10 +12,12 @@ def run_collector(
     pays: str = "france",
     statut: str | None = None,
     limit: int = 50,
+    mode: str = "all",
     thread_id: str = "collecte-1",
 ) -> list[Prospect]:
     if statut and "Priv" in statut:
         statut = "Privé"
+
     initial_state: AgentState = {
         "messages": [],
         "prospects": [],
@@ -24,6 +26,7 @@ def run_collector(
         "pays": pays,
         "statut": statut,
         "limit": limit,
+        "mode": mode,
     }
 
     config = {"configurable": {"thread_id": thread_id}}
@@ -52,17 +55,37 @@ if __name__ == "__main__":
     parser.add_argument("--pays", default="france", choices=["france", "tunisie"])
     parser.add_argument("--statut", default=None, choices=["Prive", "Privé", "Public"])
     parser.add_argument("--limit", type=int, default=50)
+    parser.add_argument(
+        "--mode",
+        default="all",
+        choices=["csv", "api", "web", "all"],
+        help="csv=CSV locaux, api=APIs officielles, web=recherche web, all=tout",
+    )
     args = parser.parse_args()
 
     print(
-        f"Lancement de la collecte : {args.pays}, statut={args.statut}, limit={args.limit}"
+        f"\nLancement de la collecte : {args.pays}, statut={args.statut}, limit={args.limit}, mode={args.mode}"
     )
-    prospects = run_collector(pays=args.pays, statut=args.statut, limit=args.limit)
+    prospects = run_collector(
+        pays=args.pays, statut=args.statut, limit=args.limit, mode=args.mode
+    )
 
-    print(f"\nResultats : {len(prospects)} prospects collectes")
+    if args.mode == "csv":
+        print(f"\n[CSV] Resultats : {len(prospects)} prospects collectes")
+    elif args.mode == "api":
+        print(f"\n[API] Resultats : {len(prospects)} prospects collectes via API")
+    elif args.mode == "web":
+        print(f"\n[WEB] Resultats : {len(prospects)} prospects collectes via le web")
+    else:
+        print(
+            f"\n[ALL] Resultats : {len(prospects)} prospects collectes (CSV + API + Web)"
+        )
+
     for p in prospects:
         site = p.site_web or "NON"
-        print(f"  - {p.nom} ({p.type.value}) | {p.localisation} | site: {site}")
+        print(
+            f"  - {p.nom} ({p.type.value}) | {p.localisation} | site: {site} | src: {p.source}"
+        )
 
     if prospects:
-        export_to_csv(prospects)
+        export_to_csv(prospects, f"data/prospects_{args.mode}.csv")
