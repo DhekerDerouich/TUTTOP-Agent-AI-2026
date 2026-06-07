@@ -60,29 +60,65 @@ def search_duckduckgo(query: str, max_results: int = 5) -> list[dict]:
         return []
 
 
-def extract_email_phone(url: str) -> tuple:
-    email, telephone = "", ""
+def _extract_from_detail(url: str) -> dict:
+    info = {"email": "", "telephone": "", "site_web": ""}
     try:
         r = requests.get(url, headers=HEADERS, timeout=10, allow_redirects=True)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
+
+        # Try JSON-LD first (123ecoles has phone there)
+        for script in soup.find_all("script", type="application/ld+json"):
+            try:
+                import json
+
+                data = json.loads(script.string)
+                if isinstance(data, dict):
+                    tel = data.get("telephone", "")
+                    addr = data.get("address", {})
+                    if isinstance(addr, dict):
+                        tel = tel or addr.get("telephone", "")
+                    if tel:
+                        info["telephone"] = tel
+                    web = data.get("url", "")
+                    if web:
+                        info["site_web"] = web
+            except:
+                pass
+
+        # Extract from text (etablissements-scolaires has email)
         for tag in soup(["script", "style", "nav", "footer", "header"]):
             tag.decompose()
         text = soup.get_text(separator="\n", strip=True)
         for line in text.split("\n"):
             if len(line) < 20:
                 continue
-            m = re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", line)
-            if m and not email:
-                email = m.group()
-            m2 = re.search(r"(0[1-9])(\s?\d{2}){4}", line.replace("\u00a0", " "))
-            if m2 and not telephone:
-                telephone = m2.group().strip()
-            if email and telephone:
+            if not info["email"]:
+                m = re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", line)
+                if m:
+                    info["email"] = m.group()
+            if not info["telephone"]:
+                m = re.search(r"(0[1-9])(\s?\d{2}){4}", line.replace("\u00a0", " "))
+                if m:
+                    info["telephone"] = m.group().strip()
+            if info["email"] and info["telephone"]:
                 break
+
+        # Extract real website from first external link
+        if not info["site_web"]:
+            for a in soup.find_all("a", href=True):
+                href = a["href"]
+                if (
+                    href.startswith("http")
+                    and "ecoles.com" not in href
+                    and "etablissements-scolaires" not in href
+                ):
+                    if any(kw in href.lower() for kw in [".fr", ".com", ".org", ".eu"]):
+                        info["site_web"] = href
+                        break
     except:
         pass
-    return email, telephone
+    return info
 
 
 def scrape_etablissements_scolaires(limit: int) -> list[dict]:
@@ -363,6 +399,27 @@ def collect_from_web(statut: str | None = None, limit: int = 50) -> list[dict]:
             print(f"    -> {len(results)} prospects")
         except Exception as e:
             print(f"    Erreur: {e}")
+
+    print(f"  Enrichissement (email/telephone/site web) depuis les pages detail...")
+    enriched = 0
+    for p in all_results[:limit]:
+        detail_url = p.get("site_web", "")
+        if not detail_url:
+            continue
+        if any(skip in detail_url for skip in ["web_recherche"]):
+            continue
+        info = _extract_from_detail(detail_url)
+        if info["email"]:
+            p["email"] = info["email"]
+            enriched += 1
+        if info["telephone"]:
+            p["telephone"] = info["telephone"]
+            enriched += 1
+        if info["site_web"]:
+            p["site_web"] = info["site_web"]
+            enriched += 1
+    if enriched:
+        print(f"    -> {enriched} champs enrichis")
 
     print(f"  Total collecte web: {len(all_results)} prospects")
     return all_results[:limit]
