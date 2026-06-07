@@ -1,134 +1,368 @@
 import requests
 from bs4 import BeautifulSoup
 import urllib.parse
+import re
 from core.extractor import normalize_prospect
 
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
-SEARCH_QUERIES = [
-    "liste des ecoles privees {pays}",
-    "annuaire etablissements scolaires {pays}",
-    "ecoles privees {pays} site officiel",
-    "directory private schools {pays}",
-    "liste lycees prives {pays}",
+PRIVATE_KEYWORDS = [
+    "prive",
+    "privee",
+    "privé",
+    "privée",
+    "hors contrat",
+    "independante",
+    "libre",
+    "ecole libre",
 ]
 
-ANNUAIRES = [
-    {
-        "url": "https://www Ecoles privees france",
-        "pays": "France",
-        "type_lien": "annuaire",
-    },
-]
+_statut: str | None = None
 
 
-def search_web(query: str, max_results: int = 10) -> list[dict]:
+def _is_private(text: str) -> bool:
+    t = (
+        text.lower()
+        .replace("é", "e")
+        .replace("è", "e")
+        .replace("ê", "e")
+        .replace("ë", "e")
+    )
+    return any(kw in t for kw in PRIVATE_KEYWORDS)
+
+
+def _keep(priv: bool) -> bool:
+    if _statut is None:
+        return True
+    s = _statut.lower().replace("é", "e").replace("è", "e")
+    if "priv" in s:
+        return priv
+    if "public" in s:
+        return not priv
+    return True
+
+
+def search_duckduckgo(query: str, max_results: int = 5) -> list[dict]:
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        }
-        url = f"https://www.google.com/search?q={urllib.parse.quote(query)}&num={max_results}"
-        resp = requests.get(url, headers=headers, timeout=10)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
+        from duckduckgo_search import DDGS
 
         results = []
-        for a in soup.select("a[href]"):
-            href = a.get("href", "")
-            title = a.get_text(strip=True)
-            if href.startswith("/url?q="):
-                href = urllib.parse.unquote(href.split("/url?q=")[1].split("&")[0])
-            if title and href.startswith("http") and len(title) > 10:
-                results.append({"titre": title, "url": href})
-        return results[:max_results]
+        with DDGS() as ddgs:
+            for r in ddgs.text(query, max_results=max_results, region="fr-fr"):
+                results.append({"url": r["href"], "titre": r["title"]})
+        if not results:
+            with DDGS() as ddgs:
+                for r in ddgs.text(query, max_results=max_results):
+                    results.append({"url": r["href"], "titre": r["title"]})
+        return results
     except Exception as e:
-        print(f"  Erreur recherche web: {e}")
+        print(f"    DuckDuckGo erreur: {e}")
         return []
 
 
-def scrape_directory_page(url: str, pays: str) -> list[dict]:
+def extract_email_phone(url: str) -> tuple:
+    email, telephone = "", ""
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-        }
-        resp = requests.get(url, headers=headers, timeout=15)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
+        r = requests.get(url, headers=HEADERS, timeout=10, allow_redirects=True)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        for tag in soup(["script", "style", "nav", "footer", "header"]):
+            tag.decompose()
+        text = soup.get_text(separator="\n", strip=True)
+        for line in text.split("\n"):
+            if len(line) < 20:
+                continue
+            m = re.search(r"[\w.+-]+@[\w-]+\.[\w.-]+", line)
+            if m and not email:
+                email = m.group()
+            m2 = re.search(r"(0[1-9])(\s?\d{2}){4}", line.replace("\u00a0", " "))
+            if m2 and not telephone:
+                telephone = m2.group().strip()
+            if email and telephone:
+                break
+    except:
+        pass
+    return email, telephone
 
-        schools = []
-        for link in soup.find_all("a", href=True):
-            href = link["href"]
-            text = link.get_text(strip=True)
-            if (
-                text
-                and len(text) > 5
-                and any(
-                    kw in href.lower()
-                    for kw in [
-                        "ecole",
-                        "school",
-                        "etablissement",
-                        "lycee",
-                        "college",
-                        "universite",
-                    ]
-                )
-            ):
-                if href.startswith("http"):
-                    full_url = href
-                elif href.startswith("/"):
-                    parsed = urllib.parse.urlparse(url)
-                    full_url = f"{parsed.scheme}://{parsed.netloc}{href}"
-                else:
-                    continue
 
-                if full_url.count("/") <= 4:
-                    continue
-
-                schools.append(
-                    {
-                        "nom": text,
-                        "site_web": full_url,
-                        "ville": "",
-                        "type": "Inconnu",
-                    }
-                )
-
-        print(f"  Scrape {url}: {len(schools)} liens trouves")
-        return schools[:30]
+def scrape_etablissements_scolaires(limit: int) -> list[dict]:
+    results = []
+    BASE = "http://etablissements-scolaires.fr"
+    try:
+        r = requests.get(f"{BASE}/departement.html", headers=HEADERS, timeout=15)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        dept_links = [
+            f"{BASE}/{a['href'].lstrip('/')}"
+            for a in soup.find_all("a", href=True)
+            if "departement-" in a["href"] and a["href"].endswith(".html")
+        ][:8]
+        for dept_url in dept_links:
+            try:
+                rd = requests.get(dept_url, headers=HEADERS, timeout=15)
+                rd.raise_for_status()
+                sd = BeautifulSoup(rd.text, "html.parser")
+                city_links = [
+                    f"{BASE}/{a['href'].lstrip('/')}"
+                    for a in sd.find_all("a", href=True)
+                    if "ville-" in a["href"]
+                ][:5]
+                for city_url in city_links:
+                    try:
+                        rc = requests.get(city_url, headers=HEADERS, timeout=15)
+                        rc.raise_for_status()
+                        sc = BeautifulSoup(rc.text, "html.parser")
+                        for a in sc.find_all("a", href=True):
+                            href = a["href"]
+                            text = a.get_text(strip=True)
+                            if "etablissement-scolaire-" in href and len(text) > 5:
+                                private = _is_private(text)
+                                if not _keep(private) and _statut:
+                                    continue
+                                full = (
+                                    href
+                                    if href.startswith("http")
+                                    else f"{BASE}/{href.lstrip('/')}"
+                                )
+                                ville = (
+                                    city_url.split("ville-")[-1]
+                                    .replace(".html", "")
+                                    .replace("-", " ")
+                                    .title()
+                                )
+                                results.append(
+                                    {
+                                        "nom": text,
+                                        "site_web": full,
+                                        "ville": ville,
+                                        "type": "Prive" if private else "Public",
+                                        "email": "",
+                                        "telephone": "",
+                                        "pays": "France",
+                                        "departement": "",
+                                        "source": "annuaire_etablissements_scolaires",
+                                    }
+                                )
+                                if len(results) >= limit:
+                                    return results
+                    except:
+                        continue
+            except:
+                continue
     except Exception as e:
-        print(f"  Erreur scrape {url}: {e}")
-        return []
+        print(f"    Erreur etablissements-scolaires.fr: {e}")
+    return results
+
+
+def scrape_123ecoles(limit: int) -> list[dict]:
+    results = []
+    BASE = "https://www.123ecoles.com"
+    try:
+        r = requests.get(
+            f"{BASE}/etablissements-scolaires-par-departements/",
+            headers=HEADERS,
+            timeout=15,
+        )
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        dept_urls = []
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            if "etablissements-scolaires-" in href and href.count("-") >= 2:
+                dept_urls.append(href if href.startswith("http") else f"{BASE}{href}")
+        dept_urls = dept_urls[:10]
+        for dept_url in dept_urls:
+            try:
+                rd = requests.get(dept_url, headers=HEADERS, timeout=15)
+                rd.raise_for_status()
+                sd = BeautifulSoup(rd.text, "html.parser")
+                for a in sd.find_all("a", href=True):
+                    href = a["href"]
+                    text = a.get_text(strip=True)
+                    if (
+                        "ecole-" in href or "lycee-" in href or "college-" in href
+                    ) and len(text) > 10:
+                        private = _is_private(text)
+                        if not _keep(private) and _statut:
+                            continue
+                        full = href if href.startswith("http") else f"{BASE}{href}"
+                        results.append(
+                            {
+                                "nom": text,
+                                "site_web": full,
+                                "ville": "",
+                                "type": "Prive" if private else "Public",
+                                "email": "",
+                                "telephone": "",
+                                "pays": "France",
+                                "departement": "",
+                                "source": "annuaire_123ecoles",
+                            }
+                        )
+                        if len(results) >= limit:
+                            return results
+            except:
+                continue
+    except Exception as e:
+        print(f"    Erreur 123ecoles.com: {e}")
+    return results
+
+
+def scrape_lesecoles(limit: int) -> list[dict]:
+    results = []
+    BASE = "https://lesecoles.fr"
+    try:
+        r = requests.get(BASE, headers=HEADERS, timeout=15)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        region_links = []
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            if href.count("/") == 1 and href.startswith("/") and len(href) > 3:
+                if not any(
+                    x in href.lower() for x in [".css", ".js", ".png", ".jpg", "#"]
+                ):
+                    region_links.append(f"{BASE}{href}")
+        region_links = region_links[:5]
+        for region_url in region_links:
+            try:
+                rr = requests.get(region_url, headers=HEADERS, timeout=15)
+                rr.raise_for_status()
+                sr = BeautifulSoup(rr.text, "html.parser")
+                city_links = [
+                    f"{BASE}{a['href']}"
+                    for a in sr.find_all("a", href=True)
+                    if a["href"].startswith("/")
+                    and a["href"].count("-") >= 2
+                    and len(a.get_text(strip=True)) > 5
+                ][:3]
+                for city_url in city_links:
+                    try:
+                        rc = requests.get(city_url, headers=HEADERS, timeout=15)
+                        rc.raise_for_status()
+                        sc = BeautifulSoup(rc.text, "html.parser")
+                        for a in sc.find_all("a", href=True):
+                            href = a["href"]
+                            text = a.get_text(strip=True)
+                            if (
+                                href.startswith("/")
+                                and "ecole" in href.lower()
+                                and len(text) > 5
+                            ):
+                                private = _is_private(text)
+                                if not _keep(private) and _statut:
+                                    continue
+                                full = f"{BASE}{href}"
+                                results.append(
+                                    {
+                                        "nom": text,
+                                        "site_web": full,
+                                        "ville": "",
+                                        "type": "Prive" if private else "Public",
+                                        "email": "",
+                                        "telephone": "",
+                                        "pays": "France",
+                                        "departement": "",
+                                        "source": "annuaire_lesecoles",
+                                    }
+                                )
+                                if len(results) >= limit:
+                                    return results
+                    except:
+                        continue
+            except:
+                continue
+    except Exception as e:
+        print(f"    Erreur lesecoles.fr: {e}")
+    return results
+
+
+def scrape_ddg_results(limit: int) -> list[dict]:
+    results = []
+    queries = [
+        "ecoles privees France site web",
+        "ecole privee sous contrat annuaire",
+        "private schools France directory",
+    ]
+    seen = set()
+    for query in queries:
+        sites = search_duckduckgo(query, max_results=5)
+        for site in sites:
+            url = site["url"]
+            if url in seen:
+                continue
+            seen.add(url)
+            try:
+                r = requests.get(url, headers=HEADERS, timeout=15, allow_redirects=True)
+                r.raise_for_status()
+                soup = BeautifulSoup(r.text, "html.parser")
+                for tag in soup(["script", "style", "nav", "footer", "header"]):
+                    tag.decompose()
+                for a in soup.find_all("a", href=True):
+                    href = a["href"]
+                    text = a.get_text(strip=True)
+                    if len(text) < 10:
+                        continue
+                    keywords = ["ecole", "lycee", "college", "institut", "prive"]
+                    if not any(
+                        kw in href.lower() or kw in text.lower() for kw in keywords
+                    ):
+                        continue
+                    private = _is_private(text)
+                    if not _keep(private) and _statut:
+                        continue
+                    if href.startswith("http"):
+                        full_url = href
+                    elif href.startswith("/"):
+                        parsed = urllib.parse.urlparse(url)
+                        full_url = f"{parsed.scheme}://{parsed.netloc}{href}"
+                    else:
+                        continue
+                    results.append(
+                        {
+                            "nom": text,
+                            "site_web": full_url,
+                            "ville": "",
+                            "type": "Prive" if private else "Public",
+                            "email": "",
+                            "telephone": "",
+                            "pays": "France",
+                            "departement": "",
+                            "source": "web_recherche",
+                        }
+                    )
+                    if len(results) >= limit:
+                        return results
+            except:
+                continue
+    return results
 
 
 def collect_from_web(statut: str | None = None, limit: int = 50) -> list[dict]:
+    global _statut
+    _statut = statut
     all_results = []
 
-    search_terms = []
-    for pays in ["France", "Belgique", "Suisse"]:
-        for q in SEARCH_QUERIES:
-            search_terms.append((pays, q.format(pays=pays)))
+    scrapers = [
+        ("123ecoles.com", scrape_123ecoles),
+        ("etablissements-scolaires.fr", scrape_etablissements_scolaires),
+        ("lesecoles.fr", scrape_lesecoles),
+        ("DuckDuckGo", scrape_ddg_results),
+    ]
 
-    for pays, query in search_terms:
-        print(f"  Recherche web: [{pays}] {query}")
-        results = search_web(query, max_results=5)
-        for r in results:
-            url = r["url"]
-            scraped = scrape_directory_page(url, pays)
-            for s in scraped:
-                s["pays"] = pays
-                s["departement"] = ""
-                s["source"] = "web_scrape"
-                s["email"] = ""
-                s["telephone"] = ""
-                if statut:
-                    if "Priv" in statut and s.get("type") == "Public":
-                        continue
-                    if "Pub" in statut and s.get("type") == "Privé":
-                        continue
-                normalized = normalize_prospect(s, pays, "web_search")
-                all_results.append(normalized)
-
-        if len(all_results) >= limit:
+    for name, scraper_fn in scrapers:
+        remaining = limit - len(all_results)
+        if remaining <= 0:
             break
+        print(f"  Scraping {name}...")
+        try:
+            results = scraper_fn(remaining)
+            for s in results:
+                normalized = normalize_prospect(s, s["pays"], s["source"])
+                all_results.append(normalized)
+            print(f"    -> {len(results)} prospects")
+        except Exception as e:
+            print(f"    Erreur: {e}")
 
+    print(f"  Total collecte web: {len(all_results)} prospects")
     return all_results[:limit]

@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     langchain_tracing_v2: bool = False
     langchain_project: str = "TUTTOP-agent"
 
+    serpapi_api_key: str = ""
+
     model_name: str = "gpt-4o-mini"
     model_temperature: float = 0.1
 
