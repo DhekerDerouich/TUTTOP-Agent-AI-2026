@@ -374,6 +374,44 @@ def scrape_ddg_results(limit: int) -> list[dict]:
     return results
 
 
+def _is_directory_url(url: str) -> bool:
+    return any(
+        d in url for d in ["123ecoles.com", "etablissements-scolaires", "lesecoles.fr"]
+    )
+
+
+def _find_real_website(nom: str, ville: str = "") -> str:
+    query = f"{nom} {ville}".strip()
+    query = re.sub(r"\s+", " ", query)[:80]
+    try:
+        sites = search_duckduckgo(query, max_results=3)
+        for site in sites:
+            url = site["url"]
+            if any(
+                skip in url
+                for skip in [
+                    "123ecoles.com",
+                    "etablissements-scolaires",
+                    "lesecoles.fr",
+                    "facebook.com",
+                    "twitter.com",
+                    "youtube.com",
+                    "instagram.com",
+                    "pagesjaunes",
+                    "linternaute",
+                ]
+            ):
+                continue
+            if any(kw in url.lower() for kw in [".fr", ".org", ".com", ".eu"]) and any(
+                kw in url.lower()
+                for kw in ["ecole", "lycee", "college", "ecole", "institut"]
+            ):
+                return url
+    except:
+        pass
+    return ""
+
+
 def collect_from_web(statut: str | None = None, limit: int = 50) -> list[dict]:
     global _statut
     _statut = statut
@@ -400,26 +438,34 @@ def collect_from_web(statut: str | None = None, limit: int = 50) -> list[dict]:
         except Exception as e:
             print(f"    Erreur: {e}")
 
-    print(f"  Enrichissement (email/telephone/site web) depuis les pages detail...")
+    print(f"  Enrichissement depuis les pages detail...")
     enriched = 0
     for p in all_results[:limit]:
         detail_url = p.get("site_web", "")
-        if not detail_url:
-            continue
-        if any(skip in detail_url for skip in ["web_recherche"]):
+        if not detail_url or "web_recherche" in detail_url:
             continue
         info = _extract_from_detail(detail_url)
-        if info["email"]:
-            p["email"] = info["email"]
-            enriched += 1
-        if info["telephone"]:
-            p["telephone"] = info["telephone"]
-            enriched += 1
-        if info["site_web"]:
-            p["site_web"] = info["site_web"]
-            enriched += 1
+        for field in ["email", "telephone", "site_web"]:
+            if info[field]:
+                p[field] = info[field]
+                enriched += 1
+
+    print(f"  Recherche des vrais sites web via DuckDuckGo...")
+    found_websites = 0
+    for p in all_results[:limit]:
+        url = p.get("site_web", "")
+        if url and not _is_directory_url(url):
+            continue
+        if url and _is_directory_url(url):
+            real = _find_real_website(p.get("nom", ""), p.get("ville", ""))
+            if real:
+                p["site_web"] = real
+                found_websites += 1
+    if found_websites:
+        print(f"    -> {found_websites} vrais sites web trouves")
+
     if enriched:
-        print(f"    -> {enriched} champs enrichis")
+        print(f"    -> {enriched} champs enrichis (email/tel/site)")
 
     print(f"  Total collecte web: {len(all_results)} prospects")
     return all_results[:limit]
