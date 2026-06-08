@@ -15,7 +15,7 @@ TUNISIE_CSV = (
 
 
 def search_french_schools(
-    statut: Optional[str] = None, departement: Optional[str] = None, limit: int = 50
+    statut: Optional[str] = None, departement: Optional[str] = None
 ) -> list[dict]:
     if not FRANCE_CSV.exists():
         return [{"error": "Fichier annuaire France non trouve"}]
@@ -40,7 +40,7 @@ def search_french_schools(
     df = pd.concat([df[has_web], df[~has_web]])
 
     results = []
-    for _, row in df.head(limit).iterrows():
+    for _, row in df.iterrows():
         results.append(
             {
                 "nom": row.get("Nom_etablissement", ""),
@@ -59,9 +59,7 @@ def search_french_schools(
     return results
 
 
-def search_tunisian_schools(
-    statut: Optional[str] = None, limit: int = 50
-) -> list[dict]:
+def search_tunisian_schools(statut: Optional[str] = None) -> list[dict]:
     if not TUNISIE_CSV.exists():
         return [{"error": "Fichier Tunisie non trouve"}]
 
@@ -80,7 +78,7 @@ def search_tunisian_schools(
         df = df[mask]
 
     results = []
-    for _, row in df.head(limit).iterrows():
+    for _, row in df.iterrows():
         results.append(
             {
                 "nom": row.get("nom", ""),

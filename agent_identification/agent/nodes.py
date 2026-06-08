@@ -30,17 +30,19 @@ def find_prospects_csv(state: AgentState) -> dict:
 
     pays = state.get("pays", "france")
     statut = state.get("statut", None)
-    limit = state.get("limit", 50)
 
     print(f"\n{'=' * 50}")
     print(f"  [CSV] Recherche dans les bases locales")
-    print(f"  Pays: {pays} | Statut: {statut} | Limit: {limit}")
+    print(f"  Pays: {pays} | Statut: {statut}")
     print(f"{'=' * 50}")
 
-    if pays.lower() == "tunisie":
-        results = search_tunisian_schools(statut=statut, limit=limit)
+    if pays.lower() == "france":
+        results = search_french_schools(statut=statut)
+    elif pays.lower() == "tunisie":
+        results = search_tunisian_schools(statut=statut)
     else:
-        results = search_french_schools(statut=statut, limit=limit)
+        print(f"  -> Pas de source CSV pour {pays}")
+        results = []
 
     if results and "error" not in results[0]:
         prospects = [Prospect(**r) if isinstance(r, dict) else r for r in results]
@@ -48,9 +50,6 @@ def find_prospects_csv(state: AgentState) -> dict:
         prospects = []
 
     print(f"  -> {len(prospects)} prospects trouves dans les CSV")
-    for p in prospects:
-        site = p.site_web or "NON"
-        print(f"    - {p.nom} ({p.type.value}) | {p.localisation} | site: {site}")
 
     existing = list(state.get("prospects", []))
     all_prospects = deduplicate(existing + prospects)
@@ -66,14 +65,14 @@ def find_prospects_api(state: AgentState) -> dict:
         return {}
 
     statut = state.get("statut", None)
-    limit = state.get("limit", 50)
+    pays = state.get("pays", "france")
 
     print(f"\n{'=' * 50}")
     print(f"  [API] Collecte via APIs officielles")
-    print(f"  Statut: {statut} | Limit: {limit}")
+    print(f"  Pays: {pays} | Statut: {statut}")
     print(f"{'=' * 50}")
 
-    results = api_collect(statut=statut, limit=limit)
+    results = api_collect(statut=statut, pays=pays)
 
     if results and "error" not in results[0]:
         prospects = [Prospect(**r) if isinstance(r, dict) else r for r in results]
@@ -81,9 +80,6 @@ def find_prospects_api(state: AgentState) -> dict:
         prospects = []
 
     print(f"  -> {len(prospects)} prospects trouves via API")
-    for p in prospects:
-        site = p.site_web or "NON"
-        print(f"    - {p.nom} ({p.type.value}) | {p.localisation} | site: {site}")
 
     existing = list(state.get("prospects", []))
     all_prospects = deduplicate(existing + prospects)
@@ -99,17 +95,22 @@ def find_prospects_web(state: AgentState) -> dict:
         return {}
 
     statut = state.get("statut", None)
-    limit = state.get("limit", 50)
     pays = state.get("pays", "france")
 
     print(f"\n{'=' * 50}")
     print(f"  [WEB] Recherche autonome sur le web")
-    print(f"  Pays: {pays} | Statut: {statut} | Limit: {limit}")
+    print(f"  Pays: {pays} | Statut: {statut}")
     print(f"{'=' * 50}")
 
     from tools.web_collector import collect_from_web
 
-    results = collect_from_web(statut=statut, limit=limit)
+    pays_label = {
+        "france": "France",
+        "belgique": "Belgique",
+        "suisse": "Suisse",
+        "tunisie": "Tunisie",
+    }.get(pays.lower(), "France")
+    results = collect_from_web(statut=statut, pays=pays_label)
 
     if results and "error" not in results[0]:
         prospects = [Prospect(**r) if isinstance(r, dict) else r for r in results]
@@ -117,9 +118,6 @@ def find_prospects_web(state: AgentState) -> dict:
         prospects = []
 
     print(f"  -> {len(prospects)} prospects trouves via le web")
-    for p in prospects:
-        site = p.site_web or "NON"
-        print(f"    - {p.nom} ({p.type.value}) | {p.localisation} | site: {site}")
 
     existing = list(state.get("prospects", []))
     all_prospects = deduplicate(existing + prospects)

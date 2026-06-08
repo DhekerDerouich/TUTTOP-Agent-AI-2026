@@ -11,11 +11,15 @@ def load_sources() -> list[dict]:
     return data.get("sources", [])
 
 
-def collect_from_api(statut: str | None = None, limit: int = 50) -> list[dict]:
+def collect_from_api(statut: str | None = None, pays: str | None = None) -> list[dict]:
     sources = load_sources()
     api_sources = [
         s for s in sources if s.get("type") == "api" and s.get("enabled", True)
     ]
+    if pays:
+        api_sources = [
+            s for s in api_sources if s.get("pays", "").lower() == pays.lower()
+        ]
 
     all_results = []
     for source in api_sources:
@@ -23,7 +27,7 @@ def collect_from_api(statut: str | None = None, limit: int = 50) -> list[dict]:
         url = source["url"]
         mapping = source.get("mapping", {})
         params = dict(source.get("params", {}))
-        params["limit"] = min(limit, 100)
+        params["limit"] = 100
 
         where_clauses = ["web is not null"]
         if statut:
@@ -39,28 +43,39 @@ def collect_from_api(statut: str | None = None, limit: int = 50) -> list[dict]:
         if where_clauses:
             params["where"] = " AND ".join(where_clauses)
 
-        try:
-            resp = requests.get(url, params=params, timeout=15)
-            resp.raise_for_status()
-            data = resp.json()
-            records = data.get("results", data.get("records", []))
-            print(f"    Total count: {data.get('total_count', '?')}")
-        except Exception as e:
-            print(f"  Erreur API {pays}: {e}")
-            continue
+        offset = 0
+        total_fetched = 0
+        while True:
+            params["offset"] = offset
+            try:
+                resp = requests.get(url, params=params, timeout=30)
+                resp.raise_for_status()
+                data = resp.json()
+                records = data.get("results", data.get("records", []))
+                if offset == 0:
+                    print(f"    Total count: {data.get('total_count', '?')}")
+                if not records:
+                    break
+            except Exception as e:
+                print(f"  Erreur API {pays} (offset={offset}): {e}")
+                break
 
-        for item in records:
-            raw = {}
-            for target_field, source_field in mapping.items():
-                val = item.get(source_field)
-                if val is None:
-                    val = item.get(f"fields.{source_field}")
-                raw[target_field] = val
+            for item in records:
+                raw = {}
+                for target_field, source_field in mapping.items():
+                    val = item.get(source_field)
+                    if val is None:
+                        val = item.get(f"fields.{source_field}")
+                    raw[target_field] = val
 
-            raw["departement"] = item.get(mapping.get("departement", ""), "")
-            prospect = normalize_prospect(raw, pays, f"api_{source['id']}")
-            all_results.append(prospect)
+                raw["departement"] = item.get(mapping.get("departement", ""), "")
+                prospect = normalize_prospect(raw, pays, f"api_{source['id']}")
+                all_results.append(prospect)
 
-        print(f"  API {pays}: {len(records)} trouves")
+            total_fetched += len(records)
+            print(f"  API {pays}: offset={offset}, fetched={total_fetched}")
+            offset += 100
+
+        print(f"  API {pays}: {total_fetched} trouves")
 
     return all_results

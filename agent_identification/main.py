@@ -11,7 +11,7 @@ from models import Prospect
 def run_collector(
     pays: str = "france",
     statut: str | None = None,
-    limit: int = 50,
+    limit: int = 5000,
     mode: str = "all",
     thread_id: str = "collecte-1",
 ) -> list[Prospect]:
@@ -52,9 +52,11 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Agent de collecte EdTech TUT'TOP")
-    parser.add_argument("--pays", default="france", choices=["france", "tunisie"])
+    parser.add_argument(
+        "--pays", default="france", choices=["france", "belgique", "suisse", "tunisie"]
+    )
     parser.add_argument("--statut", default=None, choices=["Prive", "Privé", "Public"])
-    parser.add_argument("--limit", type=int, default=50)
+    parser.add_argument("--limit", type=int, default=5000)
     parser.add_argument(
         "--mode",
         default="all",
@@ -64,8 +66,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print(
-        f"\nLancement de la collecte : {args.pays}, statut={args.statut}, limit={args.limit}, mode={args.mode}"
+        f"\nLancement de la collecte : {args.pays}, statut={args.statut}, mode={args.mode}"
     )
+    if args.mode in ("csv", "api"):
+        print(f"  (collecte integrale - sans limite de nombre)")
+    else:
+        print(f"  (limite web: {args.limit})")
     prospects = run_collector(
         pays=args.pays, statut=args.statut, limit=args.limit, mode=args.mode
     )
@@ -88,4 +94,4 @@ if __name__ == "__main__":
         )
 
     if prospects:
-        export_to_csv(prospects, f"data/prospects_{args.mode}.csv")
+        export_to_csv(prospects, f"data/prospects_{args.mode}_{args.pays}.csv")
