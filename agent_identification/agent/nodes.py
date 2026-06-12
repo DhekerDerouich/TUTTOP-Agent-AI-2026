@@ -15,6 +15,7 @@ class AgentState(TypedDict):
     statut: str
     limit: int
     mode: str
+    store: dict
 
 
 def _should_run(state: AgentState, mode: str) -> bool:
@@ -126,3 +127,80 @@ def find_prospects_web(state: AgentState) -> dict:
         "prospects": all_prospects,
         "total_count": len(all_prospects),
     }
+
+
+def classify_prospects(state: AgentState) -> dict:
+    print(f"\n{'=' * 50}")
+    print(f"  [CLASSIFY] Classification des types Inconnu")
+    print(f"{'=' * 50}")
+
+    from agent.classifier import classify_types
+
+    prospects = list(state.get("prospects", []))
+    records = [
+        p.model_dump() if hasattr(p, "model_dump") else dict(p) for p in prospects
+    ]
+
+    records = classify_types(records)
+
+    new_prospects = [Prospect(**r) for r in records]
+    store = dict(state.get("store", {}))
+    unknown_after = sum(1 for r in records if r.get("type") == "Inconnu")
+    store["unknown_count"] = unknown_after
+
+    print(f"  -> {unknown_after} Inconnus restants")
+
+    return {"prospects": new_prospects, "store": store}
+
+
+def clean_prospects(state: AgentState) -> dict:
+    print(f"\n{'=' * 50}")
+    print(f"  [CLEAN] Nettoyage et deduplication")
+    print(f"{'=' * 50}")
+
+    from agent.cleaner import clean_prospects as cleaner
+
+    prospects = list(state.get("prospects", []))
+    records = [
+        p.model_dump() if hasattr(p, "model_dump") else dict(p) for p in prospects
+    ]
+
+    records = cleaner(records)
+
+    new_prospects = [Prospect(**r) for r in records]
+    store = dict(state.get("store", {}))
+    store["cleaned"] = True
+
+    print(f"  -> {len(new_prospects)} prospects apres nettoyage")
+
+    return {"prospects": new_prospects, "store": store}
+
+
+def qualify_prospects(state: AgentState) -> dict:
+    print(f"\n{'=' * 50}")
+    print(f"  [QUALIFY] Scoring et qualification")
+    print(f"{'=' * 50}")
+
+    from agent.qualifier import qualify_prospects as qualifier
+
+    prospects = list(state.get("prospects", []))
+    records = [
+        p.model_dump() if hasattr(p, "model_dump") else dict(p) for p in prospects
+    ]
+
+    records = qualifier(records)
+
+    new_prospects = [Prospect(**r) for r in records]
+    store = dict(state.get("store", {}))
+    store["qualified"] = True
+
+    print(f"  -> Qualification terminee")
+
+    return {"prospects": new_prospects, "store": store}
+
+
+def decide_next(state: AgentState) -> str:
+    from agent.orchestrator import orchestrator
+
+    result = orchestrator(state)
+    return result.get("next_action", "done")

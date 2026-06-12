@@ -3,8 +3,9 @@
     {
       "id": "csv_france",
       "type": "csv",
+      "format": "csv_local",
       "pays": "France",
-      "description": "Annuaire France - Open Data Ministere Education",
+      "description": "Annuaire France - Open Data Ministere Education (CSV local)",
       "path": "france/fr-en-annuaire-education.csv",
       "enabled": true,
       "mapping": {
@@ -20,8 +21,9 @@
     {
       "id": "csv_tunisie",
       "type": "csv",
+      "format": "csv_local",
       "pays": "Tunisie",
-      "description": "Annuaire Tunisie - Scrape ecoles.com.tn",
+      "description": "Annuaire Tunisie - Scrape ecoles.com.tn (CSV local)",
       "path": "tunisie/tous_etablissements_avec_sites_web.csv",
       "enabled": true,
       "mapping": {
@@ -36,8 +38,9 @@
     {
       "id": "api_france",
       "type": "api",
+      "format": "ods",
       "pays": "France",
-      "description": "API officielle data.education.gouv.fr",
+      "description": "API officielle data.education.gouv.fr (ODS)",
       "url": "https://data.education.gouv.fr/api/explore/v2.1/catalog/datasets/fr-en-annuaire-education/records",
       "params": {
         "limit": 100
@@ -51,6 +54,192 @@
         "site_web": "web",
         "email": "mail",
         "telephone": "telephone"
+      }
+    },
+    {
+      "id": "api_wikidata_eu",
+      "type": "api",
+      "format": "sparql",
+      "pays": "Europe",
+      "description": "Wikidata SPARQL - Tous les etablissements scolaires d'Europe",
+      "url": "https://query.wikidata.org/sparql",
+      "params": {
+        "limit_per_country": 50000
+      },
+      "enabled": true,
+      "rate_limit_sec": 0.5,
+      "mapping": {
+        "schoolLabel": "nom",
+        "countryLabel": "pays",
+        "website": "site_web",
+        "email": "email",
+        "phone": "telephone"
+      }
+    },
+    {
+      "id": "api_osm_eu",
+      "type": "api",
+      "format": "overpass",
+      "pays": "Europe",
+      "description": "OpenStreetMap Overpass API - Ecoles du monde entier",
+      "url": "https://overpass-api.de/api/interpreter",
+      "params": {
+        "limit_per_country": 100000
+      },
+      "enabled": true,
+      "rate_limit_sec": 1.0,
+      "mapping": {
+        "name": "nom",
+        "website": "site_web",
+        "email": "email",
+        "phone": "telephone",
+        "addr:city": "ville",
+        "addr:country": "pays_iso"
+      }
+    },
+    {
+      "id": "api_belgique",
+      "type": "api",
+      "format": "ods",
+      "pays": "Belgique",
+      "description": "API Enseignement.be - Open Data Wallonie-Bruxelles",
+      "url": "https://data.enseignement.be/api/records/1.0/search/?dataset=ecoles",
+      "params": {
+        "limit": 100
+      },
+      "enabled": true,
+      "mapping": {
+        "nom": "ecole_nom",
+        "type": "ecole_type",
+        "ville": "commune",
+        "site_web": "site_web",
+        "email": "email",
+        "telephone": "telephone"
+      }
+    },
+    {
+      "id": "api_suisse_ckan",
+      "type": "api",
+      "format": "ckan",
+      "pays": "Suisse",
+      "description": "Opendata.swiss - Paquetages sur l'education",
+      "url": "https://opendata.swiss/api/3/action/package_search",
+      "params": {
+        "q": "schule OR ecole OR scuola OR school",
+        "rows": 100
+      },
+      "enabled": true,
+      "resource_format": "csv",
+      "mapping": {
+        "title": "nom",
+        "description": "description",
+        "url": "site_web"
+      }
+    },
+    {
+      "id": "api_portugal_ckan",
+      "type": "api",
+      "format": "ckan",
+      "pays": "Portugal",
+      "description": "Dados.gov.pt - Conjuntos de dados sobre educacao",
+      "url": "https://dados.gov.pt/api/1/datasets/",
+      "params": {
+        "tag": "educacao",
+        "limit": 100
+      },
+      "enabled": true,
+      "resource_format": "csv",
+      "mapping": {
+        "title": "nom",
+        "description": "description",
+        "url": "site_web"
+      }
+    },
+    {
+      "id": "api_luxembourg_ckan",
+      "type": "api",
+      "format": "ckan",
+      "pays": "Luxembourg",
+      "description": "Data.public.lu - Jeux de donnees enseignement",
+      "url": "https://data.public.lu/api/1/datasets/",
+      "params": {
+        "tag": "enseignement",
+        "limit": 100
+      },
+      "enabled": true,
+      "resource_format": "csv",
+      "mapping": {
+        "title": "nom",
+        "description": "description",
+        "url": "site_web"
+      }
+    },
+    {
+      "id": "api_autriche_ckan",
+      "type": "api",
+      "format": "ckan",
+      "pays": "Autriche",
+      "description": "Data.gv.at - Pakete zum Thema Schule",
+      "url": "https://www.data.gv.at/api/3/action/package_search",
+      "params": {
+        "q": "schule",
+        "rows": 100
+      },
+      "enabled": true,
+      "resource_format": "csv",
+      "mapping": {
+        "title": "nom",
+        "description": "description",
+        "url": "site_web"
+      }
+    },
+    {
+      "id": "api_italie",
+      "type": "api",
+      "format": "json_rest",
+      "pays": "Italie",
+      "description": "Dati.istruzione.it - Cataloghi aperti istruzione",
+      "url": "https://dati.istruzione.it/opendata/opendata/catalogo/",
+      "enabled": true,
+      "mapping": {
+        "title": "nom",
+        "description": "description",
+        "url": "site_web"
+      }
+    },
+    {
+      "id": "api_espagne",
+      "type": "api",
+      "format": "json_rest",
+      "pays": "Espagne",
+      "description": "Datos.gob.es - Catalogos educacion",
+      "url": "https://datos.gob.es/apidata/catalog/dataset",
+      "params": {
+        "theme": "educacion",
+        "_pageSize": 100
+      },
+      "enabled": true,
+      "mapping": {
+        "title": "nom",
+        "description": "description",
+        "url": "site_web"
+      }
+    },
+    {
+      "id": "api_paysbas_csv",
+      "type": "api",
+      "format": "csv_url",
+      "pays": "Pays-Bas",
+      "description": "DUO Open Onderwijsdata - Bestanden onderwijsinstellingen",
+      "url": "https://duo.nl/open_onderwijsdata/databestanden/",
+      "enabled": true,
+      "mapping": {
+        "BRIN_NUMMER": "code",
+        "NAAM": "nom",
+        "WEBSITE": "site_web",
+        "EMAIL": "email",
+        "TELEFOON": "telephone",
+        "PLAATS": "ville"
       }
     }
   ]

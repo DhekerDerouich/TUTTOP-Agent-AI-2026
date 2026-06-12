@@ -17,3 +17,5 @@ class Prospect(BaseModel):
     telephone: str = Field(default="", description="Téléphone")
     source: str = Field(default="", description="Source de la donnée")
     pays: str = Field(default="", description="Pays")
+    score: int = Field(default=0, description="Score de qualification 0-100")
+    qualification: str = Field(default="Froid", description="Chaud, Tiède ou Froid")
