@@ -13,6 +13,7 @@ class Hackathon(BaseModel):
     conditions: str = ""
     strategique: str = ""
     source: str = ""
+    source_engine: str = "tavily"
     score_strategique: int = 0
     raison: str = ""
     pertinence_tuttop: str = ""
@@ -30,6 +31,7 @@ class Evenement(BaseModel):
     thematiques: list[str] = []
     strategique: str = ""
     source: str = ""
+    source_engine: str = "tavily"
     score_strategique: int = 0
     raison: str = ""
     pertinence_tuttop: str = ""

@@ -64,7 +64,7 @@ def generate_queries(state: VeilleState) -> dict:
     llm = _get_llm()
     llm_structured = llm.with_structured_output(SearchQueries)
 
-    if iteration == 0:
+    if not queries_done:
         queries = [
             "hackathon IA education innovation Sophia Antipolis 2026",
             "concours IA data science Alpes-Maritimes 2026",
@@ -143,6 +143,7 @@ def search_tavily(state: VeilleState) -> dict:
                         "snippet": res.get("content", "")[:500],
                         "page_content": res.get("content", ""),
                         "query": q,
+                        "source_engine": "tavily",
                     }
                 )
             print(f"      -> {len(response.get('results', []))} resultats")
@@ -150,9 +151,60 @@ def search_tavily(state: VeilleState) -> dict:
             print(f"      -> Erreur: {ex}")
 
     store = dict(state.get("store", {}))
-    existing = store.get("raw_data", [])
-    store["raw_data"] = existing + all_results
-    print(f"    Total raw_data: {len(store['raw_data'])} entrees")
+    existing = store.get("tavily_data", [])
+    store["tavily_data"] = existing + all_results
+    print(f"    Total tavily_data: {len(store['tavily_data'])} entrees")
+    return {"store": store}
+
+
+def search_duckduckgo(state: VeilleState) -> dict:
+    queries = state.get("queries_executees", [])
+    n_queries = min(5, len(queries))
+    last_queries = queries[-n_queries:] if n_queries > 0 else queries
+
+    print(f"\n  [DUCKDUCKGO] Recherche web pour {len(last_queries)} requetes...")
+
+    all_results = []
+
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
+    import time as _time
+
+    for q in last_queries:
+        print(f"    Requete: {q}")
+        try:
+            from ddgs import DDGS
+
+            def _search(q):
+                results = []
+                with DDGS() as ddgs:
+                    results = list(ddgs.text(q, max_results=3))
+                return results
+
+            with ThreadPoolExecutor(max_workers=1) as pool:
+                fut = pool.submit(_search, q)
+                results = fut.result(timeout=10)
+            for res in results:
+                all_results.append(
+                    {
+                        "title": res.get("title", ""),
+                        "url": res.get("href", ""),
+                        "snippet": res.get("body", "")[:500],
+                        "page_content": res.get("body", ""),
+                        "query": q,
+                        "source_engine": "duckduckgo",
+                    }
+                )
+            print(f"      -> {len(results)} resultats")
+            _time.sleep(0.5)
+        except FutureTimeout:
+            print(f"      -> Timeout (15s depasse)")
+        except Exception as ex:
+            print(f"      -> Erreur: {ex}")
+
+    store = dict(state.get("store", {}))
+    existing = store.get("duckduckgo_data", [])
+    store["duckduckgo_data"] = existing + all_results
+    print(f"    Total duckduckgo_data: {len(store['duckduckgo_data'])} entrees")
     return {"store": store}
 
 
@@ -646,12 +698,17 @@ def _parse_json_from_llm(text: str) -> dict:
 
 
 def extract_and_store(state: VeilleState) -> dict:
-    store = state.get("store", {})
-    raw_data = store.get("raw_data", [])
+    store = dict(state.get("store", {}))
+    tavily_data = store.get("tavily_data", [])
+    duckduckgo_data = store.get("duckduckgo_data", [])
+    raw_data = tavily_data + duckduckgo_data
+    store["raw_data"] = raw_data
     hackathons = list(state.get("hackathons", []))
     evenements = list(state.get("evenements", []))
 
-    print(f"\n  [EXTRACTION] Analyse de {len(raw_data)} entrees...")
+    print(
+        f"\n  [EXTRACTION] Analyse de {len(raw_data)} entrees (tavily={len(tavily_data)}, duckduckgo={len(duckduckgo_data)})"
+    )
 
     if not raw_data:
         print("    Aucune donnee a analyser")
@@ -814,13 +871,21 @@ Retourne UNIQUEMENT un JSON valide (sans markdown, sans backticks) avec cette st
     evenements = _fill_empty_scores(evenements)
     hackathons, evenements = _deduplicate_events(hackathons, evenements)
 
+    ddg_urls = {r["url"] for r in duckduckgo_data if r.get("url")}
+    for h in hackathons:
+        if h.url in ddg_urls:
+            h.source_engine = "duckduckgo"
+    for e in evenements:
+        if e.url in ddg_urls:
+            e.source_engine = "duckduckgo"
+
     store["raw_data"] = []
     print(f"  Total: {len(hackathons)} hackathons, {len(evenements)} evenements")
 
     return {"hackathons": hackathons, "evenements": evenements, "store": store}
 
 
-def decide_next(state: VeilleState) -> str:
+def decide_next_veille(state: VeilleState) -> str:
     iteration = state.get("iteration", 0)
     max_iter = state.get("max_iterations", 5)
     hackathons = state.get("hackathons", [])

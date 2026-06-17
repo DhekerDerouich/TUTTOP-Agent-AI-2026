@@ -49,23 +49,25 @@ def export_results(
     hackathons: list,
     evenements: list,
     prefix: str = "data/veille",
+    source_filter: str = "",
 ):
     out_dir = Path(__file__).parent / "data"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    hack_data = []
-    for h in hackathons:
-        if hasattr(h, "model_dump"):
-            hack_data.append(h.model_dump())
-        else:
-            hack_data.append(dict(h))
+    def _get_source_engine(obj):
+        return obj.source_engine if hasattr(obj, "source_engine") else ""
 
-    event_data = []
-    for e in evenements:
-        if hasattr(e, "model_dump"):
-            event_data.append(e.model_dump())
-        else:
-            event_data.append(dict(e))
+    if source_filter:
+        hackathons = [h for h in hackathons if _get_source_engine(h) == source_filter]
+        evenements = [e for e in evenements if _get_source_engine(e) == source_filter]
+        prefix = f"{prefix}_{source_filter}"
+
+    hack_data = [
+        h.model_dump() if hasattr(h, "model_dump") else dict(h) for h in hackathons
+    ]
+    event_data = [
+        e.model_dump() if hasattr(e, "model_dump") else dict(e) for e in evenements
+    ]
 
     csv_hack = out_dir / f"{prefix}_hackathons.csv"
     csv_event = out_dir / f"{prefix}_evenements.csv"
@@ -224,4 +226,11 @@ if __name__ == "__main__":
             r = f" | {raison}" if raison else ""
             print(f"  [{s}/10] {nom} ({type_e}) | {lieu}{r}")
 
+    # Export 3 fichiers: merged, tavily, duckduckgo
     export_results(hackathons, evenements, prefix=args.output_prefix)
+    export_results(
+        hackathons, evenements, prefix=args.output_prefix, source_filter="tavily"
+    )
+    export_results(
+        hackathons, evenements, prefix=args.output_prefix, source_filter="duckduckgo"
+    )
