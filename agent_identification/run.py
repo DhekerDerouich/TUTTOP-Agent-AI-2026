@@ -11,6 +11,7 @@ if env_path.exists():
     load_dotenv(env_path, override=True)
 
 os.environ.setdefault("LANGGRAPH_STRICT_MSGPACK", "false")
+os.environ["LANGCHAIN_PROJECT"] = "TUTTOP-agent-unified"
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 from agent.unified_graph import agent as unified_agent, UnifiedState
