@@ -87,8 +87,10 @@ def run_prospection(args):
     }
 
     config = {"configurable": {"thread_id": args.thread_id}}
-    result = unified_agent.invoke(initial_state, config)
-    prospects = result.get("prospects", [])
+    for event in unified_agent.stream(initial_state, config):
+        pass
+    result = unified_agent.get_state(config)
+    prospects = result.values.get("prospects", [])
 
     labels = {
         "csv": "CSV",
