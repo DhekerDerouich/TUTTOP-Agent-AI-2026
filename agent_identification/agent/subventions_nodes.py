@@ -39,7 +39,11 @@ Genere 5 requetes courtes et precises en francais."""
 
 
 def _get_llm():
-    return get_llm(provider="groq", temperature=0.1)
+    try:
+        return get_llm(provider="groq", temperature=0.1)
+    except ValueError as e:
+        print(f"    [LLM] {e}")
+        return None
 
 
 def _chunk_data(data: list, size: int):
@@ -98,6 +102,20 @@ def generate_queries_subventions(state: SubventionsState) -> dict:
         }
 
     llm = _get_llm()
+    if llm is None:
+        print("    [LLM] Pas de LLM disponible — requetes par defaut")
+        return {
+            "queries_executees": queries_done
+            + [
+                "appel projet innovation educative 2026",
+                "subvention numerique educatif region 2026",
+                "financement equipement scolaire 2026",
+                "aide formation enseignant 2026",
+                "aide innovation pedagogique region 2026",
+            ],
+            "iteration": iteration + 1,
+            "store": state.get("store", {}),
+        }
     llm_structured = llm.with_structured_output(SearchQueries)
 
     result = llm_structured.invoke(
@@ -409,7 +427,14 @@ Retourne UNIQUEMENT un JSON valide (sans markdown, sans backticks) avec cette st
             + content
         )
 
-        llm = _get_llm()
+        try:
+            llm = _get_llm()
+            if llm is None:
+                print("    [LLM] Pas de LLM disponible — extraction ignorée")
+                continue
+        except Exception as ex:
+            print(f"    [LLM] Pas de LLM disponible ({ex}) — extraction ignorée")
+            continue
 
         try:
             response = llm.invoke(

@@ -9,16 +9,27 @@ env_path = Path(__file__).parent / ".env"
 if env_path.exists():
     load_dotenv(env_path, override=True)
 
-os.environ.setdefault("LANGGRAPH_STRICT_MSGPACK", "false")
-if os.getenv("LANGCHAIN_API_KEY"):
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+# Diagnostic des clés API
+_groq = os.getenv("GROQ_API_KEY", "")
+_tavily = os.getenv("TAVILY_API_KEY", "")
+_langchain = os.getenv("LANGCHAIN_API_KEY", "")
+print(f"[ENV] GROQ_API_KEY={'OK (' + _groq[:8] + '...)' if _groq else 'MANQUANTE'}")
+print(
+    f"[ENV] TAVILY_API_KEY={'OK (' + _tavily[:8] + '...)' if _tavily else 'MANQUANTE'}"
+)
+print(
+    f"[ENV] LANGCHAIN_API_KEY={'OK (' + _langchain[:8] + '...)' if _langchain else 'MANQUANTE'}"
+)
+
+if _langchain:
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
     os.environ.setdefault("LANGCHAIN_PROJECT", "TUTTOP-agent-unified")
-    print("[LANGCHAIN] Tracing active")
+    print("[LANGCHAIN] Tracing activé")
 else:
     os.environ["LANGCHAIN_TRACING_V2"] = "false"
     print("[LANGCHAIN] Pas de clé API — tracing désactivé")
-
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 from agent.unified_graph import agent as unified_agent, UnifiedState
 from agent.veille_models import Hackathon, Evenement
 from agent.subventions_models import Subvention

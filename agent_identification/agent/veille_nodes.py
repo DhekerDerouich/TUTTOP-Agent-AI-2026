@@ -41,7 +41,11 @@ Genere 5 requetes courtes et precises en francais."""
 
 
 def _get_llm():
-    return get_llm(provider="groq", temperature=0.1)
+    try:
+        return get_llm(provider="groq", temperature=0.1)
+    except ValueError as e:
+        print(f"    [LLM] {e}")
+        return None
 
 
 def generate_queries(state: VeilleState) -> dict:
@@ -62,6 +66,20 @@ def generate_queries(state: VeilleState) -> dict:
     context += f"\nEvenements deja trouves: {len(evenements)}"
 
     llm = _get_llm()
+    if llm is None:
+        print("    [LLM] Pas de LLM disponible — requetes par defaut")
+        return {
+            "queries_executees": queries_done
+            + [
+                "hackathon IA education innovation Sophia Antipolis 2026",
+                "concours IA data science Alpes-Maritimes 2026",
+                "conference EdTech Monaco Cote d'Azur 2026",
+                "salon education orientation innovation Nice Paca 2026",
+                "competition startup etudiante Grasse Antibes 2026",
+            ],
+            "iteration": iteration + 1,
+            "store": state.get("store", {}),
+        }
     llm_structured = llm.with_structured_output(SearchQueries)
 
     if not queries_done:
@@ -234,6 +252,10 @@ Retourne UNIQUEMENT ce JSON, sans texte avant/apres, sans backticks :
 {{"hackathons":[{{"nom":"","date_debut":"JJ/MM/AAAA","date_fin":"JJ/MM/AAAA","lieu":"Ville","description":"","conditions":"equipe,niveau,prix","url":"","type":"Hackathon","thematiques":["IA"],"strategique":"Oui","score_strategique":8,"raison":"","pertinence_tuttop":"","source":"connaissance LLM"}}],"evenements":[{{"nom":"","type":"Conference","date":"JJ/MM/AAAA","lieu":"Ville","description":"","url":"","thematiques":["IA"],"strategique":"Oui","score_strategique":8,"raison":"","pertinence_tuttop":"","source":"connaissance LLM"}}]}}"""
 
     llm = _get_llm()
+    if llm is None:
+        print("    [LLM] Pas de LLM disponible — skip generation connaissances")
+        return {"hackathons": hackathons, "evenements": evenements}
+
     response = llm.invoke(
         [
             {
@@ -811,7 +833,11 @@ Retourne UNIQUEMENT un JSON valide (sans markdown, sans backticks) avec cette st
             + content
         )
 
-        llm = _get_llm()
+        try:
+            llm = _get_llm()
+        except Exception as ex:
+            print(f"    Pas de LLM disponible ({ex}) — extraction ignorée")
+            continue
 
         try:
             response = llm.invoke(
