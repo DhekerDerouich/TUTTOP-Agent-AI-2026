@@ -835,6 +835,9 @@ Retourne UNIQUEMENT un JSON valide (sans markdown, sans backticks) avec cette st
 
         try:
             llm = _get_llm()
+            if llm is None:
+                print("    [LLM] Pas de LLM disponible — extraction ignorée")
+                continue
         except Exception as ex:
             print(f"    Pas de LLM disponible ({ex}) — extraction ignorée")
             continue
