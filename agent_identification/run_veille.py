@@ -73,34 +73,65 @@ def export_results(
     csv_event = out_dir / f"{prefix}_evenements.csv"
     xlsx_path = out_dir / f"{prefix}.xlsx"
 
+    dedup_col = "nom"
+
     if hack_data:
         df_h = pd.DataFrame(hack_data)
+        if csv_hack.exists():
+            df_old = pd.read_csv(csv_hack, dtype=str, encoding="utf-8-sig").fillna("")
+            df_h = pd.concat([df_old, df_h], ignore_index=True)
+            if dedup_col in df_h.columns:
+                df_h = df_h.drop_duplicates(subset=[dedup_col], keep="last")
+            print(
+                f"  -> Merge hackathons: {len(df_old)} + {len(hack_data)} = {len(df_h)}"
+            )
         df_h.to_csv(csv_hack, index=False, encoding="utf-8-sig")
-        print(f"  -> {len(hack_data)} hackathons exportes: {csv_hack}")
+        print(f"  -> {len(df_h)} hackathons exportes: {csv_hack}")
     else:
-        pd.DataFrame().to_csv(csv_hack, index=False, encoding="utf-8-sig")
-        print(f"  -> 0 hackathons (fichier vide cree)")
+        if not csv_hack.exists():
+            pd.DataFrame().to_csv(csv_hack, index=False, encoding="utf-8-sig")
+        print(f"  -> 0 nouveau hackathon")
 
     if event_data:
         df_e = pd.DataFrame(event_data)
+        if csv_event.exists():
+            df_old = pd.read_csv(csv_event, dtype=str, encoding="utf-8-sig").fillna("")
+            df_e = pd.concat([df_old, df_e], ignore_index=True)
+            if dedup_col in df_e.columns:
+                df_e = df_e.drop_duplicates(subset=[dedup_col], keep="last")
+            print(
+                f"  -> Merge evenements: {len(df_old)} + {len(event_data)} = {len(df_e)}"
+            )
         df_e.to_csv(csv_event, index=False, encoding="utf-8-sig")
-        print(f"  -> {len(event_data)} evenements exportes: {csv_event}")
+        print(f"  -> {len(df_e)} evenements exportes: {csv_event}")
     else:
-        pd.DataFrame().to_csv(csv_event, index=False, encoding="utf-8-sig")
-        print(f"  -> 0 evenements (fichier vide cree)")
+        if not csv_event.exists():
+            pd.DataFrame().to_csv(csv_event, index=False, encoding="utf-8-sig")
+        print(f"  -> 0 nouveau evenement")
 
     try:
+        df_h_all = pd.DataFrame(hack_data)
+        df_e_all = pd.DataFrame(event_data)
+        if xlsx_path.exists():
+            xls_old = pd.read_excel(xlsx_path, sheet_name=None, engine="openpyxl")
+            if "Hackathons" in xls_old:
+                df_h_old = xls_old["Hackathons"].fillna("")
+                df_h_all = pd.concat([df_h_old, df_h_all], ignore_index=True)
+                if dedup_col in df_h_all.columns:
+                    df_h_all = df_h_all.drop_duplicates(subset=[dedup_col], keep="last")
+            if "Evenements" in xls_old:
+                df_e_old = xls_old["Evenements"].fillna("")
+                df_e_all = pd.concat([df_e_old, df_e_all], ignore_index=True)
+                if dedup_col in df_e_all.columns:
+                    df_e_all = df_e_all.drop_duplicates(subset=[dedup_col], keep="last")
+
         with pd.ExcelWriter(xlsx_path, engine="openpyxl") as writer:
-            if hack_data:
-                pd.DataFrame(hack_data).to_excel(
-                    writer, sheet_name="Hackathons", index=False
-                )
+            if not df_h_all.empty:
+                df_h_all.to_excel(writer, sheet_name="Hackathons", index=False)
             else:
                 pd.DataFrame().to_excel(writer, sheet_name="Hackathons", index=False)
-            if event_data:
-                pd.DataFrame(event_data).to_excel(
-                    writer, sheet_name="Evenements", index=False
-                )
+            if not df_e_all.empty:
+                df_e_all.to_excel(writer, sheet_name="Evenements", index=False)
             else:
                 pd.DataFrame().to_excel(writer, sheet_name="Evenements", index=False)
         print(f"  -> Fichier Excel complete: {xlsx_path}")

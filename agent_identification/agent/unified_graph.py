@@ -3,6 +3,7 @@ from langgraph.graph import add_messages, StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 from models import Prospect
 from agent.veille_models import Hackathon, Evenement
+from agent.subventions_models import Subvention
 from agent.nodes import (
     find_prospects_csv,
     find_prospects_api,
@@ -10,7 +11,6 @@ from agent.nodes import (
     classify_prospects,
     clean_prospects,
     qualify_prospects,
-    decide_next as decide_next_prospection,
 )
 from agent.veille_nodes import (
     generate_queries,
@@ -18,6 +18,13 @@ from agent.veille_nodes import (
     search_duckduckgo,
     extract_and_store,
     decide_next_veille,
+)
+from agent.subventions_nodes import (
+    generate_queries_subventions,
+    search_tavily_subventions,
+    search_duckduckgo_subventions,
+    extract_subventions,
+    decide_next_subventions,
 )
 
 
@@ -41,6 +48,11 @@ class UnifiedState(TypedDict):
     queries_executees: list[str]
     iteration: int
     max_iterations: int
+
+    # Subventions
+    subventions: list[Subvention]
+    subventions_iteration: int
+    subventions_max_iterations: int
 
 
 def router_node(state: UnifiedState) -> dict:
@@ -72,6 +84,12 @@ def build_unified_agent() -> StateGraph:
     workflow.add_node("search_duckduckgo", search_duckduckgo)
     workflow.add_node("extract_and_store", extract_and_store)
 
+    workflow.add_node("generate_queries_subventions", generate_queries_subventions)
+    workflow.add_node("search_tavily_subventions", search_tavily_subventions)
+    workflow.add_node("search_duckduckgo_subventions", search_duckduckgo_subventions)
+    workflow.add_node("extract_subventions", extract_subventions)
+    workflow.add_node("decide_next_subventions", decide_next_subventions)
+
     workflow.set_entry_point("router")
 
     workflow.add_conditional_edges(
@@ -80,6 +98,7 @@ def build_unified_agent() -> StateGraph:
         {
             "prospection": "find_prospects_csv",
             "veille": "generate_queries",
+            "subventions": "generate_queries_subventions",
         },
     )
 
@@ -98,6 +117,18 @@ def build_unified_agent() -> StateGraph:
         decide_next_veille,
         {
             "continue": "generate_queries",
+            "end": END,
+        },
+    )
+
+    workflow.add_edge("generate_queries_subventions", "search_tavily_subventions")
+    workflow.add_edge("search_tavily_subventions", "search_duckduckgo_subventions")
+    workflow.add_edge("search_duckduckgo_subventions", "extract_subventions")
+    workflow.add_conditional_edges(
+        "extract_subventions",
+        decide_next_subventions,
+        {
+            "continue": "generate_queries_subventions",
             "end": END,
         },
     )

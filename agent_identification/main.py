@@ -88,8 +88,8 @@ def export_to_csv(
 
     out_path = Path(__file__).parent / filename
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    df = pd.DataFrame(data)
-    if "score" in df.columns:
+    df_new = pd.DataFrame(data)
+    if "score" in df_new.columns:
         cols = [
             "nom",
             "type",
@@ -102,10 +102,21 @@ def export_to_csv(
             "score",
             "qualification",
         ]
-        cols = [c for c in cols if c in df.columns]
-        df = df[cols + [c for c in df.columns if c not in cols]]
-    df.to_csv(out_path, index=False, encoding="utf-8-sig")
-    print(f"\nExporte {len(data)} prospects -> {out_path}")
+        cols = [c for c in cols if c in df_new.columns]
+        df_new = df_new[cols + [c for c in df_new.columns if c not in cols]]
+
+    if out_path.exists():
+        df_old = pd.read_csv(out_path, dtype=str, encoding="utf-8-sig").fillna("")
+        df_new = pd.concat([df_old, df_new], ignore_index=True)
+        dedup_cols = [c for c in ["nom", "site_web"] if c in df_new.columns]
+        if dedup_cols:
+            df_new = df_new.drop_duplicates(subset=dedup_cols, keep="last")
+        print(
+            f"  Merge: {len(df_old)} existants + {len(data)} nouveaux = {len(df_new)} total"
+        )
+
+    df_new.to_csv(out_path, index=False, encoding="utf-8-sig")
+    print(f"\nExporte {len(df_new)} prospects -> {out_path}")
     return out_path
 
 

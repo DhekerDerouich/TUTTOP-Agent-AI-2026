@@ -45,15 +45,20 @@ def find_prospects_csv(state: AgentState) -> dict:
         print(f"  -> Pas de source CSV pour {pays}")
         results = []
 
-    if results and "error" not in results[0]:
-        prospects = [Prospect(**r) if isinstance(r, dict) else r for r in results]
-    else:
-        prospects = []
+    limit = state.get("limit", 0)
 
-    print(f"  -> {len(prospects)} prospects trouves dans les CSV")
+    if results and "error" not in results[0]:
+        p = [Prospect(**r) if isinstance(r, dict) else r for r in results]
+    else:
+        p = []
+
+    if limit > 0:
+        p = p[:limit]
+
+    print(f"  -> {len(p)} prospects trouves dans les CSV")
 
     existing = list(state.get("prospects", []))
-    all_prospects = deduplicate(existing + prospects)
+    all_prospects = deduplicate(existing + p)
 
     return {
         "prospects": all_prospects,
@@ -73,17 +78,21 @@ def find_prospects_api(state: AgentState) -> dict:
     print(f"  Pays: {pays} | Statut: {statut}")
     print(f"{'=' * 50}")
 
+    limit = state.get("limit", 0)
     results = api_collect(statut=statut, pays=pays)
 
     if results and "error" not in results[0]:
-        prospects = [Prospect(**r) if isinstance(r, dict) else r for r in results]
+        p = [Prospect(**r) if isinstance(r, dict) else r for r in results]
     else:
-        prospects = []
+        p = []
 
-    print(f"  -> {len(prospects)} prospects trouves via API")
+    if limit > 0:
+        p = p[:limit]
+
+    print(f"  -> {len(p)} prospects trouves via API")
 
     existing = list(state.get("prospects", []))
-    all_prospects = deduplicate(existing + prospects)
+    all_prospects = deduplicate(existing + p)
 
     return {
         "prospects": all_prospects,
@@ -111,17 +120,21 @@ def find_prospects_web(state: AgentState) -> dict:
         "suisse": "Suisse",
         "tunisie": "Tunisie",
     }.get(pays.lower(), "France")
+    limit = state.get("limit", 0)
     results = collect_from_web(statut=statut, pays=pays_label)
 
     if results and "error" not in results[0]:
-        prospects = [Prospect(**r) if isinstance(r, dict) else r for r in results]
+        p = [Prospect(**r) if isinstance(r, dict) else r for r in results]
     else:
-        prospects = []
+        p = []
 
-    print(f"  -> {len(prospects)} prospects trouves via le web")
+    if limit > 0:
+        p = p[:limit]
+
+    print(f"  -> {len(p)} prospects trouves via le web")
 
     existing = list(state.get("prospects", []))
-    all_prospects = deduplicate(existing + prospects)
+    all_prospects = deduplicate(existing + p)
 
     return {
         "prospects": all_prospects,
