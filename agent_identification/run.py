@@ -10,8 +10,13 @@ if env_path.exists():
     load_dotenv(env_path, override=True)
 
 os.environ.setdefault("LANGGRAPH_STRICT_MSGPACK", "false")
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ.setdefault("LANGCHAIN_PROJECT", "TUTTOP-agent-unified")
+if os.getenv("LANGCHAIN_API_KEY"):
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ.setdefault("LANGCHAIN_PROJECT", "TUTTOP-agent-unified")
+    print("[LANGCHAIN] Tracing active")
+else:
+    os.environ["LANGCHAIN_TRACING_V2"] = "false"
+    print("[LANGCHAIN] Pas de clé API — tracing désactivé")
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 from agent.unified_graph import agent as unified_agent, UnifiedState
