@@ -7,6 +7,14 @@ build/
 
 # Environment
 .env
+
+# Un-ignore specific small data files needed for app to work
+!data/prospect_chauds.xlsx
+!data/veille.xlsx
+!data/subventions_all.xlsx
+!data/contacts.csv
+!data/state_veille.json
+!data/state_subventions.json
 .venv/
 venv/
 

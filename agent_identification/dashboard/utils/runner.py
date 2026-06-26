@@ -20,6 +20,8 @@ def run_pipeline(mode: str, **kwargs):
 
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
 
+    (BASE / "data").mkdir(parents=True, exist_ok=True)
+
     log_path = BASE / "data" / f"run_{mode}_{datetime.now():%Y%m%d_%H%M%S}.log"
     with open(log_path, "w", encoding="utf-8") as log:
         log.write(f"COMMAND: {' '.join(cmd)}\n\n")

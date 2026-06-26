@@ -1,0 +1,2595 @@
+{
+  "hackathons": [
+    {
+      "nom": "IASP 2026",
+      "date_debut": "27/06/2026",
+      "date_fin": "30/06/2026",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Hackathon sur l'IA, l'éducation et l'innovation",
+      "url": "https://www.instagram.com/reel/DXbdFfBDliR",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DXbdFfBDliR",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Sophia Antipolis",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de Sophia Antipolis"
+    },
+    {
+      "nom": "ETSI SNS4SNS 2026",
+      "date_debut": "27/06/2026",
+      "date_fin": "30/06/2026",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Hackathon sur l'IA, l'éducation et l'innovation",
+      "url": "https://www.etsi.org/newsroom/press-releases/2639-etsi-sns4sns-2026-open-software-6g",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Oui",
+      "source": "https://www.etsi.org/newsroom/press-releases/2639-etsi-sns4sns-2026-open-software-6g",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Sophia Antipolis",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de Sophia Antipolis"
+    },
+    {
+      "nom": "Strengthening Franco-Indian cooperation in Artificial Intelligence",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Événement sur la coopération franco-indienne en IA",
+      "url": "https://3ia.univ-cotedazur.eu/strengthening-franco-indian-cooperation-in-artificial-intelligence",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Non",
+      "source": "https://3ia.univ-cotedazur.eu/strengthening-franco-indian-cooperation-in-artificial-intelligence",
+      "source_engine": "tavily",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Sophia Antipolis",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des établissements de Sophia Antipolis"
+    },
+    {
+      "nom": "Shaping values for a human-centric future",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "hackathon IA education innovation",
+      "url": "https://www.instagram.com/p/DQ9SWtUjIKy",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "équipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DQ9SWtUjIKy",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux participants",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des participants"
+    },
+    {
+      "nom": "concours IA data science",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "concours IA data science",
+      "url": "https://www.facebook.com/departement06/posts/et-si-lintelligence-artificielle-r%C3%A9volutionnait-aussi-lunivers-du-parfum-pour-ce/1419753180180015",
+      "type": "Competition",
+      "thematiques": [
+        "IA",
+        "data science"
+      ],
+      "conditions": "équipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://www.facebook.com/departement06/posts/et-si-lintelligence-artificielle-r%C3%A9volutionnait-aussi-lunivers-du-parfum-pour-ce/1419753180180015",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux participants",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des participants"
+    },
+    {
+      "nom": "Empower“ teaching and learning conference",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco, Monaco",
+      "description": "Conférence EdTech",
+      "url": "https://www.instagram.com/reel/DQobkCsDTHN",
+      "type": "Conference",
+      "thematiques": [
+        "EdTech"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "Instagram",
+      "source_engine": "tavily",
+      "score_strategique": 4,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Côte d'Azur",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des professionnels de l'EdTech"
+    },
+    {
+      "nom": "7th International Conference on Education and Integrating",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco, Monaco",
+      "description": "Conférence EdTech",
+      "url": "https://mainevent.info/International-conference-0016101",
+      "type": "Conference",
+      "thematiques": [
+        "EdTech"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "Main Event",
+      "source_engine": "tavily",
+      "score_strategique": 4,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Côte d'Azur",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des professionnels de l'EdTech"
+    },
+    {
+      "nom": "Share • Empower” Education Conference",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco, France",
+      "description": "Conference sur l'education",
+      "url": "https://www.instagram.com/p/DTUqSCtDYEB",
+      "type": "Conference",
+      "thematiques": [
+        "education"
+      ],
+      "conditions": "Inscription requise",
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DTUqSCtDYEB",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas d'information sur la date ou la thematique",
+      "pertinence_tuttop": "Pas d'information pertinente"
+    },
+    {
+      "nom": "Salon de l'orientation et de l'innovation",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Salon sur l'orientation et l'innovation",
+      "url": "https://allconferencealert.net/cities/nice/innovation.php",
+      "type": "Salon",
+      "thematiques": [
+        "orientation",
+        "innovation"
+      ],
+      "conditions": "Inscription requise",
+      "strategique": "Non",
+      "source": "https://allconferencealert.net/cities/nice/innovation.php",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas d'information sur la date ou la thematique",
+      "pertinence_tuttop": "Pas d'information pertinente"
+    },
+    {
+      "nom": "Competition startup étudiante Grasse Antibes 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Grasse, France",
+      "description": "Deux étudiantes créent une startup pour résoudre un problème local",
+      "url": "https://www.instagram.com/reel/DUGD67oCK1Z",
+      "type": "Competition",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "Étudiantes, niveau non spécifié, prix non mentionné",
+      "strategique": "Non",
+      "source": "https://www.instagram.com/reel/DUGD67oCK1Z",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants de la région",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de la région"
+    },
+    {
+      "nom": "Hackathon IA education innovation Sophia Antipolis 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Hackathon sur l'IA, l'éducation et l'innovation",
+      "url": "https://www.pialadunia2026live.live/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "Niveau non spécifié, prix non mentionné",
+      "strategique": "Non",
+      "source": "https://www.pialadunia2026live.live/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 0,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux participants",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des participants"
+    },
+    {
+      "nom": "IA DATE - Révolution IA : environnement, géopolitique et perspectives",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Département des Alpes-Maritimes",
+      "url": "https://www.departement06.fr/agenda/ia-date-revolution-ia-environnement-geopolitique-et-perspectives",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://www.departement06.fr/agenda/ia-date-revolution-ia-environnement-geopolitique-et-perspectives",
+      "source_engine": "duckduckgo",
+      "score_strategique": 1,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Alpes-Maritimes"
+    },
+    {
+      "nom": "WAICF 2026 : 28 start-up IA des Alpes-Maritimes à Cannes",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Cannes, Alpes-Maritimes, France",
+      "description": "CCI Nice Côte d’Azur",
+      "url": "https://www.cote-azur.cci.fr/28-start-up-representeront-les-alpes-maritimes-au-waicf-2026/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://www.cote-azur.cci.fr/28-start-up-representeront-les-alpes-maritimes-au-waicf-2026/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 1,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Alpes-Maritimes"
+    },
+    {
+      "nom": "Upcoming Education Conferences in Monaco 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "ICA",
+      "url": "https://internationalconferencealerts.com/education/monaco",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://internationalconferencealerts.com/education/monaco",
+      "source_engine": "duckduckgo",
+      "score_strategique": 1,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Academic Education Conferences in Monaco 2026/2027/2028",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Monaco",
+      "description": "Conférence sur l'éducation académique à Monaco",
+      "url": "https://conferenceindex.org/conferences/academic-education/monaco",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Oui",
+      "source": "https://conferenceindex.org/conferences/academic-education/monaco",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "Competition Startup Étudiante",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Grasse, France",
+      "description": "Competition startup étudiante",
+      "url": "https://www.youtube.com/watch?v=0TNTlMZFTWw",
+      "type": "Competition",
+      "thematiques": [
+        "startup",
+        "étudiante"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://www.youtube.com/watch?v=0TNTlMZFTWw",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Evenement potentiellement interessant pour TUT'TOP (score 2)",
+      "pertinence_tuttop": ""
+    },
+    {
+      "nom": "Salon de l'Étudiant – Nice",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Salon de l'Étudiant – Nice est un événement qui se concentre sur l'orientation et l'innovation dans le domaine de l'éducation.",
+      "url": "https://www.instagram.com/p/DQ6elc5DgmO",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "orientation",
+        "innovation"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DQ6elc5DgmO",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et aux établissements de la région Paca.",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de Nice"
+    },
+    {
+      "nom": "Elevating the Maison Sasha Brand",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Elevating the Maison Sasha Brand est un événement qui se concentre sur l'innovation et l'orientation dans le domaine de l'éducation.",
+      "url": "https://www.tiktok.com/@sashatheschool/video/7595600716467686712",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "orientation",
+        "innovation"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Oui",
+      "source": "https://www.tiktok.com/@sashatheschool/video/7595600716467686712",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et aux établissements de la région Paca.",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de Nice"
+    },
+    {
+      "nom": "Rencontres pédagogiques d'été 2026",
+      "date_debut": "22/06/2026",
+      "date_fin": "28/08/2026",
+      "lieu": "Cote d'Azur, France",
+      "description": "conference EdTech innovation pedagogique",
+      "url": "https://www.instagram.com/p/DV03FxnCPh1",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DV03FxnCPh1",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Salons et Journées Portes Ouvertes à Monaco et dans les Alpes-Maritimes",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco et Alpes-Maritimes, France",
+      "description": "Salons et Journées Portes Ouvertes à Monaco et dans les Alpes-Maritimes",
+      "url": "https://cien.gouv.mc/content/download/91087/file/Salons%20et%20JPO%202025-2026.pdf",
+      "type": "Salon",
+      "thematiques": [
+        "education"
+      ],
+      "conditions": "Pas de conditions de participation mentionnees",
+      "strategique": "Non",
+      "source": "Gouvernement de Monaco",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence mentionnee pour TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence mentionnee pour TUT'TOP"
+    },
+    {
+      "nom": "MonacoTech 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Salon de l'innovation et de la technologie pour les étudiants et les startups",
+      "url": "https://tribuca.net/monacotech-devoile-sa-promo-2026",
+      "type": "Salon",
+      "thematiques": [
+        "IA",
+        "education",
+        "startup"
+      ],
+      "conditions": "Étudiants et startups",
+      "strategique": "Oui",
+      "source": "https://tribuca.net/monacotech-devoile-sa-promo-2026",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et aux startups de Monaco",
+      "pertinence_tuttop": "Opportunité de demo et de partenariat avec les startups et les étudiants de Monaco"
+    },
+    {
+      "nom": "4e Forum Monaco pour l'Emploi",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Forum sur l'emploi et la formation professionnelle",
+      "url": "https://www.instagram.com/p/DUI5iJOkfn4",
+      "type": "Forum",
+      "thematiques": [
+        "education",
+        "emploi"
+      ],
+      "conditions": "Professionnels et étudiants",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DUI5iJOkfn4",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y présenter son CRM scolaire et son système de tutorat IA aux professionnels et aux étudiants de Monaco",
+      "pertinence_tuttop": "Opportunité de demo et de partenariat avec les professionnels et les étudiants de Monaco"
+    },
+    {
+      "nom": "Hackathon Numérique Éducatif",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Hackathon numérique éducatif pour les étudiants de la région Alpes-Maritimes",
+      "url": "https://www.isula.corsica/assemblea/docs/RapportCP/2026044CP-annexes.pdf",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "éducation",
+        "numérique"
+      ],
+      "conditions": "Équipe de 2 à 5 membres, niveau étudiant",
+      "strategique": "Oui",
+      "source": "https://www.isula.corsica/assemblea/docs/RapportCP/2026044CP-annexes.pdf",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants de la région",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de la région"
+    },
+    {
+      "nom": "Salon Studyrama des Études Supérieures",
+      "date_debut": "01/09/2026",
+      "date_fin": "03/09/2026",
+      "lieu": "Nice, France",
+      "description": "Le Salon Studyrama des Études Supérieures est un événement annuel qui rassemble les étudiants, les enseignants et les professionnels de l'éducation pour discuter des dernières tendances et innovations dans le domaine de l'éducation.",
+      "url": "https://ds4h.univ-cotedazur.fr/rendez-vous-au-salon-studyrama-des-etudes-superieures-2026-a-nice",
+      "type": "Salon",
+      "thematiques": [
+        "education"
+      ],
+      "conditions": "Tous les participants sont invités à partager leurs expériences et connaissances dans le domaine de l'éducation.",
+      "strategique": "Oui",
+      "source": "https://ds4h.univ-cotedazur.fr/rendez-vous-au-salon-studyrama-des-etudes-superieures-2026-a-nice",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y présenter son CRM scolaire et son système d'automatisation des documents aux établissements de la région Côte d'Azur.",
+      "pertinence_tuttop": "Opportunité de demo du CRM scolaire et du système d'automatisation des documents auprès des établissements de la région Côte d'Azur."
+    },
+    {
+      "nom": "IONIS Education Group",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Salon de l'éducation et des startups",
+      "url": "https://www.ionis-group.com/",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "startups"
+      ],
+      "conditions": "Étudiants, startups, éducation",
+      "strategique": "Non",
+      "source": "Site web",
+      "source_engine": "duckduckgo",
+      "score_strategique": 1,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et startups de la région Monaco",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants et startups de la région Monaco"
+    },
+    {
+      "nom": "Formation Data Engineer",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Certification en Data Engineer",
+      "url": "https://liora.io/formation/data-ia/data-engineer",
+      "type": "Formation",
+      "thematiques": [
+        "data science"
+      ],
+      "conditions": "Concours de data science",
+      "strategique": "Non",
+      "source": "Site web",
+      "source_engine": "duckduckgo",
+      "score_strategique": 1,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants de la région Nice",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de la région Nice"
+    },
+    {
+      "nom": "Concours MSC 12 mois",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Concours de data science",
+      "url": "https://hello.bsb-education.com/hubfs/Regulations+-+UK/REGLEMENT+CONCOURS+INTERNATIONAL+MSC+12+MOIS+2025-2026+-+GB.pdf",
+      "type": "Concours",
+      "thematiques": [
+        "data science"
+      ],
+      "conditions": "Concours de data science",
+      "strategique": "Non",
+      "source": "Site web",
+      "source_engine": "duckduckgo",
+      "score_strategique": 1,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants de la région Nice",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de la région Nice"
+    },
+    {
+      "nom": "Hackathons WAICF 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "WAICF 2026 : candidatez au Village des start-up IA des Alpes-Maritimes",
+      "url": "https://www.cote-azur.cci.fr/rejoignez-le-village-des-start-up-au-waicf-2026",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA"
+      ],
+      "conditions": "Candidatures ouvertes aux startups IA des Alpes-Maritimes",
+      "strategique": "Oui",
+      "source": "https://www.cote-azur.cci.fr/rejoignez-le-village-des-start-up-au-waicf-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux startups IA de la région",
+      "pertinence_tuttop": "Opportunité de demo et de partenariat avec les startups IA de la région"
+    },
+    {
+      "nom": "Can't-Miss Education Conferences in 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Nice, France",
+      "description": "Liste des conférences EdTech à ne pas manquer en 2026",
+      "url": "https://www.gettingsmart.com/2025/12/18/cant-miss-education-conferences-in-2026",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas de conditions spécifiques",
+      "strategique": "Oui",
+      "source": "https://www.gettingsmart.com/2025/12/18/cant-miss-education-conferences-in-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des lycees de Nice"
+    },
+    {
+      "nom": "22 Best EdTech Conferences to Attend in 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Nice, France",
+      "description": "Liste des 22 meilleures conférences EdTech à assister en 2026",
+      "url": "https://simplifiediq.com/blog/events/edtech-conferences-2026",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas de conditions spécifiques",
+      "strategique": "Oui",
+      "source": "https://simplifiediq.com/blog/events/edtech-conferences-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des lycees de Nice"
+    },
+    {
+      "nom": "2026 Innovative Teaching & Learning Conference",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Nice, France",
+      "description": "Conférence sur l'innovation pédagogique en 2026",
+      "url": "https://teaching.utk.edu/itlc-2026",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas de conditions spécifiques",
+      "strategique": "Oui",
+      "source": "https://teaching.utk.edu/itlc-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des lycees de Nice"
+    },
+    {
+      "nom": "L'IASP 2026 sera à Sophia Antipolis du 27 au 30 ...",
+      "date_debut": "27/06/2026",
+      "date_fin": "30/06/2026",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Competitions data science education Sophia Antipolis 2026",
+      "url": "https://www.instagram.com/reel/DXbdFfBDliR",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education",
+        "data science"
+      ],
+      "conditions": "équipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DXbdFfBDliR",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Paca"
+    },
+    {
+      "nom": "WMF - We Make Future",
+      "date_debut": "24/06/2026",
+      "date_fin": "26/06/2026",
+      "lieu": "Monaco",
+      "description": "Le WMF - We Make Future est un événement qui rassemble les professionnels de l'innovation et de la formation professionnelle pour discuter des dernières tendances et innovations dans le domaine.",
+      "url": "https://en.wemakefuture.it",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "formation professionnelle"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Oui",
+      "source": "https://en.wemakefuture.it",
+      "source_engine": "tavily",
+      "score_strategique": 7,
+      "raison": "TUT'TOP peut y présenter son CRM scolaire et son système d'automatisation des documents aux professionnels de l'innovation et de la formation professionnelle.",
+      "pertinence_tuttop": "Opportunité de demo du CRM scolaire et du système d'automatisation des documents auprès des professionnels de l'innovation et de la formation professionnelle"
+    },
+    {
+      "nom": "hackathon inconnu",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "hackathon IA education innovation",
+      "url": "https://www.pialadunia2026live.live/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "équipe, niveau, prix inconnus",
+      "strategique": "Non",
+      "source": "https://www.pialadunia2026live.live/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 0,
+      "raison": "Pas de lien avec TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence"
+    },
+    {
+      "nom": "Idée Startup étudiante",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Grasse, France",
+      "description": "Competition startup étudiante pour les étudiants de Grasse et Antibes",
+      "url": "https://afri-carrieres.com/tag/idee-startup-etudiante",
+      "type": "Competition",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Étudiants de Grasse et Antibes",
+      "strategique": "Oui",
+      "source": "https://afri-carrieres.com/tag/idee-startup-etudiante",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants de Grasse et Antibes",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de Grasse et Antibes"
+    },
+    {
+      "nom": "Concours Data Science Education Nice 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Concours de data science pour les étudiants en éducation",
+      "url": "https://hello.bsb-education.com/hubfs/Regulations+-+UK/REGLEMENT+CONCOURS+INTERNATIONAL+MSC+12+MOIS+2025-2026+-+GB.pdf",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "data science"
+      ],
+      "conditions": "Étudiants en éducation, niveau master ou supérieur",
+      "strategique": "Oui",
+      "source": "https://hello.bsb-education.com/hubfs/Regulations+-+UK/REGLEMENT+CONCOURS+INTERNATIONAL+MSC+12+MOIS+2025-2026+-+GB.pdf",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants en éducation de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants en éducation de la région Paca"
+    },
+    {
+      "nom": "Catalogue de formations 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Catalogue de formations professionnelles pour la région Paca",
+      "url": "https://www.cnfpt.fr/s-informer/nos-actualites/le-fil-dactu/catalogue-formations-2026-est-ligne/provence-alpes-cote-dazur",
+      "type": "Salon",
+      "thematiques": [
+        "formation professionnelle",
+        "éducation"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://www.cnfpt.fr/s-informer/nos-actualites/le-fil-dactu/catalogue-formations-2026-est-ligne/provence-alpes-cote-dazur",
+      "source_engine": "duckduckgo",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut y présenter son CRM scolaire et son système d'automatisation de documents",
+      "pertinence_tuttop": "Opportunité de présenter le CRM scolaire et le système d'automatisation de documents"
+    },
+    {
+      "nom": "Hackathon IA Alpes-Maritimes 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Hackathon IA Alpes-Maritimes 2026",
+      "url": "https://devpost.com/hackathons",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://devpost.com/hackathons",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Pas d'informations disponibles sur la date et la description de l'événement.",
+      "pertinence_tuttop": "Pas d'informations disponibles pour déterminer la pertinence de cet événement pour TUT'TOP."
+    },
+    {
+      "nom": "Epitech Startup Challenge 2026",
+      "date_debut": "15/06/2026",
+      "date_fin": "17/06/2026",
+      "lieu": "Nice, France",
+      "description": "Le challenge Epitech Startup est un concours de startups pour les étudiants et les jeunes entrepreneurs.",
+      "url": "https://www.epitech.eu/",
+      "type": "Hackathon",
+      "thematiques": [
+        "éducation",
+        "startups"
+      ],
+      "conditions": "Accès réservé aux étudiants et aux jeunes entrepreneurs",
+      "strategique": "Oui",
+      "source": "https://www.epitech.eu/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et aux jeunes entrepreneurs.",
+      "pertinence_tuttop": "Opportunité de demo et de partenariat avec les étudiants et les jeunes entrepreneurs de la Côte d'Azur."
+    },
+    {
+      "nom": "Rise Up",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Plateforme de formation tout-en-un propulsée par l'IA",
+      "url": "https://www.riseup.ai/",
+      "type": "Formation",
+      "thematiques": [
+        "IA",
+        "éducation",
+        "formation professionnelle"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.riseup.ai/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut présenter son chatbot de tutorat IA et son CRM scolaire aux participants à la formation",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des participants à la formation"
+    },
+    {
+      "nom": "VivaTech",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Salon international de l'innovation et de la technologie",
+      "url": "https://vivatech.com/",
+      "type": "Salon",
+      "thematiques": [
+        "IA",
+        "éducation",
+        "innovation",
+        "technologie"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://vivatech.com/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut présenter son chatbot de tutorat IA et son CRM scolaire aux participants au salon",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des participants au salon"
+    },
+    {
+      "nom": "ANR CreaMaker #CreaCube – Horizon AugMentor – AEx Inria AIDE",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Cote d'Azur, France",
+      "description": "conference EdTech innovation pedagogique",
+      "url": "https://creamaker.wordpress.com",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://creamaker.wordpress.com",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Conference EdTech innovation pedagogique Cote d'Azur 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Cote d'Azur, France",
+      "description": "Conference EdTech innovation pedagogique Cote d'Azur 2026",
+      "url": "https://www.instagram.com/p/DY-gDZiNS4d",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Oui",
+      "source": "Instagram",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Modules Formation - Terra Numerica",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Formation en formation numérique pour les enseignants et les professionnels de l'éducation",
+      "url": "https://terra-numerica.org/formations",
+      "type": "Hackathon",
+      "thematiques": [
+        "formation numérique",
+        "éducation"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://terra-numerica.org/formations",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas de pertinence directe avec les fonctionnalités TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunité de demo ou de partenariat"
+    },
+    {
+      "nom": "Hackathons EdTech formation numerique Alpes-Maritimes 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Comprendre, apprendre et découvrir l'intelligence artificielle dans les Alpes-Maritimes",
+      "url": "https://www.departement06.fr/actualites/intelligence-artificielle-dans-les-alpes-maritimes-comprendre-apprendre-et-decouvrir",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "formation numerique"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Oui",
+      "source": "https://www.departement06.fr/actualites/intelligence-artificielle-dans-les-alpes-maritimes-comprendre-apprendre-et-decouvrir",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Alpes-Maritimes"
+    },
+    {
+      "nom": "What makes work truly meaningful—and where does AI fit in?",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Cote d'Azur",
+      "description": "Conferences EdTech innovation pedagogique Cote d'Azur 2026",
+      "url": "https://www.instagram.com/reel/DYWaSZxD3tB",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DYWaSZxD3tB",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Conférences Internationales Pédagogie En Europe",
+      "date_debut": "2026",
+      "date_fin": "2027",
+      "lieu": "Monaco",
+      "description": "Salons educatifs et innovation pedagogique Monaco 2026",
+      "url": "https://conferenceineurope.net/fr-fr/topic-list/pedagogy",
+      "type": "Conference",
+      "thematiques": [
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://conferenceineurope.net/fr-fr/topic-list/pedagogy",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut presenter son CRM scolaire et son systeme de correction intelligente aux etablissements de la region Monaco",
+      "pertinence_tuttop": "Opportunite de demo du CRM scolaire et de la correction intelligente aupres des etablissements de la region Monaco"
+    },
+    {
+      "nom": "Salon Monaco Business",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Salons educatifs et innovation pedagogique Monaco 2026",
+      "url": "https://www.monaco-tribune.com/2025/09/ia-education-et-entrepreneuriat-leconomie-de-demain-a-lhonneur-au-salon-monaco-business",
+      "type": "Salon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.monaco-tribune.com/2025/09/ia-education-et-entrepreneuriat-leconomie-de-demain-a-lhonneur-au-salon-monaco-business",
+      "source_engine": "tavily",
+      "score_strategique": 7,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Monaco",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Monaco"
+    },
+    {
+      "nom": "Appel à Projets IdEx « Innovation Pédagogique »",
+      "date_debut": "2026",
+      "date_fin": "",
+      "lieu": "",
+      "description": "Salons educatifs et innovation pedagogique Monaco 2026",
+      "url": "http://pair.auf.org/fr/calls/appel-projets-idex-innovation-pedagogique-2026",
+      "type": "Competition",
+      "thematiques": [
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "http://pair.auf.org/fr/calls/appel-projets-idex-innovation-pedagogique-2026",
+      "source_engine": "tavily",
+      "score_strategique": 6,
+      "raison": "TUT'TOP peut presenter son CRM scolaire et son systeme de correction intelligente aux etablissements de la region Monaco",
+      "pertinence_tuttop": "Opportunite de demo du CRM scolaire et de la correction intelligente aupres des etablissements de la region Monaco"
+    },
+    {
+      "nom": "Salon educatif et innovation pedagogique Monaco 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Paca",
+      "url": "https://www.instagram.com/reel/DTaN_ZXjVXt",
+      "type": "Salon",
+      "thematiques": [
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DTaN_ZXjVXt",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Paca"
+    },
+    {
+      "nom": "Sun City Ed Tech Conference",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Paca",
+      "description": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux participants de la conference",
+      "url": "https://www.esc19.net/conferences/sun-city-edtech-conference",
+      "type": "Conference",
+      "thematiques": [
+        "education",
+        "EdTech"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Oui",
+      "source": "https://www.esc19.net/conferences/sun-city-edtech-conference",
+      "source_engine": "tavily",
+      "score_strategique": 6,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux participants de la conference",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des participants de la conference"
+    },
+    {
+      "nom": "Competitions EdTech data science Paca 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Paca",
+      "description": "Recherche de compétitions EdTech data science à Paca en 2026",
+      "url": "https://www.instagram.com/reel/DUKv23zCnZ1",
+      "type": "Hackathon",
+      "thematiques": [
+        "EdTech",
+        "data science"
+      ],
+      "conditions": "Équipe, niveau, prix",
+      "strategique": "Non",
+      "source": "Instagram",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas d'information disponible",
+      "pertinence_tuttop": "Pas d'information disponible"
+    },
+    {
+      "nom": "Salon Education Orientation Innovation Nice Paca 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Salon sur l'éducation, l'orientation et l'innovation à Nice en 2026",
+      "url": "https://www.instagram.com/teamnicecotedazur/",
+      "type": "Salon",
+      "thematiques": [
+        "IA",
+        "education",
+        "orientation",
+        "innovation"
+      ],
+      "conditions": "Équipe, niveau, prix non spécifiés",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/teamnicecotedazur/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "Challenge Innovatech PACA 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Evenement de formation professionnelle qui valorise l'innovation au feminin",
+      "url": "https://nice.cesi.fr/fr/projets/le-campus-cesi-de-nice-accueille-le-challenge-innovatech-paca-2026-et-valorise-linnovation-au-feminin/",
+      "type": "Conference",
+      "thematiques": [
+        "formation professionnelle",
+        "innovation"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://nice.cesi.fr/fr/projets/le-campus-cesi-de-nice-accueille-le-challenge-innovatech-paca-2026-et-valorise-linnovation-au-feminin/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence directe avec les fonctionnalites TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunite de demo/partenariat/presentation"
+    },
+    {
+      "nom": "VivaTech 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Paris, France",
+      "description": "Salons educatifs etudiant startup Cote d'Azur 2026",
+      "url": "https://vivatech.com/",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "startups"
+      ],
+      "conditions": "Étudiants, startups",
+      "strategique": "Non",
+      "source": "https://vivatech.com/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etudiants et startups de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etudiants de la region Cote d'Azur"
+    },
+    {
+      "nom": "Recruitment campaign for researchers 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Campagne de recrutement de chercheurs 2026",
+      "url": "https://www.inria.fr/en/recruitment-campaign-researchers-2026",
+      "type": "Competition",
+      "thematiques": [
+        "recherche",
+        "éducation"
+      ],
+      "conditions": "Chercheurs",
+      "strategique": "Non",
+      "source": "https://www.inria.fr/en/recruitment-campaign-researchers-2026",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux chercheurs de la region Sophia Antipolis",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des chercheurs de la region Sophia Antipolis"
+    },
+    {
+      "nom": "G-Research PhD Prize: Maths & Data Science Awards",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Le G-Research PhD Prize est un concours de mathématiques et de data science qui vise à récompenser les meilleurs doctorants dans ces domaines.",
+      "url": "https://www.gresearch.com/phd-prize-in-maths-and-data-science/",
+      "type": "Hackathon",
+      "thematiques": [
+        "mathématiques",
+        "data science"
+      ],
+      "conditions": "Étudiants de doctorat en mathématiques ou data science",
+      "strategique": "Non",
+      "source": "https://www.gresearch.com/phd-prize-in-maths-and-data-science/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP n'a pas de lien direct avec ce concours, mais peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et chercheurs de la région Sophia Antipolis.",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des étudiants et chercheurs de la région Sophia Antipolis."
+    },
+    {
+      "nom": "Hackathons simplifiés : votre voie vers ...",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes",
+      "description": "Hackathons EdTech formation numerique Alpes-Maritimes 2026",
+      "url": "https://fr.allhackathons.com/hackathons/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Non spécifié",
+      "strategique": "Non",
+      "source": "https://fr.allhackathons.com/hackathons/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des équipes de développement de la région Alpes-Maritimes"
+    },
+    {
+      "nom": "New & upcoming hackathons",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "",
+      "description": "Hackathons EdTech formation numerique Alpes-Maritimes 2026",
+      "url": "https://devpost.com/hackathons",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Non spécifié",
+      "strategique": "Non",
+      "source": "https://devpost.com/hackathons",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des équipes de développement du monde entier"
+    },
+    {
+      "nom": "Se former au numérique",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes",
+      "description": "Hackathons EdTech formation numerique Alpes-Maritimes 2026",
+      "url": "https://www.departement06.fr/se-former-au-numerique",
+      "type": "Formation",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Non spécifié",
+      "strategique": "Non",
+      "source": "https://www.departement06.fr/se-former-au-numerique",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des équipes de développement de la région Alpes-Maritimes"
+    },
+    {
+      "nom": "MSc SmartEdTech - Université Côte d'Azur",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Pas d'informations disponibles",
+      "description": "MSc SmartEdTech - Université Côte d'Azur",
+      "url": "https://univ-cotedazur.eu/msc/msc-smartedtech",
+      "type": "Formation",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://univ-cotedazur.eu/msc/msc-smartedtech",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Pas d'informations disponibles",
+      "pertinence_tuttop": "Pas d'informations disponibles"
+    },
+    {
+      "nom": "Découvrez le programme pédagogique de la session d’été 2026 de l'A2M !",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Académie de la Mer, Monaco",
+      "description": "Découvrez le programme pédagogique de la session d’été 2026 de l'A2M !",
+      "url": "https://a2m.mc/decouvrez-le-programme-pedagogique-de-la-session-dete-2026-de-la2m/",
+      "type": "Salon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://a2m.mc/decouvrez-le-programme-pedagogique-de-la-session-dete-2026-de-la2m/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Monaco",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Monaco"
+    },
+    {
+      "nom": "Salon professionnel de l'innovation éducative",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Le salon professionnel de l'innovation éducative est un événement qui rassemble les acteurs de l'éducation pour présenter les dernières innovations et technologies éducatives.",
+      "url": "https://salon-education.com/salon-professionnel-de-linnovation-educative/",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "innovation pedagogique"
+      ],
+      "conditions": "Professionnels de l'éducation, éditeurs, fournisseurs de solutions éducatives",
+      "strategique": "Oui",
+      "source": "https://salon-education.com/salon-professionnel-de-linnovation-educative/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "Immersion au WAICF 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Retour sur l'immersion au WAICF 2026",
+      "url": "https://www.instagram.com/reel/DW6XD5YiBbR",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DW6XD5YiBbR",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et enseignants de la région Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de l'Université de Nice"
+    },
+    {
+      "nom": "WAICF 2026",
+      "date_debut": "Jeudi",
+      "date_fin": "...",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Salon international de l'intelligence artificielle",
+      "url": "https://www.instagram.com/p/DUfTzRyiotH?hl=en",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DUfTzRyiotH?hl=en",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Alpes-Maritimes"
+    },
+    {
+      "nom": "Salon Éducatif",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Pas d'informations disponibles",
+      "url": "https://salon-educ.be",
+      "type": "Salon",
+      "thematiques": [
+        "Éducation"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://salon-educ.be",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas d'informations disponibles",
+      "pertinence_tuttop": "Pas d'informations disponibles"
+    },
+    {
+      "nom": "Competition EdTech",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Pas d'informations disponibles",
+      "url": "https://www.instagram.com/p/DW1fkOwDd-q",
+      "type": "Competition",
+      "thematiques": [
+        "EdTech",
+        "Intelligence Artificielle"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DW1fkOwDd-q",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas d'informations disponibles",
+      "pertinence_tuttop": "Pas d'informations disponibles"
+    },
+    {
+      "nom": "EdTech Intelligence Artificielle Monaco 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Monaco",
+      "description": "49 prédictions sur l'EdTech, l'innovation et l'intelligence artificielle en 2026",
+      "url": "https://www.eschoolnews.com/innovative-teaching/2026/01/01/draft-2026-predictions",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Oui",
+      "source": "https://www.eschoolnews.com/innovative-teaching/2026/01/01/draft-2026-predictions",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Monaco",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de Monaco"
+    },
+    {
+      "nom": "ANR CreaMaker #CreaCube",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Antibes, France",
+      "description": "Horizon AugMentor – AEx Inria AIDE",
+      "url": "https://creamaker.wordpress.com",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Equipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://creamaker.wordpress.com",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "Hackathon EdTech - Innovons dans le secteur de l'éducation et du numérique",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Innovons dans le secteur de l'éducation et du numérique",
+      "url": "https://www.hackathon.com/event/hackathon-edtech---innovons-dans-le-secteur-de-leducation-et-du-numerique-48210179946",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Équipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://www.hackathon.com/event/hackathon-edtech---innovons-dans-le-secteur-de-leducation-et-du-numerique-48210179946",
+      "source_engine": "duckduckgo",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Alpes-Maritimes"
+    },
+    {
+      "nom": "Digital Transformation of Industry – Ulysseus R&I Conference",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Cote d'Azur",
+      "description": "Conference sur la transformation numerique de l'industrie",
+      "url": "https://ulysseus.eu/wp-content/uploads/2025/10/proceedings-ulysseus-conference-2025.pdf",
+      "type": "Conference",
+      "thematiques": [
+        "formation numerique",
+        "EdTech"
+      ],
+      "conditions": "Pas de conditions de participation mentionnees",
+      "strategique": "Non",
+      "source": "https://ulysseus.eu/wp-content/uploads/2025/10/proceedings-ulysseus-conference-2025.pdf",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence pour TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunite de demo/partenariat/presentation"
+    },
+    {
+      "nom": "Conférences internationales Éducation en France 2026-2027",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2027",
+      "lieu": "Nice, France",
+      "description": "Conférence internationale sur l'éducation en France",
+      "url": "https://conferenceineurope.net/fr-fr/france/education",
+      "type": "Conference",
+      "thematiques": [
+        "éducation",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Oui",
+      "source": "https://conferenceineurope.net/fr-fr/france/education",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "EducaTec-EducaTice 2026 - Tradefest",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Nice, France",
+      "description": "Salon éducatif et innovation pédagogique",
+      "url": "https://tradefest.io/en/event/educatec-educatice",
+      "type": "Salon",
+      "thematiques": [
+        "éducation",
+        "innovation pédagogique"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Oui",
+      "source": "https://tradefest.io/en/event/educatec-educatice",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "OECD Digital Education Outlook 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Monaco",
+      "description": "Rapport sur l'avenir de l'éducation numérique",
+      "url": "https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html",
+      "type": "Rapport",
+      "thematiques": [
+        "éducation",
+        "intelligence artificielle"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Non",
+      "source": "https://www.oecd.org/en/publications/oecd-digital-education-outlook-2026_062a7394-en.html",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence directe pour TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence directe pour TUT'TOP"
+    },
+    {
+      "nom": "Hackathon des intelligences à l'EFAP",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Hackathon des intelligences à l'EFAP",
+      "url": "https://www.instagram.com/reel/DV-kfrRFB9k",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Étudiants de 4e année du EFAP",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DV-kfrRFB9k",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etudiants de l'EFAP",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etudiants de l'EFAP"
+    },
+    {
+      "nom": "Printemps de la Recherche en Éducation 2026",
+      "date_debut": "01/06/2026",
+      "date_fin": "30/06/2026",
+      "lieu": "Alpes-Maritimes, France",
+      "description": "Printemps de la Recherche en Éducation 2026",
+      "url": "https://www.reseau-inspe.fr/printemps-de-la-recherche-en-education-2026",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.reseau-inspe.fr/printemps-de-la-recherche-en-education-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux chercheurs en éducation",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des chercheurs en éducation"
+    },
+    {
+      "nom": "International Digital Week 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Nice, France",
+      "description": "Semaine internationale du numérique 2026",
+      "url": "https://univ-cotedazur.eu/events/digital-week",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Oui",
+      "source": "https://univ-cotedazur.eu/events/digital-week",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Cote d'Azur",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Cote d'Azur"
+    },
+    {
+      "nom": "Salons et évènements",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco, Monaco",
+      "description": "Liste des salons et événements de l'entreprise ESET",
+      "url": "https://www.eset.com/fr/about/salons-evenements",
+      "type": "Salon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas de conditions spécifiées",
+      "strategique": "Non",
+      "source": "https://www.eset.com/fr/about/salons-evenements",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence pour TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence pour TUT'TOP"
+    },
+    {
+      "nom": "Top EdTech Conferences 2026",
+      "date_debut": "01/01/2026",
+      "date_fin": "31/12/2026",
+      "lieu": "Nice, France",
+      "description": "Liste des meilleures conférences EdTech à assister en 2026",
+      "url": "https://worldwide-edtech.org/news/top-edtech-conferences-2026",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas de conditions spécifiques",
+      "strategique": "Oui",
+      "source": "https://worldwide-edtech.org/news/top-edtech-conferences-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Nice",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Nice"
+    },
+    {
+      "nom": "AI Market Trends 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Analyse des tendances du marché de l'intelligence artificielle en 2026",
+      "url": "https://www.morganstanley.com/insights/articles/ai-market-trends-institute-2026",
+      "type": "Conference",
+      "thematiques": [
+        "intelligence artificielle",
+        "EdTech"
+      ],
+      "conditions": "Pas de conditions de participation mentionnées",
+      "strategique": "Non",
+      "source": "https://www.morganstanley.com/insights/articles/ai-market-trends-institute-2026",
+      "source_engine": "duckduckgo",
+      "score_strategique": 0,
+      "raison": "Pas de pertinence directe pour TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunité de demo ou de partenariat"
+    },
+    {
+      "nom": "Salons educatifs EdTech IA Monaco 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Découvrez le calendrier des salons de l'Etudiant 2025 - 2026",
+      "url": "https://www.letudiant.fr/etudes/salons.html",
+      "type": "Salon",
+      "thematiques": [
+        "EdTech",
+        "IA"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.letudiant.fr/etudes/salons.html",
+      "source_engine": "duckduckgo",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "Africa IFI grant 2026 for education projects",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice",
+      "description": "Africa IFI grant 2026 for education projects",
+      "url": "https://www.facebook.com/groups/1511716712509632/posts/2767308546950436/",
+      "type": "Competition",
+      "thematiques": [
+        "EdTech",
+        "numerique",
+        "educatif"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://www.facebook.com/groups/1511716712509632/posts/2767308546950436/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Evenement educatif pertinent pour TUT'TOP (score 2)",
+      "pertinence_tuttop": ""
+    },
+    {
+      "nom": "MNCÉ2026",
+      "date_debut": "02/07/2026",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Transforming Education in the AI Age",
+      "url": "https://www.instagram.com/p/DXr0cGKFp65/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Competitions EdTech numerique educatif",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DXr0cGKFp65/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "Tech Outlook 2026: What Higher Ed Tech Leaders Expect this Year",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "",
+      "description": "Tech Outlook 2026: What Higher Ed Tech Leaders Expect this Year",
+      "url": "https://campustechnology.com/articles/2026/01/29/tech-outlook-2026-what-higher-ed-tech-leaders-expect-this-year.aspx",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Oui",
+      "source": "https://campustechnology.com/articles/2026/01/29/tech-outlook-2026-what-higher-ed-tech-leaders-expect-this-year.aspx",
+      "source_engine": "tavily",
+      "score_strategique": 6,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Paca"
+    },
+    {
+      "nom": "Hackathon IUM x MonacoTech",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "87 étudiants, 4 startups, 4 jours de hackathon",
+      "url": "https://www.instagram.com/reel/DXZlFptDNmt",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Étudiants, équipes de 4 personnes",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DXZlFptDNmt",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants de Monaco",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des étudiants de Monaco"
+    },
+    {
+      "nom": "Evenement EdTech formation professionnelle Grasse 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Grasse",
+      "description": "Evenement EdTech formation professionnelle Grasse 2026",
+      "url": "https://www.instagram.com/reel/DUAcf06iqP2",
+      "type": "Evenement",
+      "thematiques": [
+        "formation professionnelle"
+      ],
+      "conditions": "",
+      "strategique": "Non",
+      "source": "https://www.instagram.com/reel/DUAcf06iqP2",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut presenter son CRM scolaire aux etablissements de la region Grasse",
+      "pertinence_tuttop": "Opportunite de presentation du CRM scolaire aupres des etablissements de Grasse"
+    },
+    {
+      "nom": "V-Con 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "La V-Con 2026 est une convention qui se tiendra a Monaco en 2026",
+      "url": "https://www.facebook.com/QNETAfricaOfficial/posts/bienvenue-chez-vous-vcon2026-qnetquest-ce-que-la-v-convention-la-v-convention-es/1333848525516562",
+      "type": "Conference/Salon/Webinar/Competition/Summer School",
+      "thematiques": [
+        "EdTech",
+        "formation professionnelle"
+      ],
+      "conditions": "Formation professionnelle, EdTech, Monaco, 2026",
+      "strategique": "Non",
+      "source": "Facebook",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas d'information pertinente pour TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunite de demo/partenariat/presentation"
+    },
+    {
+      "nom": "Top AI in Education Conferences to Attend in 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Cote d'Azur",
+      "description": "Conferences EdTech IA Cote d'Azur 2026",
+      "url": "https://www.panoramaed.com/blog/ai-in-education-conferences-2026",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.panoramaed.com/blog/ai-in-education-conferences-2026",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "CFP",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "",
+      "description": "Conferences EdTech IA Cote d'Azur 2026",
+      "url": "https://easychair.org/cfp/ea2026",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://easychair.org/cfp/ea2026",
+      "source_engine": "tavily",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Competition EdTech éducation numérique d'Antibes 2026",
+      "date_debut": "15/06/2026",
+      "date_fin": "17/06/2026",
+      "lieu": "Antibes, France",
+      "description": "La compétition EdTech éducation numérique d'Antibes 2026 est un événement incontournable pour les professionnels de l'éducation et du numérique.",
+      "url": "https://educazur.fr/news",
+      "type": "Competition",
+      "thematiques": [
+        "IA",
+        "éducation",
+        "numérique"
+      ],
+      "conditions": "Accès réservé aux professionnels de l'éducation et du numérique",
+      "strategique": "Oui",
+      "source": "https://educazur.fr/news",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "Generative AI & Vibe Coding",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Cote d'Azur, France",
+      "description": "Be interested in Generative AI & Vibe Coding?",
+      "url": "https://www.instagram.com/p/DYm4wo7lEA_/",
+      "type": "Conference",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Non spécifié",
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DYm4wo7lEA_/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Cote d'Azur",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Cote d'Azur"
+    },
+    {
+      "nom": "Antibes 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Antibes",
+      "description": "Un événement inconnu à Antibes en 2026",
+      "url": "https://www.youtube.com/watch?v=sA-rrO4jrj8",
+      "type": "Conference",
+      "thematiques": [
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas de conditions de participation spécifiées",
+      "strategique": "Non",
+      "source": "https://www.youtube.com/watch?v=sA-rrO4jrj8",
+      "source_engine": "duckduckgo",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA",
+      "pertinence_tuttop": "Opportunité de demo du chatbot auprès des enseignants et des étudiants"
+    },
+    {
+      "nom": "InnovSPN Days",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Antibes, France",
+      "description": "Evenements EdTech innovation pedagogique",
+      "url": "https://fr.linkedin.com/posts/lamsn-uspn_innovspndays-edtech-innovation-activity-7404598294619791360-ka7D",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation"
+      ],
+      "conditions": "Équipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://fr.linkedin.com/posts/lamsn-uspn_innovspndays-edtech-innovation-activity-7404598294619791360-ka7D",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "MNCÉ2026 “Transforming Education in the AI Age",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Nice, France",
+      "description": "Competitions EdTech numerique educatif Nice 2026",
+      "url": "https://www.instagram.com/p/DXr0cGKFp65/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "conditions": "Équipe, niveau, prix",
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DXr0cGKFp65/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "Azur Tech Summer",
+      "date_debut": "02/07/2026",
+      "date_fin": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Evenements EdTech formation numerique Sophia Antipolis 2026",
+      "url": "https://www.telecom-valley.fr/azurtechsummer/",
+      "type": "Salon",
+      "thematiques": [
+        "formation",
+        "numerique"
+      ],
+      "conditions": "",
+      "strategique": "Oui",
+      "source": "https://www.telecom-valley.fr/azurtechsummer/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "Brochure MS 2026",
+      "date_debut": "",
+      "date_fin": "",
+      "lieu": "Monaco",
+      "description": "Brochure de SKEMA Business School pour les admissions",
+      "url": "https://fliphtml5.com/evvjo/nuwk/Brochure_MS_2026/",
+      "type": "Hackathon",
+      "thematiques": [
+        "IA",
+        "education",
+        "innovation pedagogique"
+      ],
+      "conditions": "Pas d'informations disponibles",
+      "strategique": "Non",
+      "source": "https://fliphtml5.com/evvjo/nuwk/Brochure_MS_2026/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 0,
+      "raison": "Pas de pertinence pour TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunité de demo ou de partenariat"
+    }
+  ],
+  "evenements": [
+    {
+      "nom": "Que faire ce week-end du 12 au 14 juin 2026 sur la Côte d'Azur ?",
+      "type": "Article",
+      "date": "",
+      "lieu": "",
+      "description": "Article de Tribuca.net sur les activités à faire sur la Côte d'Azur",
+      "url": "https://tribuca.net/que-faire-ce-week-end-du-12-au-14-juin-2026-sur-la-cote-dazur",
+      "thematiques": [
+        "tourisme",
+        "loisirs"
+      ],
+      "strategique": "Non",
+      "source": "https://tribuca.net/que-faire-ce-week-end-du-12-au-14-juin-2026-sur-la-cote-dazur",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Evenement potentiellement interessant pour TUT'TOP (score 2)",
+      "pertinence_tuttop": ""
+    },
+    {
+      "nom": "Instagram",
+      "type": "Publication",
+      "date": "",
+      "lieu": "",
+      "description": "Publication d'Instagram sur la Startup Weekend Côte d'Azur",
+      "url": "https://www.instagram.com/reel/DZlL9ZKNfwH",
+      "thematiques": [
+        "startup",
+        "entrepreneuriat"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/reel/DZlL9ZKNfwH",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Evenement potentiellement interessant pour TUT'TOP (score 2)",
+      "pertinence_tuttop": ""
+    },
+    {
+      "nom": "Evenements et Réunions - 1EdTech",
+      "type": "Salon",
+      "date": "",
+      "lieu": "Paca, France",
+      "description": "Liste des événements et réunions de 1EdTech",
+      "url": "https://www.1edtech.org/events",
+      "thematiques": [
+        "EdTech",
+        "formation professionnelle"
+      ],
+      "strategique": "Non",
+      "source": "https://www.1edtech.org/events",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas de pertinence directe avec les fonctionnalités TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunité de demo ou de partenariat"
+    },
+    {
+      "nom": "Best EdTech Events 2026 - Where to Network & Grow",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Paca, France",
+      "description": "Les meilleurs evenements EdTech de 2026 pour se connecter et se developper",
+      "url": "https://www.aspectusgroup.com/insights/the-top-four-edtech-events-you-cant-miss-in-2026",
+      "thematiques": [
+        "EdTech",
+        "formation professionnelle"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.aspectusgroup.com/insights/the-top-four-edtech-events-you-cant-miss-in-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Paca"
+    },
+    {
+      "nom": "22 Best EdTech Conferences to Attend in 2026 (Free and Paid)",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Paca, France",
+      "description": "Les 22 meilleurs conferences EdTech a visiter en 2026 (gratuites et payantes)",
+      "url": "https://simplifiediq.com/blog/events/edtech-conferences-2026",
+      "thematiques": [
+        "EdTech",
+        "formation professionnelle"
+      ],
+      "strategique": "Oui",
+      "source": "https://simplifiediq.com/blog/events/edtech-conferences-2026",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Paca"
+    },
+    {
+      "nom": "Les événements incontournables de la formation professionnelle en 2026",
+      "type": "Salon",
+      "date": "",
+      "lieu": "Provence-Alpes-Côte d'Azur, France",
+      "description": "Cet article présente les événements incontournables de la formation professionnelle en 2026.",
+      "url": "https://www.digiformag.com/les-evenements-incontournables-de-la-formation-professionnelle-en-2026/",
+      "thematiques": [
+        "IA",
+        "education",
+        "formation professionnelle"
+      ],
+      "strategique": "Non",
+      "source": "https://www.digiformag.com/les-evenements-incontournables-de-la-formation-professionnelle-en-2026/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 3,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Paca.",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "Best EdTech Events 2026",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Paca, France",
+      "description": "Les meilleurs événements EdTech à ne pas manquer en 2026",
+      "url": "https://www.aspectusgroup.com/insights/the-top-four-edtech-events-you-cant-miss-in-2026",
+      "thematiques": [
+        "EdTech"
+      ],
+      "strategique": "Non",
+      "source": "https://www.aspectusgroup.com/insights/the-top-four-edtech-events-you-cant-miss-in-2026",
+      "source_engine": "tavily",
+      "score_strategique": 4,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région",
+      "pertinence_tuttop": "Opportunité de demo et de présentation auprès des établissements de la région"
+    },
+    {
+      "nom": "Événements commerciaux et formations",
+      "type": "Formation",
+      "date": "",
+      "lieu": "Monaco",
+      "description": "Cette page présente les événements commerciaux et formations proposés par Deleguescommerciaux.gc.ca.",
+      "url": "https://www.deleguescommerciaux.gc.ca/fr/evenements-commerciaux-formations.html",
+      "thematiques": [
+        "éducation",
+        "formation professionnelle"
+      ],
+      "strategique": "Non",
+      "source": "https://www.deleguescommerciaux.gc.ca/fr/evenements-commerciaux-formations.html",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "TUT'TOP n'a pas de pertinence avec cette formation.",
+      "pertinence_tuttop": "Pas de pertinence"
+    },
+    {
+      "nom": "Share • Empower” Education Conference",
+      "type": "Conference",
+      "date": "2026",
+      "lieu": "Monaco",
+      "description": "formation professionnelle",
+      "url": "https://www.instagram.com/p/DTUqSCtDYEB",
+      "thematiques": [
+        "formation professionnelle"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DTUqSCtDYEB",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas de lien avec TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence"
+    },
+    {
+      "nom": "DU Numérique pour l'ingénierie pédagogique",
+      "type": "Formation",
+      "date": "",
+      "lieu": "Monaco",
+      "description": "formation professionnelle",
+      "url": "https://fc.sorbonne-universite.fr/nos-offres/du-numerique-pour-ingenierie-pedagogique",
+      "thematiques": [
+        "formation professionnelle"
+      ],
+      "strategique": "Non",
+      "source": "https://fc.sorbonne-universite.fr/nos-offres/du-numerique-pour-ingenierie-pedagogique",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas de lien avec TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence"
+    },
+    {
+      "nom": "Upcoming Education Conferences in Monaco 2026",
+      "type": "Conference",
+      "date": "2026",
+      "lieu": "Monaco, Monaco",
+      "description": "Liste des conférences éducatives à venir à Monaco en 2026",
+      "url": "https://internationalconferencealerts.com/education/monaco",
+      "thematiques": [
+        "education"
+      ],
+      "strategique": "Non",
+      "source": "https://internationalconferencealerts.com/education/monaco",
+      "source_engine": "duckduckgo",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements éducatifs de la région",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des établissements éducatifs de la région"
+    },
+    {
+      "nom": "Academic Education Conferences in Monaco 2026/2027/2028",
+      "type": "Conference",
+      "date": "2026",
+      "lieu": "Monaco, Monaco",
+      "description": "Liste des conférences éducatives académiques à venir à Monaco en 2026, 2027 et 2028",
+      "url": "https://conferenceindex.org/conferences/academic-education/monaco",
+      "thematiques": [
+        "education",
+        "académique"
+      ],
+      "strategique": "Non",
+      "source": "https://conferenceindex.org/conferences/academic-education/monaco",
+      "source_engine": "duckduckgo",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements éducatifs de la région",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des établissements éducatifs de la région"
+    },
+    {
+      "nom": "Conference EdTech Innovation Pedagogique",
+      "type": "Conference",
+      "date": "06/2026",
+      "lieu": "Cote d'Azur, France",
+      "description": "Conference sur l'innovation pedagogique dans le domaine de l'EdTech",
+      "url": "https://www.umak.edu.ph/assoc-prof-deplomo-gains-international-acclaim-for-edtech-innovation/",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.umak.edu.ph/assoc-prof-deplomo-gains-international-acclaim-for-edtech-innovation/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux participants de la conference",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des participants de la conference"
+    },
+    {
+      "nom": "Salon Studyrama des Études Supérieures",
+      "type": "Salon",
+      "date": "06/2026",
+      "lieu": "Nice, France",
+      "description": "Salon des etudes superieures pour les etudiants et les enseignants",
+      "url": "https://ds4h.univ-cotedazur.fr/rendez-vous-au-salon-studyrama-des-etudes-superieures-2026-a-nice",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Oui",
+      "source": "https://ds4h.univ-cotedazur.fr/rendez-vous-au-salon-studyrama-des-etudes-superieures-2026-a-nice",
+      "source_engine": "duckduckgo",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etudiants et enseignants de la region",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etudiants et enseignants de la region"
+    },
+    {
+      "nom": "Recruitment campaign for researchers 2026",
+      "type": "Conference",
+      "date": "2026",
+      "lieu": "Sophia Antipolis, France",
+      "description": "La campagne de recrutement pour les chercheurs est un événement pour les chercheurs et les professionnels de l'éducation.",
+      "url": "https://www.inria.fr/en/recruitment-campaign-researchers-2026",
+      "thematiques": [
+        "éducation",
+        "recherche"
+      ],
+      "strategique": "Non",
+      "source": "https://www.inria.fr/en/recruitment-campaign-researchers-2026",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "TUT'TOP n'a pas de pertinence directe avec ce événement.",
+      "pertinence_tuttop": "Pas de pertinence directe avec TUT'TOP."
+    },
+    {
+      "nom": "4e Forum Monaco pour l'Emploi",
+      "type": "Forum",
+      "date": "",
+      "lieu": "Monaco",
+      "description": "Forum sur l'emploi et la formation professionnelle",
+      "url": "https://www.instagram.com/p/DUI5iJOkfn4",
+      "thematiques": [
+        "education",
+        "emploi"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DUI5iJOkfn4",
+      "source_engine": "tavily",
+      "score_strategique": 5,
+      "raison": "TUT'TOP peut y présenter son CRM scolaire et son système de gestion des candidatures",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des professionnels de l'emploi et de la formation"
+    },
+    {
+      "nom": "MSc in Smart-EdTech, Co-creativity & Technology Enhanced Learning",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Cote d'Azur, France",
+      "description": "Conferences EdTech innovation pedagogique Cote d'Azur 2026",
+      "url": "https://www.educations.com/institutions/unica/msc-in-smart-edtech-co-creativity-technology-enhanced-learning",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.educations.com/institutions/unica/msc-in-smart-edtech-co-creativity-technology-enhanced-learning",
+      "source_engine": "tavily",
+      "score_strategique": 9,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etudiants de l'Université Côte d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etudiants de l'Université Côte d'Azur"
+    },
+    {
+      "nom": "Rencontres pédagogiques d'été 2026",
+      "type": "Conference",
+      "date": "22/06/2026",
+      "lieu": "Cote d'Azur, France",
+      "description": "Rencontres pédagogiques d'été 2026 : du 22 juin au 28 août",
+      "url": "https://www.instagram.com/p/DV03FxnCPh1",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DV03FxnCPh1",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux enseignants et etudiants de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des enseignants et etudiants de la region Cote d'Azur"
+    },
+    {
+      "nom": "Formation professionnelle à Sophia Antipolis",
+      "type": "Evenement",
+      "date": "",
+      "lieu": "Sophia Antipolis",
+      "description": "Formation professionnelle à Sophia Antipolis",
+      "url": "https://educazur.fr/news",
+      "thematiques": [
+        "formation professionnelle"
+      ],
+      "strategique": "Non",
+      "source": "EducAzur",
+      "source_engine": "tavily",
+      "score_strategique": 0,
+      "raison": "Pas d'information disponible",
+      "pertinence_tuttop": "Pas d'information disponible"
+    },
+    {
+      "nom": "Rise Up: Plateforme de formation tout-en-un propulsée par l'IA",
+      "type": "Webinar",
+      "date": "",
+      "lieu": "Monaco",
+      "description": "Rise Up est une plateforme de formation tout-en-un qui utilise l'IA pour proposer des cours et des ressources de formation professionnelle.",
+      "url": "https://www.riseup.ai/",
+      "thematiques": [
+        "éducation",
+        "formation professionnelle",
+        "IA"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.riseup.ai/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux professionnels de la formation.",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des professionnels de la formation."
+    },
+    {
+      "nom": "Conferences EdTech formation numerique Cote d'Azur 2026",
+      "type": "Conference",
+      "date": "2026",
+      "lieu": "Cote d'Azur, France",
+      "description": "Pas d'informations disponibles",
+      "url": "https://educazur.fr/news",
+      "thematiques": [
+        "IA",
+        "education",
+        "formation numerique"
+      ],
+      "strategique": "Oui",
+      "source": "https://educazur.fr/news",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Cote d'Azur"
+    },
+    {
+      "nom": "Professeurs FLE UDF été hiver 2026",
+      "type": "Salon",
+      "date": "",
+      "lieu": "Pas d'informations disponibles",
+      "description": "Recherchez des informations sur les salons éducatifs et l'innovation pédagogique à Nice en 2026.",
+      "url": "https://www.francophonia.com/wp-content/uploads/2025/11/FR-Professeurs-FLE-UDF-ete-hiver-2026.pdf",
+      "thematiques": [
+        "éducation",
+        "innovation"
+      ],
+      "strategique": "Non",
+      "source": "Francophonia",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas d'informations disponibles",
+      "pertinence_tuttop": "Pas d'informations disponibles"
+    },
+    {
+      "nom": "Evenements EdTech innovation pedagogique Antibes 2026",
+      "type": "Conference",
+      "date": "20/06/2026",
+      "lieu": "Antibes, France",
+      "description": "Evenements EdTech innovation pedagogique Antibes 2026",
+      "url": "https://www.instagram.com/p/DY61VsSlKVf",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/p/DY61VsSlKVf",
+      "source_engine": "tavily",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Alpes-Maritimes",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des etablissements de la region Alpes-Maritimes"
+    },
+    {
+      "nom": "Antibes 2026",
+      "type": "Salon",
+      "date": "2026",
+      "lieu": "Antibes, France",
+      "description": "Evenement EdTech lié à l'innovation pédagogique",
+      "url": "https://www.youtube.com/watch?v=sA-rrO4jrj8",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.youtube.com/watch?v=sA-rrO4jrj8",
+      "source_engine": "duckduckgo",
+      "score_strategique": 10,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des établissements de la région Paca"
+    },
+    {
+      "nom": "Girls Tech Day 2026",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Événement pour inspirer les filles à se lancer dans les carrières tech",
+      "url": "https://www.instagram.com/p/DZUnTt9FpMi",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DZUnTt9FpMi",
+      "source_engine": "tavily",
+      "score_strategique": 4,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Sophia Antipolis",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des établissements de la région Sophia Antipolis"
+    },
+    {
+      "nom": "Azur Tech Summer",
+      "type": "Salon",
+      "date": "02/07/2026",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Formation numerique",
+      "url": "https://www.telecom-valley.fr/azurtechsummer/",
+      "thematiques": [
+        "formation numerique"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.telecom-valley.fr/azurtechsummer/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "La semaine du numérique 2026",
+      "type": "Salon",
+      "date": "2026",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Formation numerique",
+      "url": "https://educazur.fr/event/la-semaine-du-numerique-2026/",
+      "thematiques": [
+        "formation numerique"
+      ],
+      "strategique": "Oui",
+      "source": "https://educazur.fr/event/la-semaine-du-numerique-2026/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 7,
+      "raison": "TUT'TOP peut y presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Paca",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de Nice"
+    },
+    {
+      "nom": "Competition EdTech",
+      "type": "Competition",
+      "date": "Pas d'informations disponibles",
+      "lieu": "Monaco",
+      "description": "Pas d'informations disponibles",
+      "url": "https://www.instagram.com/p/DW1fkOwDd-q",
+      "thematiques": [
+        "EdTech",
+        "Intelligence artificielle"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DW1fkOwDd-q",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas d'informations disponibles",
+      "pertinence_tuttop": "Pas d'informations disponibles"
+    },
+    {
+      "nom": "Evenement EdTech formation numerique",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Sophia Antipolis, France",
+      "description": "Formation numérique pour les professionnels de l'EdTech",
+      "url": "https://educazur.fr/news",
+      "thematiques": [
+        "IA",
+        "education"
+      ],
+      "strategique": "Non",
+      "source": "https://educazur.fr/news",
+      "source_engine": "tavily",
+      "score_strategique": 3,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux établissements de la région Sophia Antipolis",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des établissements de la région Sophia Antipolis"
+    },
+    {
+      "nom": "Evenements EdTech formation numerique Sophia Antipolis 2026",
+      "type": "Conference",
+      "date": "2026",
+      "lieu": "Sophia Antipolis",
+      "description": "Formation numérique pour tous",
+      "url": "https://www.instagram.com/reel/DWmMUXQl0dr",
+      "thematiques": [
+        "IA",
+        "education",
+        "formation numerique"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.instagram.com/reel/DWmMUXQl0dr",
+      "source_engine": "tavily",
+      "score_strategique": 8,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux professionnels de la formation numérique",
+      "pertinence_tuttop": "Opportunité de demo du chatbot et de la correction intelligente auprès des professionnels de la formation numérique"
+    },
+    {
+      "nom": "Salons educatifs EdTech numerique educatif Cannes 2026",
+      "type": "Salon",
+      "date": "2026",
+      "lieu": "Cannes",
+      "description": "Pas de description",
+      "url": "https://www.instagram.com/p/DUqgdIVDZdc",
+      "thematiques": [
+        "education",
+        "tech"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DUqgdIVDZdc",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence pour TUT'TOP",
+      "pertinence_tuttop": "Pas de pertinence pour TUT'TOP"
+    },
+    {
+      "nom": "Visit ISN Nice",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Nice, France",
+      "description": "Un événement de visite de l'ISN Nice qui présente un monde de possibilités d'apprentissage.",
+      "url": "https://www.instagram.com/p/DY61VsSlKVf",
+      "thematiques": [
+        "education",
+        "numerique"
+      ],
+      "strategique": "Non",
+      "source": "https://www.instagram.com/p/DY61VsSlKVf",
+      "source_engine": "tavily",
+      "score_strategique": 2,
+      "raison": "TUT'TOP peut y présenter son chatbot de tutorat IA et son CRM scolaire aux étudiants et aux enseignants.",
+      "pertinence_tuttop": "Opportunité de présence et de networking auprès des étudiants et des enseignants."
+    },
+    {
+      "nom": "Digital Transformation of Industry – Ulysseus R&I Conference",
+      "type": "Conference",
+      "date": "",
+      "lieu": "Côte d'Azur, France",
+      "description": "Digital Transformation of Industry",
+      "url": "https://ulysseus.eu/wp-content/uploads/2025/10/proceedings-ulysseus-conference-2025.pdf",
+      "thematiques": [
+        "formation numérique",
+        "industrie"
+      ],
+      "strategique": "Non",
+      "source": "https://ulysseus.eu/wp-content/uploads/2025/10/proceedings-ulysseus-conference-2025.pdf",
+      "source_engine": "duckduckgo",
+      "score_strategique": 2,
+      "raison": "Pas de pertinence directe avec les fonctionnalités TUT'TOP",
+      "pertinence_tuttop": "Pas d'opportunité de demo ou de partenariat"
+    },
+    {
+      "nom": "10 EdTech Conferences You Should Attend in 2026",
+      "type": "Conference",
+      "date": "",
+      "lieu": "",
+      "description": "Liste de conferences EdTech",
+      "url": "https://www.drmattlynch.com/10-edtech-conferences-you-should-attend-in-2026/",
+      "thematiques": [
+        "IA",
+        "education",
+        "formation professionnelle"
+      ],
+      "strategique": "Oui",
+      "source": "https://www.drmattlynch.com/10-edtech-conferences-you-should-attend-in-2026/",
+      "source_engine": "duckduckgo",
+      "score_strategique": 6,
+      "raison": "TUT'TOP peut presenter son chatbot de tutorat IA et son CRM scolaire aux etablissements de la region Cote d'Azur",
+      "pertinence_tuttop": "Opportunite de demo du chatbot et de la correction intelligente aupres des lycees de la region Cote d'Azur"
+    }
+  ],
+  "queries_executees": [
+    "hackathon IA education innovation Sophia Antipolis 2026",
+    "concours IA data science Alpes-Maritimes 2026",
+    "conference EdTech Monaco Cote d'Azur 2026",
+    "salon education orientation innovation Nice Paca 2026",
+    "competition startup etudiante Grasse Antibes 2026",
+    "hackathon numerique educatif Alpes-Maritimes 2026",
+    "conference EdTech innovation pedagogique Cote d'Azur 2026",
+    "salon education etudiant startup Monaco 2026",
+    "concours data science education Nice 2026",
+    "evenement EdTech formation professionnelle Paca 2026",
+    "Hackathons IA Alpes-Maritimes 2026",
+    "Conferences EdTech innovation pedagogique Nice 2026",
+    "Salons educatifs etudiant startup Cote d'Azur 2026",
+    "Competitions data science education Sophia Antipolis 2026",
+    "Evenements EdTech formation professionnelle Monaco 2026",
+    "Hackathons EdTech formation numerique Alpes-Maritimes 2026",
+    "Conferences EdTech innovation pedagogique Cote d'Azur 2026",
+    "Salons educatifs et innovation pedagogique Monaco 2026",
+    "Competitions EdTech data science Paca 2026",
+    "Evenements EdTech formation professionnelle Sophia Antipolis 2026",
+    "Hackathons EdTech IA Alpes-Maritimes 2026",
+    "Conferences EdTech formation numerique Cote d'Azur 2026",
+    "Salons educatifs et innovation pedagogique Nice 2026",
+    "Competitions EdTech intelligence artificielle Monaco 2026",
+    "Evenements EdTech innovation pedagogique Antibes 2026",
+    "Hackathons EdTech innovation pedagogique Alpes-Maritimes 2026",
+    "Conferences EdTech formation professionnelle Cote d'Azur 2026",
+    "Salons educatifs EdTech IA Monaco 2026",
+    "Competitions EdTech numerique educatif Nice 2026",
+    "Evenements EdTech formation numerique Sophia Antipolis 2026",
+    "Hackathons EdTech innovation pedagogique Monaco 2026",
+    "Evenements EdTech formation professionnelle Grasse 2026",
+    "Conferences EdTech IA Cote d'Azur 2026",
+    "Salons educatifs EdTech numerique educatif Cannes 2026",
+    "Competitions EdTech education numerique Antibes 2026",
+    "Hackathons EdTech IA Alpes-Maritimes 2026",
+    "Conferences EdTech formation continue Nice 2026",
+    "Salons educatifs EdTech innovation pedagogique Menton 2026",
+    "Competitions EdTech education numerique Cote d'Azur 2026",
+    "Evenements EdTech formation numerique Monaco 2026"
+  ]
+}
