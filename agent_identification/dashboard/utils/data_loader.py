@@ -15,6 +15,11 @@ PROSPECT_SOURCES = {
         "path": DATA / "prospect_chauds.xlsx",
         "type": "xlsx",
     },
+    "clean": {
+        "label": "Prospects emails valides (8k)",
+        "path": DATA / "prospect_chauds_clean.xlsx",
+        "type": "xlsx",
+    },
     "run": {
         "label": "Dernier run pipeline",
         "path": None,

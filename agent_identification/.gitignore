@@ -10,6 +10,7 @@ build/
 
 # Un-ignore specific small data files needed for app to work
 !data/prospect_chauds.xlsx
+!data/prospect_chauds_clean.xlsx
 !data/veille.xlsx
 !data/subventions_all.xlsx
 !data/contacts.csv
