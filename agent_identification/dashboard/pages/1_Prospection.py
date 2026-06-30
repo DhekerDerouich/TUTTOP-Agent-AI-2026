@@ -136,19 +136,9 @@ with tab2:
     with col_f4:
         if "localisation" in df.columns:
             all_cities = sorted(df["localisation"].dropna().unique())
-            azur_cities = [
-                c
-                for c in all_cities
-                if any(
-                    v in c.lower()
-                    for v in ["nice", "cannes", "antibes", "menton", "monaco"]
-                )
-            ]
-            default_cities = azur_cities if azur_cities else []
             selected_cities = st.multiselect(
                 "Ville",
                 all_cities,
-                default=default_cities,
                 placeholder="Choisir ville(s)",
             )
         else:
