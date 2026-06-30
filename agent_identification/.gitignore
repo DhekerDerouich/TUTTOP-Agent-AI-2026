@@ -12,7 +12,6 @@ build/
 !data/prospect_chauds.xlsx
 !data/prospect_chauds_clean.xlsx
 !data/prospect_azur.xlsx
-!data/prospects_azur.db
 !data/veille.xlsx
 !data/subventions_all.xlsx
 !data/contacts.csv
