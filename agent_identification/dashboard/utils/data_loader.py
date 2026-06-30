@@ -20,6 +20,11 @@ PROSPECT_SOURCES = {
         "path": DATA / "prospect_chauds_clean.xlsx",
         "type": "xlsx",
     },
+    "azur": {
+        "label": "Azur (Nice/Cannes/Antibes/Menton)",
+        "path": DATA / "prospect_azur.xlsx",
+        "type": "xlsx",
+    },
     "run": {
         "label": "Dernier run pipeline",
         "path": None,

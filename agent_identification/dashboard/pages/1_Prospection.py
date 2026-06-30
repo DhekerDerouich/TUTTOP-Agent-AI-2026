@@ -100,7 +100,7 @@ with tab2:
     st.markdown("---")
     st.subheader("Filtres")
 
-    col_f1, col_f2, col_f3, col_f4 = st.columns([1, 1, 1, 2])
+    col_f1, col_f2, col_f3, col_f4, col_f5 = st.columns([1, 1, 1, 1, 2])
 
     with col_f1:
         if "pays" in df.columns:
@@ -134,6 +134,27 @@ with tab2:
             st.caption("Score non disponible")
 
     with col_f4:
+        if "localisation" in df.columns:
+            all_cities = sorted(df["localisation"].dropna().unique())
+            azur_cities = [
+                c
+                for c in all_cities
+                if any(
+                    v in c.lower()
+                    for v in ["nice", "cannes", "antibes", "menton", "monaco"]
+                )
+            ]
+            default_cities = azur_cities if azur_cities else []
+            selected_cities = st.multiselect(
+                "Ville",
+                all_cities,
+                default=default_cities,
+                placeholder="Choisir ville(s)",
+            )
+        else:
+            selected_cities = []
+
+    with col_f5:
         search = st.text_input("🔍 Rechercher par nom", placeholder="Ex: Lycée...")
 
     filtered = df.copy()
@@ -145,6 +166,8 @@ with tab2:
     if "score" in filtered.columns:
         score_col = pd.to_numeric(filtered["score"], errors="coerce")
         filtered = filtered[score_col >= score_range]
+    if selected_cities:
+        filtered = filtered[filtered["localisation"].isin(selected_cities)]
     if search:
         filtered = filtered[filtered["nom"].str.contains(search, case=False, na=False)]
 
