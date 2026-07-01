@@ -147,6 +147,14 @@ with tab2:
     with col_f5:
         search = st.text_input("🔍 Rechercher par nom", placeholder="Ex: Lycée...")
 
+    exclude_default = "sport, agricole, hôtelier, restauration, mfr, musical"
+    exclude_keywords = st.text_input(
+        "🚫 Exclure (mots-clés dans le nom)",
+        value=exclude_default,
+        placeholder="sport, agricole, hôtelier",
+        help="Séparés par des virgules. Exclut les établissements dont le nom contient ces mots.",
+    )
+
     filtered = df.copy()
 
     if selected_pays != "Tous":
@@ -160,6 +168,13 @@ with tab2:
         filtered = filtered[filtered["localisation"].isin(selected_cities)]
     if search:
         filtered = filtered[filtered["nom"].str.contains(search, case=False, na=False)]
+    if exclude_keywords:
+        words = [w.strip().lower() for w in exclude_keywords.split(",") if w.strip()]
+        if words:
+            for w in words:
+                filtered = filtered[
+                    ~filtered["nom"].str.contains(w, case=False, na=False)
+                ]
 
     st.caption(f"{len(filtered)} prospects après filtrage")
 
