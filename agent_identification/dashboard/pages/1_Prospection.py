@@ -147,13 +147,27 @@ with tab2:
     with col_f5:
         search = st.text_input("🔍 Rechercher par nom", placeholder="Ex: Lycée...")
 
-    exclude_default = "sport, agricole, hôtelier, restauration, mfr, musical"
-    exclude_keywords = st.text_input(
-        "🚫 Exclure (mots-clés dans le nom)",
-        value=exclude_default,
-        placeholder="sport, agricole, hôtelier",
-        help="Séparés par des virgules. Exclut les établissements dont le nom contient ces mots.",
-    )
+    col_cat1, col_cat2 = st.columns([1, 3])
+    with col_cat1:
+        type_etab = st.selectbox(
+            "Type d'établissement",
+            [
+                "Tous",
+                "Université / Grande école",
+                "Lycée général",
+                "Lycée professionnel",
+                "Collège",
+                "École primaire",
+            ],
+        )
+    with col_cat2:
+        exclude_default = "sport, agricole, hôtelier, restauration, mfr, musical"
+        exclude_keywords = st.text_input(
+            "🚫 Exclure (mots-clés dans le nom)",
+            value=exclude_default,
+            placeholder="sport, agricole, hôtelier",
+            help="Séparés par des virgules. Exclut les établissements dont le nom contient ces mots.",
+        )
 
     filtered = df.copy()
 
@@ -168,6 +182,32 @@ with tab2:
         filtered = filtered[filtered["localisation"].isin(selected_cities)]
     if search:
         filtered = filtered[filtered["nom"].str.contains(search, case=False, na=False)]
+    if type_etab != "Tous":
+        n = filtered["nom"].dropna().str.lower()
+        if type_etab == "Université / Grande école":
+            mask = n.str.contains(
+                "universite|grande ecole|ecole superieure|faculte|institut universitaire|iut|iep|ecole d.ingenieur|ecole de commerce",
+                na=False,
+            )
+            filtered = filtered[mask.values]
+        elif type_etab == "Lycée général":
+            mask = n.str.contains("lycee", na=False) & ~n.str.contains(
+                "professionnel|polyvalent|metiers", na=False
+            )
+            filtered = filtered[mask.values]
+        elif type_etab == "Lycée professionnel":
+            mask = n.str.contains(
+                "lycee.*professionnel|lycee polyvalent|lycee des metiers", na=False
+            )
+            filtered = filtered[mask.values]
+        elif type_etab == "Collège":
+            mask = n.str.contains("college", na=False)
+            filtered = filtered[mask.values]
+        elif type_etab == "École primaire":
+            mask = n.str.contains(
+                "ecole primaire|ecole elementaire|ecole maternelle", na=False
+            )
+            filtered = filtered[mask.values]
     if exclude_keywords:
         words = [w.strip().lower() for w in exclude_keywords.split(",") if w.strip()]
         if words:
