@@ -84,6 +84,10 @@ with tab2:
 
 with tab3:
     st.subheader("Événements à venir dans la région Azur")
+    st.caption(
+        "🔗 Participer = lien direct inscription • 📰 Article = page d'info • "
+        "📸 Publication = Instagram • ℹ️ Info LLM = généré par IA (vérifier)"
+    )
     veille_data = load_veille()
 
     if not veille_data:
@@ -213,9 +217,21 @@ with tab3:
                         is_llm = "connaissance" in str(e["source"]).lower()
                         url_str = str(e["url"]) if pd.notna(e["url"]) else ""
                         if url_str.startswith("http") and not is_llm:
-                            st.link_button("🔗 Participer", url_str)
+                            if "instagram" in url_str:
+                                st.markdown(f"[📸 Publication]({url_str})")
+                            elif any(
+                                k in url_str
+                                for k in [
+                                    "tribuca",
+                                    "radiofrance",
+                                    "lactudelorientation",
+                                ]
+                            ):
+                                st.markdown(f"[📰 Article]({url_str})")
+                            else:
+                                st.link_button("🔗 Participer", url_str)
                         elif is_llm:
-                            st.markdown("⚠️ *Information\nindicative*")
+                            st.markdown("ℹ️ *Info LLM*")
 
                     with st.expander("Détails"):
                         if e["description"] and str(e["description"]) not in (
