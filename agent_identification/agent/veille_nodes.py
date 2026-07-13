@@ -238,10 +238,11 @@ def llm_generate(state: VeilleState) -> dict:
 
     TUTTOP_DESC = """TUT'TOP : plateforme IA de tutorat (chatbot cours, quiz, correction, anti-triche, CRM scolaire, automatisation documents)."""
 
+    today_str = TODAY.strftime("%d %B %Y")
     prompt = f"""Tu es un expert des evenements EdTech dans la region Alpes-Maritimes.
 
 REGION : Nice, Sophia Antipolis, Cannes, Antibes, Grasse, Menton, Monaco.
-DATES : Exclus tout evenement avant le 17 juin 2026. Annees 2026-2027.
+DATES : Exclus tout evenement avant le {today_str}. Annees 2026-2027.
 Themes : {", ".join(last_queries)}
 
 {TUTTOP_DESC}
@@ -328,7 +329,7 @@ import re as _re
 from datetime import datetime, date
 
 
-TODAY = date(2026, 6, 16)
+TODAY = date.today()
 
 
 _MONTHS_FR = {
