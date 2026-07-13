@@ -45,7 +45,10 @@ Genere 5 requetes courtes et precises en francais."""
 def _get_llm():
     for prov in ("groq", "gemini", "openai"):
         try:
-            return get_llm(provider=prov, temperature=0.1)
+            llm = get_llm(provider=prov, temperature=0.1)
+            llm.invoke([{"role": "user", "content": "test"}])
+            print(f"    [LLM] {prov} connecte")
+            return llm
         except Exception as e:
             print(f"    [LLM] {prov} indisponible: {e}")
             continue
