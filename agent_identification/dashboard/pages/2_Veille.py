@@ -84,10 +84,7 @@ with tab2:
 
 with tab3:
     st.subheader("Événements à venir dans la région Azur")
-    st.caption(
-        "🔗 Participer = lien direct inscription • 📰 Article = page d'info • "
-        "📸 Publication = Instagram • ℹ️ Info LLM = généré par IA (vérifier)"
-    )
+    st.caption("Les liens sont dans les détails de chaque événement ▼")
     veille_data = load_veille()
 
     if not veille_data:
@@ -204,7 +201,7 @@ with tab3:
                     badge = "⏳ À venir"
 
                 with st.container(border=True):
-                    cols = st.columns([1, 4, 1])
+                    cols = st.columns([1, 4])
                     with cols[0]:
                         st.markdown(f"### {e['date'].strftime('%d/%m')}")
                         st.caption(e["date"].strftime("%a").capitalize())
@@ -212,6 +209,51 @@ with tab3:
                         st.markdown(f"**{e['nom']}**  {badge}")
                         st.caption(
                             f"{e['type']} • {e['lieu']} • Score: **{e['score']}/10**"
+                        )
+
+                    with st.expander("Détails"):
+                        is_llm = "connaissance" in str(e["source"]).lower()
+                        url_str = str(e["url"]) if pd.notna(e["url"]) else ""
+                        if url_str.startswith("http") and not is_llm:
+                            if "instagram" in url_str:
+                                st.markdown(
+                                    f"📸 **Publication Instagram :** [Voir le post]({url_str})"
+                                )
+                            elif any(
+                                k in url_str
+                                for k in [
+                                    "tribuca",
+                                    "radiofrance",
+                                    "lactudelorientation",
+                                ]
+                            ):
+                                st.markdown(
+                                    f"📰 **Article :** [Lire l'article]({url_str})"
+                                )
+                            else:
+                                st.markdown(
+                                    f"🔗 **Lien :** [Accéder à l'événement]({url_str})"
+                                )
+                        elif is_llm:
+                            st.markdown(
+                                "ℹ️ *Information générée par IA — aucun lien disponible*"
+                            )
+                        if e["description"] and str(e["description"]) not in (
+                            "nan",
+                            "",
+                        ):
+                            st.markdown(f"**Description :** {e['description']}")
+                        if e["raison"] and str(e["raison"]) not in ("nan", ""):
+                            st.markdown(f"**Raison :** {e['raison']}")
+                        if e["pertinence"] and str(e["pertinence"]) not in ("nan", ""):
+                            st.markdown(f"**Pertinence TUT'TOP :** {e['pertinence']}")
+                        if e["thematiques"] and str(e["thematiques"]) not in (
+                            "nan",
+                            "",
+                        ):
+                            st.markdown(f"**Thématiques :** {e['thematiques']}")
+                        st.caption(
+                            f"Source : {e['source']} • Moteur : {e['source_engine']}"
                         )
                     with cols[2]:
                         is_llm = "connaissance" in str(e["source"]).lower()
