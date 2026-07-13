@@ -210,8 +210,11 @@ with tab3:
                             f"{e['type']} • {e['lieu']} • Score: **{e['score']}/10**"
                         )
                     with cols[2]:
-                        if e["url"] and e["url"].startswith("http"):
+                        is_llm = "connaissance" in str(e["source"]).lower()
+                        if e["url"] and e["url"].startswith("http") and not is_llm:
                             st.link_button("🔗 Participer", e["url"])
+                        elif is_llm:
+                            st.markdown("⚠️ *Information\nindicative*")
 
                     with st.expander("Détails"):
                         if e["description"] and str(e["description"]) not in (
