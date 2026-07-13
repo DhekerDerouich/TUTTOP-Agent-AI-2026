@@ -99,6 +99,13 @@ with tab3:
                 nom = row.get("nom", "")
                 type_e = row.get("type", sheet_name.rstrip("s"))
                 score = row.get("score_strategique", 0)
+                url = row.get("url", "")
+                raison = row.get("raison", "")
+                pertinence = row.get("pertinence_tuttop", "")
+                description = row.get("description", "")
+                thematiques = row.get("thematiques", "")
+                source = row.get("source", "")
+                source_engine = row.get("source_engine", "")
 
                 parsed = None
                 if isinstance(date_raw, str) and "/" in date_raw:
@@ -119,17 +126,28 @@ with tab3:
                         "date_raw": date_raw,
                         "lieu": lieu,
                         "score": score,
-                        "source": sheet_name,
+                        "url": url,
+                        "raison": raison,
+                        "pertinence": pertinence,
+                        "description": description,
+                        "thematiques": thematiques,
+                        "source": source,
+                        "source_engine": source_engine,
+                        "sheet": sheet_name,
                     }
                 )
 
         today = date.today()
 
-        filtres = st.radio(
-            "Filtrer par période",
-            ["Cette semaine", "Ce mois", "3 mois", "Tous"],
-            horizontal=True,
-        )
+        col_filtre, col_tri = st.columns([2, 1])
+        with col_filtre:
+            filtres = st.radio(
+                "Période",
+                ["Cette semaine", "Ce mois", "3 mois", "Tous"],
+                horizontal=True,
+            )
+        with col_tri:
+            score_min = st.slider("Score min", 0, 10, 5)
 
         def _in_week(d):
             if d is None:
@@ -145,9 +163,7 @@ with tab3:
         def _in_3m(d):
             if d is None:
                 return False
-            from dateutil.relativedelta import relativedelta
-
-            return today <= d <= today + relativedelta(months=3)
+            return today <= d and (d - today).days <= 90
 
         if filtres == "Cette semaine":
             all_events = [e for e in all_events if e["date"] and _in_week(e["date"])]
@@ -155,6 +171,8 @@ with tab3:
             all_events = [e for e in all_events if e["date"] and _in_month(e["date"])]
         elif filtres == "3 mois":
             all_events = [e for e in all_events if e["date"] and _in_3m(e["date"])]
+
+        all_events = [e for e in all_events if e["score"] >= score_min]
 
         with_date = [e for e in all_events if e["date"] is not None]
         without_date = [e for e in all_events if e["date"] is None]
@@ -182,14 +200,36 @@ with tab3:
                     badge = "⏳ À venir"
 
                 with st.container(border=True):
-                    cols = st.columns([1, 4])
+                    cols = st.columns([1, 4, 1])
                     with cols[0]:
                         st.markdown(f"### {e['date'].strftime('%d/%m')}")
                         st.caption(e["date"].strftime("%a").capitalize())
                     with cols[1]:
                         st.markdown(f"**{e['nom']}**  {badge}")
                         st.caption(
-                            f"{e['type']} • {e['lieu']} • Score: {e['score']}/10"
+                            f"{e['type']} • {e['lieu']} • Score: **{e['score']}/10**"
+                        )
+                    with cols[2]:
+                        if e["url"] and e["url"].startswith("http"):
+                            st.link_button("🔗 Participer", e["url"])
+
+                    with st.expander("Détails"):
+                        if e["description"] and str(e["description"]) not in (
+                            "nan",
+                            "",
+                        ):
+                            st.markdown(f"**Description :** {e['description']}")
+                        if e["raison"] and str(e["raison"]) not in ("nan", ""):
+                            st.markdown(f"**Raison :** {e['raison']}")
+                        if e["pertinence"] and str(e["pertinence"]) not in ("nan", ""):
+                            st.markdown(f"**Pertinence TUT'TOP :** {e['pertinence']}")
+                        if e["thematiques"] and str(e["thematiques"]) not in (
+                            "nan",
+                            "",
+                        ):
+                            st.markdown(f"**Thématiques :** {e['thematiques']}")
+                        st.caption(
+                            f"Source : {e['source']} • Moteur : {e['source_engine']}"
                         )
 
             if without_date:
@@ -200,3 +240,5 @@ with tab3:
                         st.markdown(
                             f"- **{e['nom']}** ({e['type']}) — {e['lieu']} — Score: {e['score']}/10"
                         )
+                        if e["raison"] and str(e["raison"]) not in ("nan", ""):
+                            st.markdown(f"  > {e['raison']}")
