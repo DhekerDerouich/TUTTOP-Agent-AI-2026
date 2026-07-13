@@ -255,26 +255,6 @@ with tab3:
                         st.caption(
                             f"Source : {e['source']} • Moteur : {e['source_engine']}"
                         )
-                    with cols[2]:
-                        is_llm = "connaissance" in str(e["source"]).lower()
-                        url_str = str(e["url"]) if pd.notna(e["url"]) else ""
-                        if url_str.startswith("http") and not is_llm:
-                            if "instagram" in url_str:
-                                st.markdown(f"[📸 Publication]({url_str})")
-                            elif any(
-                                k in url_str
-                                for k in [
-                                    "tribuca",
-                                    "radiofrance",
-                                    "lactudelorientation",
-                                ]
-                            ):
-                                st.markdown(f"[📰 Article]({url_str})")
-                            else:
-                                st.link_button("🔗 Participer", url_str)
-                        elif is_llm:
-                            st.markdown("ℹ️ *Info LLM*")
-
                     with st.expander("Détails"):
                         if e["description"] and str(e["description"]) not in (
                             "nan",
