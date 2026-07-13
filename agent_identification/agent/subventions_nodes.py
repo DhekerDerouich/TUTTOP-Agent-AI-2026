@@ -39,11 +39,13 @@ Genere 5 requetes courtes et precises en francais."""
 
 
 def _get_llm():
-    try:
-        return get_llm(provider="groq", temperature=0.1)
-    except ValueError as e:
-        print(f"    [LLM] {e}")
-        return None
+    for prov in ("groq", "gemini", "openai"):
+        try:
+            return get_llm(provider=prov, temperature=0.1)
+        except Exception as e:
+            print(f"    [LLM] {prov} indisponible: {e}")
+            continue
+    return None
 
 
 def _chunk_data(data: list, size: int):

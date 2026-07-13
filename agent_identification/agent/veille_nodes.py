@@ -18,19 +18,21 @@ class VeilleState(TypedDict):
 
 class SearchQueries(BaseModel):
     queries: list[str] = Field(
-        description="5 requetes de recherche pour trouver des hackathons et evenements EdTech dans la region Alpes-Maritimes et Monaco"
+        description="5 requetes de recherche pour trouver des hackathons et evenements EdTech AVEC inscription en ligne dans la region Alpes-Maritimes et Monaco"
     )
 
 
-SYSTEM_PROMPT_QUERIES = """Tu es un assistant specialise dans la veille de hackathons et evenements EdTech dans la region Alpes-Maritimes et Monaco.
+SYSTEM_PROMPT_QUERIES = """Tu es un assistant specialise dans la veille de hackathons et evenements EdTech avec inscription en ligne dans la region Alpes-Maritimes et Monaco.
 
 Zone de recherche EXCLUSIVE : Alpes-Maritimes, Nice, Sophia Antipolis, Cannes, Antibes, Grasse, Menton, Monaco, Cote d'Azur, Paca.
 
-Tu dois generer des requetes de recherche web pour trouver :
-1. Des hackathons (IA, education, innovation pedagogique, numerique educatif)
-2. Des conferences EdTech
-3. Des salons educatifs et evenements d'innovation
-4. Des competitions et challenges dans l'education
+Tu dois generer des requetes de recherche web pour trouver DES PAGES AVEC INSCRIPTION :
+1. Des hackathons avec formulaire d'inscription (Eventbrite, HelloAsso, site officiel)
+2. Des appels a candidatures pour concours et competitions EdTech
+3. Des conferences et salons avec billetterie en ligne
+4. Des programmes d'accelebration et challenges startup avec inscription
+
+MOTS-CLES A PRIVILEGIER : "inscription", "candidater", "participer", "billetterie", "register", "ticket", "appel a candidatures", "concours", "challenge"
 
 IMPORTANT : Limite-toi STRICTEMENT a la region Alpes-Maritimes / Cote d'Azur / Monaco / Paca.
 Ne propose PAS de requetes pour Paris, Lyon, Bordeaux, ou d'autres regions.
@@ -41,11 +43,13 @@ Genere 5 requetes courtes et precises en francais."""
 
 
 def _get_llm():
-    try:
-        return get_llm(provider="groq", temperature=0.1)
-    except ValueError as e:
-        print(f"    [LLM] {e}")
-        return None
+    for prov in ("groq", "gemini", "openai"):
+        try:
+            return get_llm(provider=prov, temperature=0.1)
+        except Exception as e:
+            print(f"    [LLM] {prov} indisponible: {e}")
+            continue
+    return None
 
 
 def generate_queries(state: VeilleState) -> dict:
@@ -71,11 +75,11 @@ def generate_queries(state: VeilleState) -> dict:
         return {
             "queries_executees": queries_done
             + [
-                "hackathon IA education innovation Sophia Antipolis 2026",
-                "concours IA data science Alpes-Maritimes 2026",
-                "conference EdTech Monaco Cote d'Azur 2026",
-                "salon education orientation innovation Nice Paca 2026",
-                "competition startup etudiante Grasse Antibes 2026",
+                "hackathon inscription IA education Sophia Antipolis 2026",
+                "concours candidature data science Alpes-Maritimes 2026",
+                "conference EdTech billetterie Monaco Cote d'Azur 2026",
+                "salon education orientation inscription Nice Paca 2026",
+                "competition startup etudiante candidater Grasse Antibes 2026",
             ],
             "iteration": iteration + 1,
             "store": state.get("store", {}),
@@ -84,11 +88,11 @@ def generate_queries(state: VeilleState) -> dict:
 
     if not queries_done:
         queries = [
-            "hackathon IA education innovation Sophia Antipolis 2026",
-            "concours IA data science Alpes-Maritimes 2026",
-            "conference EdTech Monaco Cote d'Azur 2026",
-            "salon education orientation innovation Nice Paca 2026",
-            "competition startup etudiante Grasse Antibes 2026",
+            "inscription hackathon IA education Nice Sophia Antipolis 2026",
+            "appel a candidatures concours startup innovation Cote d'Azur 2026",
+            "billetterie conference EdTech Monaco Paca 2026",
+            "participer challenge etudiant IA Alpes-Maritimes 2026 site:eventbrite.com OR site:helloasso.com",
+            "concours innovation pedagogique inscription Nice academie Nice 2026",
         ]
         return {
             "queries_executees": queries_done + queries,
@@ -782,6 +786,10 @@ IGNORE ceux avec des dates en 2025, 2024, 2023 ou plus anciennes.
 Si la date n'est pas explicite, utilise le contexte de la requete de recherche (marquee 'Query:') pour deduire l'annee.
 Exemple : si la Query contient '2026', mets la date au format 'JJ/MM/AAAA' avec l'annee 2026.
 Si tu n'as absolument aucune information sur la date, inclus-le mais mets la date vide.
+
+REGLE URL : Le champ "url" DOIT contenir une URL reelle extraite du contenu (page web, Eventbrite, HelloAsso, site officiel).
+N'INVENTE PAS d'URL. Si tu ne trouves pas d'URL dans le contenu, mets le champ vide.
+Les URL inventees (ex: "https://hackathon-xxx.fr") sont INTERDITES.
 
 Contexte TUT'TOP :
 """
