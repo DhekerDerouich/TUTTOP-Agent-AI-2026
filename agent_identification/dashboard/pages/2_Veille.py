@@ -255,24 +255,6 @@ with tab3:
                         st.caption(
                             f"Source : {e['source']} • Moteur : {e['source_engine']}"
                         )
-                    with st.expander("Détails"):
-                        if e["description"] and str(e["description"]) not in (
-                            "nan",
-                            "",
-                        ):
-                            st.markdown(f"**Description :** {e['description']}")
-                        if e["raison"] and str(e["raison"]) not in ("nan", ""):
-                            st.markdown(f"**Raison :** {e['raison']}")
-                        if e["pertinence"] and str(e["pertinence"]) not in ("nan", ""):
-                            st.markdown(f"**Pertinence TUT'TOP :** {e['pertinence']}")
-                        if e["thematiques"] and str(e["thematiques"]) not in (
-                            "nan",
-                            "",
-                        ):
-                            st.markdown(f"**Thématiques :** {e['thematiques']}")
-                        st.caption(
-                            f"Source : {e['source']} • Moteur : {e['source_engine']}"
-                        )
 
             if without_date:
                 with st.expander(
