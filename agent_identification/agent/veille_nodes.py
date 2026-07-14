@@ -79,10 +79,8 @@ def generate_queries(state: VeilleState) -> dict:
             "queries_executees": queries_done
             + [
                 "hackathon inscription IA education Sophia Antipolis 2026",
-                "concours candidature data science Alpes-Maritimes 2026",
-                "conference EdTech billetterie Monaco Cote d'Azur 2026",
-                "salon education orientation inscription Nice Paca 2026",
-                "competition startup etudiante candidater Grasse Antibes 2026",
+                "concours candidature start-up Cote d'Azur 2026",
+                "salon education innovation inscription Nice Paca 2026",
             ],
             "iteration": iteration + 1,
             "store": state.get("store", {}),
@@ -93,9 +91,7 @@ def generate_queries(state: VeilleState) -> dict:
         queries = [
             "inscription hackathon IA education Nice Sophia Antipolis 2026",
             "appel a candidatures concours startup innovation Cote d'Azur 2026",
-            "billetterie conference EdTech Monaco Paca 2026",
-            "participer challenge etudiant IA Alpes-Maritimes 2026 site:eventbrite.com OR site:helloasso.com",
-            "concours innovation pedagogique inscription Nice academie Nice 2026",
+            "evenement EdTech Salon conference Nice Monaco 2026",
         ]
         return {
             "queries_executees": queries_done + queries,
@@ -113,15 +109,13 @@ def generate_queries(state: VeilleState) -> dict:
         ]
     )
 
-    new_queries = result.queries[:5] if hasattr(result, "queries") else []
+    new_queries = result.queries[:3] if hasattr(result, "queries") else []
 
     if not new_queries:
         new_queries = [
             "hackathon IA apprentissage automatique Nice 2026",
             "salon EdTech innovation educative Sophia 2026",
             "concours startup IA Cote d'Azur 2026",
-            "conference transformation digitale ecole Monaco 2026",
-            "forum intelligence artificielle education Paca 2026",
         ]
 
     queries_all = queries_done + new_queries
@@ -137,7 +131,7 @@ def search_tavily(state: VeilleState) -> dict:
     from tavily import TavilyClient
 
     queries = state.get("queries_executees", [])
-    n_queries = min(5, len(queries))
+    n_queries = min(3, len(queries))
     last_queries = queries[-n_queries:] if n_queries > 0 else queries
 
     print(f"\n  [TAVILY] Recherche web pour {len(last_queries)} requetes...")
@@ -155,8 +149,8 @@ def search_tavily(state: VeilleState) -> dict:
         try:
             response = client.search(
                 query=q,
-                search_depth="advanced",
-                max_results=5,
+                search_depth="basic",
+                max_results=3,
                 time_range="year",
                 include_answer=False,
             )
@@ -184,7 +178,7 @@ def search_tavily(state: VeilleState) -> dict:
 
 def search_duckduckgo(state: VeilleState) -> dict:
     queries = state.get("queries_executees", [])
-    n_queries = min(5, len(queries))
+    n_queries = min(3, len(queries))
     last_queries = queries[-n_queries:] if n_queries > 0 else queries
 
     print(f"\n  [DUCKDUCKGO] Recherche web pour {len(last_queries)} requetes...")
@@ -202,7 +196,7 @@ def search_duckduckgo(state: VeilleState) -> dict:
             def _search(q):
                 results = []
                 with DDGS() as ddgs:
-                    results = list(ddgs.text(q, max_results=3))
+                    results = list(ddgs.text(q, max_results=2))
                 return results
 
             with ThreadPoolExecutor(max_workers=1) as pool:
@@ -235,7 +229,7 @@ def search_duckduckgo(state: VeilleState) -> dict:
 
 def llm_generate(state: VeilleState) -> dict:
     queries_done = state.get("queries_executees", [])
-    n_queries = min(5, len(queries_done))
+    n_queries = min(3, len(queries_done))
     last_queries = queries_done[-n_queries:] if n_queries > 0 else queries_done
     existing_h = state.get("hackathons", [])
     existing_e = state.get("evenements", [])
@@ -744,7 +738,7 @@ def extract_and_store(state: VeilleState) -> dict:
         print("    Aucune donnee a analyser")
         return {"hackathons": hackathons, "evenements": evenements}
 
-    chunks = _chunk_data(raw_data, 4)
+    chunks = _chunk_data(raw_data, 8)
 
     for chunk in chunks:
         textes = []
