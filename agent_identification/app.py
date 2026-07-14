@@ -1,4 +1,13 @@
 import streamlit as st
+import os
+
+# Inject Streamlit secrets into os.environ for subprocesses and module imports
+try:
+    for k, v in st.secrets.items():
+        if isinstance(v, str) and k not in os.environ:
+            os.environ[k] = v
+except Exception:
+    pass
 
 st.set_page_config(
     page_title="TUT'TOP Agent Dashboard",

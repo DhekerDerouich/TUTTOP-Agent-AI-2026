@@ -1,8 +1,81 @@
 import streamlit as st
 import pandas as pd
+import io
+import contextlib
 from datetime import datetime, date
+from pathlib import Path
 from dashboard.utils.data_loader import load_veille
-from dashboard.utils.runner import run_pipeline
+
+
+def _run_veille_pipeline(max_iterations=5, min_score=0):
+    """Run veille pipeline in-process. Yields log lines."""
+    from agent.veille_graph import agent as veille_agent
+    from agent.veille_nodes import VeilleState
+
+    initial_state: VeilleState = {
+        "messages": [],
+        "hackathons": [],
+        "evenements": [],
+        "queries_executees": [],
+        "iteration": 0,
+        "max_iterations": max_iterations,
+        "store": {"raw_data": []},
+    }
+
+    yield f"Lancement de la veille ({max_iterations} iterations max)"
+
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        config = {"configurable": {"thread_id": "veille-streamlit"}}
+        try:
+            for event in veille_agent.stream(initial_state, config):
+                pass
+        except Exception as e:
+            yield f"ERREUR: {e}"
+            return
+
+        final = veille_agent.get_state(config)
+        values = final.values
+
+    for line in buf.getvalue().splitlines():
+        stripped = line.strip()
+        if stripped:
+            yield stripped
+
+    hackathons = values.get("hackathons", [])
+    evenements = values.get("evenements", [])
+
+    if min_score > 0:
+        hackathons = [
+            h for h in hackathons if getattr(h, "score_strategique", 0) >= min_score
+        ]
+        evenements = [
+            e for e in evenements if getattr(e, "score_strategique", 0) >= min_score
+        ]
+
+    yield f"Resultats: {len(hackathons)} hackathons, {len(evenements)} evenements"
+
+    DATA = Path(__file__).resolve().parent.parent.parent / "data"
+    hack_data = [
+        h.model_dump() if hasattr(h, "model_dump") else dict(h) for h in hackathons
+    ]
+    event_data = [
+        e.model_dump() if hasattr(e, "model_dump") else dict(e) for e in evenements
+    ]
+
+    pd.DataFrame(hack_data).to_csv(
+        DATA / "veille_hackathons.csv", index=False, encoding="utf-8-sig"
+    )
+    pd.DataFrame(event_data).to_csv(
+        DATA / "veille_evenements.csv", index=False, encoding="utf-8-sig"
+    )
+
+    with pd.ExcelWriter(DATA / "veille.xlsx", engine="openpyxl") as w:
+        pd.DataFrame(hack_data).to_excel(w, sheet_name="Hackathons", index=False)
+        pd.DataFrame(event_data).to_excel(w, sheet_name="Evenements", index=False)
+
+    yield f"Fichiers mis a jour: {len(hackathons)} hackathons + {len(evenements)} evenements -> veille.xlsx"
+
 
 st.title("📅 Veille événementielle EdTech")
 
@@ -17,8 +90,6 @@ with tab1:
     with col2:
         min_score = st.slider("Score minimum", 0, 10, 0)
 
-    resume = st.checkbox("Reprendre depuis le dernier checkpoint")
-
     if st.button("▶️ Lancer la veille", type="primary", use_container_width=True):
         if st.session_state.get("pipeline_running"):
             st.warning("Un pipeline est déjà en cours d'exécution")
@@ -27,11 +98,9 @@ with tab1:
             placeholder = st.empty()
             with placeholder.container():
                 with st.status("Veille en cours...", expanded=True) as status:
-                    for line in run_pipeline(
-                        "veille",
+                    for line in _run_veille_pipeline(
                         max_iterations=max_iter,
                         min_score=min_score,
-                        load_checkpoint=resume,
                     ):
                         st.text(line)
                     status.update(label="Veille terminée", state="complete")

@@ -19,6 +19,14 @@ def run_pipeline(mode: str, **kwargs):
                 cmd.extend([flag, str(v)])
 
     env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+    try:
+        import streamlit as st
+
+        for k, v in st.secrets.items():
+            if isinstance(v, str) and k not in os.environ:
+                env[k] = v
+    except Exception:
+        pass
 
     (BASE / "data").mkdir(parents=True, exist_ok=True)
 
