@@ -9,6 +9,19 @@ from dashboard.utils.data_loader import load_veille
 
 def _run_veille_pipeline(max_iterations=5, min_score=0):
     """Run veille pipeline in-process. Yields log lines."""
+    import os as _os
+
+    # Diagnostic des cles API
+    for _k in [
+        "GROQ_API_KEY",
+        "TAVILY_API_KEY",
+        "LANGCHAIN_API_KEY",
+        "GOOGLE_API_KEY",
+        "OPENAI_API_KEY",
+    ]:
+        _v = _os.environ.get(_k, "") or ""
+        yield f"[ENV] {_k}={'OK (' + _v[:8] + '...)' if _v else 'MANQUANT'}"
+
     from agent.veille_graph import agent as veille_agent
     from agent.veille_nodes import VeilleState
 
@@ -34,8 +47,12 @@ def _run_veille_pipeline(max_iterations=5, min_score=0):
             yield f"ERREUR: {e}"
             return
 
-        final = veille_agent.get_state(config)
-        values = final.values
+        try:
+            final = veille_agent.get_state(config)
+            values = final.values
+        except Exception as e:
+            yield f"ERREUR get_state: {e}"
+            return
 
     for line in buf.getvalue().splitlines():
         stripped = line.strip()
@@ -56,6 +73,11 @@ def _run_veille_pipeline(max_iterations=5, min_score=0):
     yield f"Resultats: {len(hackathons)} hackathons, {len(evenements)} evenements"
 
     DATA = Path(__file__).resolve().parent.parent.parent / "data"
+
+    if not hackathons and not evenements:
+        yield "AUCUN RESULTAT — Les fichiers existants sont conserves intacts"
+        return
+
     hack_data = [
         h.model_dump() if hasattr(h, "model_dump") else dict(h) for h in hackathons
     ]
@@ -95,6 +117,7 @@ with tab1:
             st.warning("Un pipeline est déjà en cours d'exécution")
         else:
             st.session_state.pipeline_running = True
+            had_results = False
             placeholder = st.empty()
             with placeholder.container():
                 with st.status("Veille en cours...", expanded=True) as status:
@@ -103,9 +126,16 @@ with tab1:
                         min_score=min_score,
                     ):
                         st.text(line)
+                        if "Fichiers mis a jour" in line:
+                            had_results = True
                     status.update(label="Veille terminée", state="complete")
             st.session_state.pipeline_running = False
-            st.rerun()
+            if had_results:
+                st.rerun()
+            else:
+                st.warning(
+                    "Aucun nouveau résultat trouvé. Les données existantes sont conservées."
+                )
 
 with tab2:
     st.subheader("Résultats de la veille")
