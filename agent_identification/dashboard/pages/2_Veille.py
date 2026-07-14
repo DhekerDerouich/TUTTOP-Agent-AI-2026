@@ -4,7 +4,7 @@ import io
 import contextlib
 from datetime import datetime, date
 from pathlib import Path
-from dashboard.utils.data_loader import load_veille
+from dashboard.utils.data_loader import load_veille, DATA
 
 
 def _run_veille_pipeline(max_iterations=5, min_score=0):
@@ -85,18 +85,71 @@ def _run_veille_pipeline(max_iterations=5, min_score=0):
         e.model_dump() if hasattr(e, "model_dump") else dict(e) for e in evenements
     ]
 
-    pd.DataFrame(hack_data).to_csv(
-        DATA / "veille_hackathons.csv", index=False, encoding="utf-8-sig"
-    )
-    pd.DataFrame(event_data).to_csv(
-        DATA / "veille_evenements.csv", index=False, encoding="utf-8-sig"
-    )
+    df_h = pd.DataFrame(hack_data)
+    df_e = pd.DataFrame(event_data)
+
+    # --- Date filtering: remove past events ---
+    today_ts = date.today()
+    for df in [df_h, df_e]:
+        if df.empty:
+            continue
+        date_cols = [c for c in ["date", "date_debut", "date_fin"] if c in df.columns]
+        for col in date_cols:
+
+            def _parse_dt(val):
+                if not isinstance(val, str) or "/" not in val:
+                    return None
+                parts = val.strip().split("/")
+                if len(parts) != 3:
+                    return None
+                try:
+                    return datetime(int(parts[2]), int(parts[1]), int(parts[0]))
+                except ValueError:
+                    return None
+
+            mask = df[col].apply(
+                lambda v: (
+                    _parse_dt(v) is not None and _parse_dt(v).date() >= today_ts
+                    if isinstance(v, str) and "/" in v
+                    else True
+                )
+            )
+            df.drop(df[~mask].index, inplace=True)
+
+    # --- Write latest results (overwrite) ---
+    df_h.to_csv(DATA / "veille_hackathons.csv", index=False, encoding="utf-8-sig")
+    df_e.to_csv(DATA / "veille_evenements.csv", index=False, encoding="utf-8-sig")
 
     with pd.ExcelWriter(DATA / "veille.xlsx", engine="openpyxl") as w:
-        pd.DataFrame(hack_data).to_excel(w, sheet_name="Hackathons", index=False)
-        pd.DataFrame(event_data).to_excel(w, sheet_name="Evenements", index=False)
+        df_h.to_excel(w, sheet_name="Hackathons", index=False)
+        df_e.to_excel(w, sheet_name="Evenements", index=False)
 
-    yield f"Fichiers mis a jour: {len(hackathons)} hackathons + {len(evenements)} evenements -> veille.xlsx"
+    yield f"Fichiers mis a jour: {len(df_h)} hackathons + {len(df_e)} evenements -> veille.xlsx"
+
+    # --- Append to history (cumulative, dedup by nom) ---
+    hist_path = DATA / "veille_history.xlsx"
+    try:
+        if hist_path.exists():
+            hist = pd.read_excel(hist_path, sheet_name=None)
+            h_hist = hist.get("Hackathons", pd.DataFrame())
+            e_hist = hist.get("Evenements", pd.DataFrame())
+        else:
+            h_hist, e_hist = pd.DataFrame(), pd.DataFrame()
+
+        h_all = pd.concat([h_hist, df_h], ignore_index=True)
+        e_all = pd.concat([e_hist, df_e], ignore_index=True)
+
+        if "nom" in h_all.columns:
+            h_all = h_all.drop_duplicates(subset=["nom"], keep="last")
+        if "nom" in e_all.columns:
+            e_all = e_all.drop_duplicates(subset=["nom"], keep="last")
+
+        with pd.ExcelWriter(hist_path, engine="openpyxl") as w:
+            h_all.to_excel(w, sheet_name="Hackathons", index=False)
+            e_all.to_excel(w, sheet_name="Evenements", index=False)
+        yield f"Historique mis a jour: {len(h_all)} hackathons + {len(e_all)} evenements -> veille_history.xlsx"
+    except Exception as exc:
+        yield f"ATTENTION: impossible d'ecrire l'historique ({exc})"
 
 
 st.title("📅 Veille événementielle EdTech")
@@ -139,7 +192,20 @@ with tab1:
 
 with tab2:
     st.subheader("Résultats de la veille")
-    veille_data = load_veille()
+
+    source_filter = st.radio(
+        "Afficher",
+        ["Dernière veille", "Tous les résultats"],
+        horizontal=True,
+        key="src_tab2",
+    )
+    if (
+        source_filter == "Tous les résultats"
+        and (DATA / "veille_history.xlsx").exists()
+    ):
+        veille_data = pd.read_excel(DATA / "veille_history.xlsx", sheet_name=None)
+    else:
+        veille_data = load_veille()
 
     if not veille_data:
         st.info("Aucune donnée de veille trouvée")
@@ -184,7 +250,20 @@ with tab2:
 with tab3:
     st.subheader("Événements à venir dans la région Azur")
     st.caption("Les liens sont dans les détails de chaque événement ▼")
-    veille_data = load_veille()
+
+    source_filter = st.radio(
+        "Afficher",
+        ["Dernière veille", "Tous les résultats"],
+        horizontal=True,
+        key="src_tab3",
+    )
+    if (
+        source_filter == "Tous les résultats"
+        and (DATA / "veille_history.xlsx").exists()
+    ):
+        veille_data = pd.read_excel(DATA / "veille_history.xlsx", sheet_name=None)
+    else:
+        veille_data = load_veille()
 
     if not veille_data:
         st.info("Aucune donnée de veille trouvée")
