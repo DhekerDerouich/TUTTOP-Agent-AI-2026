@@ -19,7 +19,7 @@ with tab1:
 
     resume = st.checkbox("Reprendre depuis le dernier checkpoint")
 
-    if st.button("▶️ Lancer la veille", type="primary", width="stretch"):
+    if st.button("▶️ Lancer la veille", type="primary", use_container_width=True):
         if st.session_state.get("pipeline_running"):
             st.warning("Un pipeline est déjà en cours d'exécution")
         else:

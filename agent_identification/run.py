@@ -302,14 +302,32 @@ def run_veille(args):
             r = f" | {raison}" if raison else ""
             print(f"  [{s}/10] {nom} ({type_e}) | {lieu}{r}")
 
-    from run_veille import export_results
+    import pandas as pd
+    from agent.veille_models import Hackathon, Evenement
 
-    export_results(hackathons, evenements, prefix=args.output_prefix)
-    export_results(
-        hackathons, evenements, prefix=args.output_prefix, source_filter="tavily"
+    DATA = Path(__file__).parent / "data"
+    hack_data = [
+        h.model_dump() if hasattr(h, "model_dump") else dict(h) for h in hackathons
+    ]
+    event_data = [
+        e.model_dump() if hasattr(e, "model_dump") else dict(e) for e in evenements
+    ]
+
+    pd.DataFrame(hack_data).to_csv(
+        DATA / "veille_hackathons.csv", index=False, encoding="utf-8-sig"
     )
-    export_results(
-        hackathons, evenements, prefix=args.output_prefix, source_filter="duckduckgo"
+    print(f"  -> {len(hack_data)} hackathons -> veille_hackathons.csv")
+
+    pd.DataFrame(event_data).to_csv(
+        DATA / "veille_evenements.csv", index=False, encoding="utf-8-sig"
+    )
+    print(f"  -> {len(event_data)} evenements -> veille_evenements.csv")
+
+    with pd.ExcelWriter(DATA / "veille.xlsx", engine="openpyxl") as writer:
+        pd.DataFrame(hack_data).to_excel(writer, sheet_name="Hackathons", index=False)
+        pd.DataFrame(event_data).to_excel(writer, sheet_name="Evenements", index=False)
+    print(
+        f"  -> {len(hack_data)} hackathons + {len(event_data)} evenements -> veille.xlsx"
     )
 
     save_checkpoint(values)
