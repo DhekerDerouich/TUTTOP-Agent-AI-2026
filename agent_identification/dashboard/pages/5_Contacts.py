@@ -14,15 +14,24 @@ HISTORY_FILE = DATA / "contacts_rocketreach.csv"
 
 
 def _load_history() -> pd.DataFrame:
+    if "contacts_history" in st.session_state:
+        return st.session_state.contacts_history
     if HISTORY_FILE.exists():
         df = pd.read_csv(HISTORY_FILE, dtype=str).fillna("")
+        st.session_state.contacts_history = df
         return df
-    return pd.DataFrame()
+    empty = pd.DataFrame()
+    st.session_state.contacts_history = empty
+    return empty
 
 
 def _save_history(df: pd.DataFrame):
-    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(HISTORY_FILE, index=False, encoding="utf-8-sig")
+    st.session_state.contacts_history = df
+    try:
+        HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+        df.to_csv(HISTORY_FILE, index=False, encoding="utf-8-sig")
+    except Exception:
+        pass  # FS may be read-only on Streamlit Cloud
 
 
 def _save_search(info: dict, search_mode: str):
