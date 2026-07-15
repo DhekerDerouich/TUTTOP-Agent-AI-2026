@@ -46,6 +46,11 @@ def _save_search(info: dict, search_mode: str):
         "found_date": today_str,
     }
 
+    # Ensure all columns exist in hist (migration-safe)
+    for col in new_row:
+        if col not in hist.columns:
+            hist[col] = ""
+
     # Dedup by linkedin_url or name+company
     dup = False
     if new_row["linkedin_url"]:
