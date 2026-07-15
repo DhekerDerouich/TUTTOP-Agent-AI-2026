@@ -30,6 +30,7 @@ st.sidebar.info(
 - **Prospection** : écoles privées/publiques
 - **Veille** : hackathons + événements EdTech
 - **Subventions** : aides et financements
+- **Contacts** : recherche emails (RocketReach)
     """
 )
 
@@ -48,6 +49,7 @@ veille = st.Page("dashboard/pages/2_Veille.py", title="Veille", icon="📅")
 subventions = st.Page(
     "dashboard/pages/3_Subventions.py", title="Subventions", icon="💰"
 )
+contacts = st.Page("dashboard/pages/5_Contacts.py", title="Contacts", icon="🔍")
 
-pg = st.navigation([dashboard, prospection, veille, subventions])
+pg = st.navigation([dashboard, prospection, veille, subventions, contacts])
 pg.run()
