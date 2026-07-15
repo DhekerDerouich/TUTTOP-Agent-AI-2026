@@ -10,7 +10,7 @@ CACHE_FILE = Path(__file__).resolve().parent.parent / "data" / "rocketreach_cach
 USAGE_FILE = Path(__file__).resolve().parent.parent / "data" / "rocketreach_usage.json"
 DAILY_LIMIT = 40
 
-API_BASE = "https://api.rocketreach.co/v2/api"
+API_BASE = "https://api.rocketreach.co/api/v2"
 
 
 class RocketReachClient:
@@ -88,23 +88,59 @@ class RocketReachClient:
         self._usage = usage
         self._save_usage()
 
-    # ---- API calls ----
+    # ---- API: Search (FREE, no credits) ----
 
-    def _call_api(self, payload: dict) -> Optional[dict]:
+    def search_person(
+        self, name: str, company: str = "", title: str = "", location: str = ""
+    ) -> dict:
+        """Search for people by criteria. FREE — no credit consumed.
+        Returns list of matching profiles WITHOUT contact details (no emails).
+        """
         if not self.api_key:
             return {"error": "ROCKETREACH_API_KEY non configurée"}
 
-        if self.remaining <= 0:
-            return {"error": "Quota quotidien épuisé (40/40). Réessaie demain."}
+        query = {"name": [name]}
+        if company:
+            query["current_employer"] = [company]
+        if title:
+            query["current_title"] = [title]
+        if location:
+            query["location"] = [location]
 
         try:
             resp = requests.post(
-                f"{API_BASE}/person/lookup",
+                f"{API_BASE}/person/search",
                 headers={
                     "Api-Key": self.api_key,
                     "Content-Type": "application/json",
                 },
-                json=payload,
+                json={"query": query},
+                timeout=30,
+            )
+        except requests.RequestException as e:
+            return {"error": f"Erreur réseau: {e}"}
+
+        if resp.status_code == 401:
+            return {"error": "Clé API invalide. Vérifie ROCKETREACH_API_KEY."}
+        if resp.status_code != 200:
+            return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
+
+        return resp.json()
+
+    # ---- API: Lookup (costs 1 credit) ----
+
+    def _lookup(self, **params) -> dict:
+        """GET /person/lookup with query params. Costs 1 credit."""
+        if not self.api_key:
+            return {"error": "ROCKETREACH_API_KEY non configurée"}
+        if self.remaining <= 0:
+            return {"error": "Quota quotidien épuisé (40/40). Réessaie demain."}
+
+        try:
+            resp = requests.get(
+                f"{API_BASE}/person/lookup",
+                headers={"Api-Key": self.api_key},
+                params=params,
                 timeout=30,
             )
         except requests.RequestException as e:
@@ -118,7 +154,6 @@ class RocketReachClient:
             return {"error": "Clé API invalide. Vérifie ROCKETREACH_API_KEY."}
         if resp.status_code == 404:
             return {"error": "Aucun profil trouvé pour ces critères."}
-
         if resp.status_code != 200:
             return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
 
@@ -128,42 +163,61 @@ class RocketReachClient:
     # ---- Public methods ----
 
     def lookup_by_linkedin(self, linkedin_url: str) -> dict:
+        """Lookup by LinkedIn URL. Costs 1 credit."""
         cached = self._get_from_cache(linkedin_url=linkedin_url)
         if cached:
             return {**cached, "_cached": True}
 
-        result = self._call_api({"linkedin_url": linkedin_url})
+        result = self._lookup(linkedin_url=linkedin_url)
         if result and "error" not in result:
             self._set_cache(result, linkedin_url=linkedin_url)
         return result
 
-    def lookup_by_name_company(
-        self,
-        name: str,
-        company: str = "",
-        location: str = "",
-        title: str = "",
-    ) -> dict:
-        cached = self._get_from_cache(
-            name=name, company=company, location=location, title=title
-        )
+    def lookup_by_id(self, profile_id: int) -> dict:
+        """Lookup by RocketReach profile ID. Costs 1 credit."""
+        cached = self._get_from_cache(profile_id=profile_id)
         if cached:
             return {**cached, "_cached": True}
 
-        payload = {"name": name}
-        if company:
-            payload["company"] = company
-        if location:
-            payload["location"] = location
-        if title:
-            payload["title"] = title
-
-        result = self._call_api(payload)
+        result = self._lookup(id=profile_id)
         if result and "error" not in result:
-            self._set_cache(
-                result, name=name, company=company, location=location, title=title
-            )
+            self._set_cache(result, profile_id=profile_id)
         return result
+
+    def search_and_lookup(
+        self, name: str, company: str = "", title: str = "", location: str = ""
+    ) -> dict:
+        """Search (free) then lookup the best match (costs 1 credit)."""
+        cached = self._get_from_cache(
+            name=name, company=company, title=title, location=location
+        )
+        if cached:
+            # cached contains both search results + looked-up profile
+            return {**cached, "_cached": True}
+
+        search_result = self.search_person(name, company, title, location)
+        if "error" in search_result:
+            return search_result
+
+        profiles = search_result.get("profiles") or search_result.get("results") or []
+        if not profiles:
+            return {"error": "Aucun profil trouvé pour ces critères."}
+
+        pid = profiles[0].get("id") or profiles[0].get("profile_id")
+        if not pid:
+            return {
+                "error": "Profil trouvé mais sans ID — impossible de récupérer les coordonnées."
+            }
+
+        lookup_result = self.lookup_by_id(pid)
+        if "error" in lookup_result:
+            return lookup_result
+
+        combined = {**lookup_result, "_search_profiles": profiles}
+        self._set_cache(
+            combined, name=name, company=company, title=title, location=location
+        )
+        return combined
 
     # ---- Cache management ----
 
