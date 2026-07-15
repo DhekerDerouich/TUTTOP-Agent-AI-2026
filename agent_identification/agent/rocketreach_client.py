@@ -122,10 +122,9 @@ class RocketReachClient:
 
         if resp.status_code == 401:
             return {"error": "Clé API invalide. Vérifie ROCKETREACH_API_KEY."}
-        if resp.status_code != 200:
-            return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
-
-        return resp.json()
+        if resp.status_code in (200, 201):
+            return resp.json()
+        return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
 
     # ---- API: Lookup (costs 1 credit) ----
 
