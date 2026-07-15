@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from agent.rocketreach_client import (
     RocketReachClient,
@@ -25,10 +25,50 @@ def _save_history(df: pd.DataFrame):
     df.to_csv(HISTORY_FILE, index=False, encoding="utf-8-sig")
 
 
+def _save_search(info: dict, search_mode: str):
+    """Save a search result to history. Always saves, even without email."""
+    hist = _load_history()
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    today_str = date.today().isoformat()
+
+    email_str = "; ".join(e["email"] for e in info.get("emails", []) if e["email"])
+
+    new_row = {
+        "name": info.get("name", ""),
+        "title": info.get("title", ""),
+        "company": info.get("company", ""),
+        "location": info.get("location", ""),
+        "email": email_str,
+        "has_email": "Oui" if email_str else "Non",
+        "linkedin_url": info.get("linkedin_url", ""),
+        "search_mode": search_mode,
+        "found_at": now,
+        "found_date": today_str,
+    }
+
+    # Dedup by linkedin_url or name+company
+    dup = False
+    if new_row["linkedin_url"]:
+        dup = not hist[hist["linkedin_url"] == new_row["linkedin_url"]].empty
+    elif new_row["name"]:
+        dup = not hist[
+            (hist["name"] == new_row["name"]) & (hist["company"] == new_row["company"])
+        ].empty
+
+    if dup:
+        st.info("📌 Déjà dans l'historique")
+        return
+
+    hist = pd.concat([hist, pd.DataFrame([new_row])], ignore_index=True)
+    _save_history(hist)
+    st.success("💾 Contact sauvegardé dans l'historique")
+
+
 def _display_person(info: dict):
+    """Display person details. Returns the info dict."""
     if "error" in info:
         st.error(f"❌ {info['error']}")
-        return
+        return info
 
     st.success(
         "✅ Contact trouvé" + (" (depuis le cache)" if info.get("_cached") else "")
@@ -90,7 +130,7 @@ def _display_person(info: dict):
                     else:
                         st.text(str(edu))
 
-    return info.get("name") and len(info.get("emails", [])) > 0
+    return info
 
 
 st.title("🔍 Recherche de contacts RocketReach")
@@ -134,30 +174,9 @@ with tab_search:
                     raw = rr.lookup_by_linkedin(linkedin_url.strip())
                     info = extract_person_info(raw)
 
-                found = _display_person(info)
-                if found:
-                    # Auto-save
-                    hist = _load_history()
-                    email_str = "; ".join(
-                        e["email"] for e in info.get("emails", []) if e["email"]
-                    )
-                    if email_str and not hist[hist["email"] == email_str].empty:
-                        st.info("📌 Déjà dans l'historique")
-                    else:
-                        new_row = {
-                            "name": info["name"],
-                            "title": info.get("title", ""),
-                            "company": info.get("company", ""),
-                            "location": info.get("location", ""),
-                            "email": email_str,
-                            "linkedin_url": info.get("linkedin_url", ""),
-                            "found_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                        }
-                        hist = pd.concat(
-                            [hist, pd.DataFrame([new_row])], ignore_index=True
-                        )
-                        _save_history(hist)
-                        st.success("💾 Contact sauvegardé dans l'historique")
+                info = _display_person(info)
+                if info.get("name"):
+                    _save_search(info, "LinkedIn URL")
 
     else:
         col1, col2 = st.columns(2)
@@ -177,7 +196,6 @@ with tab_search:
             if not name:
                 st.warning("Entre au moins un nom")
             else:
-                # Step 1: Search (free)
                 with st.spinner("Recherche de profils..."):
                     search_result = rr.search_person(
                         name=name.strip(),
@@ -234,45 +252,9 @@ with tab_search:
                                             raw = rr.lookup_by_id(p_id)
                                             info = extract_person_info(raw)
 
-                                        found = _display_person(info)
-                                        if found:
-                                            hist = _load_history()
-                                            email_str = "; ".join(
-                                                e["email"]
-                                                for e in info.get("emails", [])
-                                                if e["email"]
-                                            )
-                                            if (
-                                                email_str
-                                                and not hist[
-                                                    hist["email"] == email_str
-                                                ].empty
-                                            ):
-                                                st.info("📌 Déjà dans l'historique")
-                                            else:
-                                                new_row = {
-                                                    "name": info["name"],
-                                                    "title": info.get("title", ""),
-                                                    "company": info.get("company", ""),
-                                                    "location": info.get(
-                                                        "location", ""
-                                                    ),
-                                                    "email": email_str,
-                                                    "linkedin_url": info.get(
-                                                        "linkedin_url", ""
-                                                    ),
-                                                    "found_at": datetime.now().strftime(
-                                                        "%Y-%m-%d %H:%M"
-                                                    ),
-                                                }
-                                                hist = pd.concat(
-                                                    [hist, pd.DataFrame([new_row])],
-                                                    ignore_index=True,
-                                                )
-                                                _save_history(hist)
-                                                st.success(
-                                                    "💾 Contact sauvegardé dans l'historique"
-                                                )
+                                        info = _display_person(info)
+                                        if info.get("name"):
+                                            _save_search(info, "Nom+Établissement")
                                 else:
                                     st.caption(
                                         "⚠️ Pas d'ID — impossible de récupérer les coordonnées"
@@ -288,26 +270,80 @@ with tab_history:
     if hist.empty:
         st.info("Aucun contact sauvegardé pour l'instant")
     else:
-        st.caption(f"{len(hist)} contact(s) au total")
-        cols_hist = st.multiselect(
-            "Colonnes à afficher",
-            list(hist.columns),
-            default=[
-                c
-                for c in ["name", "title", "company", "email", "location"]
-                if c in hist.columns
-            ],
-        )
-        if cols_hist:
-            st.dataframe(hist[cols_hist], hide_index=True, use_container_width=True)
+        # ---- Date filter ----
+        col_f1, col_f2 = st.columns([1, 3])
+        with col_f1:
+            date_filter = st.radio(
+                "Période",
+                ["Tous", "Aujourd'hui", "Hier", "7 jours", "Date précise"],
+                horizontal=True,
+            )
+        with col_f2:
+            if date_filter == "Date précise":
+                pick = st.date_input("Choisir une date", value=date.today())
+                filter_date = pick.isoformat()
+            elif date_filter == "Aujourd'hui":
+                filter_date = date.today().isoformat()
+            elif date_filter == "Hier":
+                filter_date = (date.today() - timedelta(days=1)).isoformat()
+            elif date_filter == "7 jours":
+                filter_date = (date.today() - timedelta(days=7)).isoformat()
+            else:
+                filter_date = ""
 
-        csv = hist.to_csv(index=False, encoding="utf-8-sig")
-        st.download_button(
-            "📥 Télécharger (CSV)",
-            csv,
-            "contacts_rocketreach.csv",
-        )
+        if filter_date and date_filter == "7 jours":
+            cutoff = (date.today() - timedelta(days=7)).isoformat()
+            filtered = hist[hist["found_date"] >= cutoff]
+        elif filter_date:
+            filtered = hist[hist["found_date"] == filter_date]
+        else:
+            filtered = hist
 
-        if st.button("🗑️ Vider l'historique", type="secondary"):
+        # ---- Email filter ----
+        email_filter = st.radio(
+            "Email",
+            ["Tous", "Avec email", "Sans email"],
+            horizontal=True,
+        )
+        if email_filter == "Avec email":
+            filtered = filtered[filtered["has_email"] == "Oui"]
+        elif email_filter == "Sans email":
+            filtered = filtered[filtered["has_email"] == "Non"]
+
+        st.caption(f"{len(filtered)} contact(s) sur {len(hist)} au total")
+
+        if filtered.empty:
+            st.info("Aucun contact pour cette période")
+        else:
+            cols_hist = st.multiselect(
+                "Colonnes à afficher",
+                list(filtered.columns),
+                default=[
+                    c
+                    for c in [
+                        "name",
+                        "title",
+                        "company",
+                        "email",
+                        "has_email",
+                        "location",
+                        "found_date",
+                    ]
+                    if c in filtered.columns
+                ],
+            )
+            if cols_hist:
+                st.dataframe(
+                    filtered[cols_hist], hide_index=True, use_container_width=True
+                )
+
+            csv = filtered.to_csv(index=False, encoding="utf-8-sig")
+            st.download_button(
+                "📥 Télécharger ce filtre (CSV)",
+                csv,
+                "contacts_rocketreach.csv",
+            )
+
+        if st.button("🗑️ Vider tout l'historique", type="secondary"):
             _save_history(pd.DataFrame())
             st.rerun()
