@@ -1,7 +1,12 @@
 import streamlit as st
 import pandas as pd
+import os
+import base64
+import json
 from pathlib import Path
 from datetime import datetime, date, timedelta
+
+import requests
 
 from agent.rocketreach_client import (
     RocketReachClient,
@@ -12,14 +17,129 @@ from agent.rocketreach_client import (
 DATA = Path(__file__).resolve().parent.parent.parent / "data"
 HISTORY_FILE = DATA / "contacts_rocketreach.csv"
 
+# ---- GitHub sync (permanent storage across restarts) ----
+
+
+def _github_repo() -> tuple[str, str] | None:
+    """Get GitHub owner/repo from git remote or env."""
+    token = os.environ.get("GITHUB_TOKEN") or ""
+    if not token:
+        return None
+    try:
+        import subprocess
+
+        r = subprocess.run(
+            ["git", "remote", "get-url", "origin"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            cwd=Path(__file__).resolve().parent.parent.parent,
+        )
+        url = r.stdout.strip()
+        # https://github.com/owner/repo.git  or  git@github.com:owner/repo.git
+        url = url.replace("https://github.com/", "").replace("git@github.com:", "")
+        url = url.rstrip(".git")
+        parts = url.split("/")
+        if len(parts) == 2:
+            return parts[0], parts[1]
+    except Exception:
+        pass
+    return None
+
+
+def _load_from_github() -> pd.DataFrame | None:
+    """Fetch contacts CSV from GitHub repo via API."""
+    token = os.environ.get("GITHUB_TOKEN") or ""
+    if not token:
+        return None
+    repo = _github_repo()
+    if not repo:
+        return None
+    owner, repo_name = repo
+    path = "agent_identification/data/contacts_rocketreach.csv"
+    url = f"https://api.github.com/repos/{owner}/{repo_name}/contents/{path}"
+    try:
+        resp = requests.get(
+            url, headers={"Authorization": f"Bearer {token}"}, timeout=10
+        )
+        if resp.status_code == 200:
+            data = resp.json()
+            content = base64.b64decode(data["content"]).decode("utf-8")
+            from io import StringIO
+
+            df = pd.read_csv(StringIO(content), dtype=str).fillna("")
+            return df
+    except Exception:
+        pass
+    return None
+
+
+def _sync_to_github(df: pd.DataFrame):
+    """Push CSV to GitHub repo via API (silent, best-effort)."""
+    token = os.environ.get("GITHUB_TOKEN") or ""
+    if not token:
+        return
+    repo = _github_repo()
+    if not repo:
+        return
+    owner, repo_name = repo
+    path = "agent_identification/data/contacts_rocketreach.csv"
+    url = f"https://api.github.com/repos/{owner}/{repo_name}/contents/{path}"
+
+    csv_bytes = df.to_csv(index=False, encoding="utf-8-sig").encode("utf-8")
+    content_b64 = base64.b64encode(csv_bytes).decode("utf-8")
+
+    # Get SHA of existing file if it exists
+    sha = None
+    try:
+        resp = requests.get(
+            url, headers={"Authorization": f"Bearer {token}"}, timeout=10
+        )
+        if resp.status_code == 200:
+            sha = resp.json().get("sha")
+    except Exception:
+        pass
+
+    payload = {
+        "message": f"Sync contacts ({len(df)} rows)",
+        "content": content_b64,
+    }
+    if sha:
+        payload["sha"] = sha
+
+    try:
+        requests.put(
+            url, headers={"Authorization": f"Bearer {token}"}, json=payload, timeout=15
+        )
+    except Exception:
+        pass
+
+
+# ---- Local history load/save ----
+
 
 def _load_history() -> pd.DataFrame:
     if "contacts_history" in st.session_state:
         return st.session_state.contacts_history
+
+    # Try GitHub first (persists across restarts)
+    gh = _load_from_github()
+    if gh is not None and not gh.empty:
+        st.session_state.contacts_history = gh
+        # Also save locally for backup
+        try:
+            HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+            gh.to_csv(HISTORY_FILE, index=False, encoding="utf-8-sig")
+        except Exception:
+            pass
+        return gh
+
+    # Fallback to local CSV
     if HISTORY_FILE.exists():
         df = pd.read_csv(HISTORY_FILE, dtype=str).fillna("")
         st.session_state.contacts_history = df
         return df
+
     empty = pd.DataFrame()
     st.session_state.contacts_history = empty
     return empty
@@ -31,7 +151,9 @@ def _save_history(df: pd.DataFrame):
         HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
         df.to_csv(HISTORY_FILE, index=False, encoding="utf-8-sig")
     except Exception:
-        pass  # FS may be read-only on Streamlit Cloud
+        pass
+    # Also sync to GitHub for permanent storage
+    _sync_to_github(df)
 
 
 def _save_search(info: dict, search_mode: str):
@@ -151,7 +273,7 @@ st.title("🔍 Recherche de contacts RocketReach")
 
 rr = RocketReachClient()
 
-# ---- Header: quota info ----
+# ---- Header: quota info + GitHub status ----
 remaining = rr.remaining
 used = rr.used_today
 if remaining <= 5:
@@ -160,6 +282,16 @@ elif remaining <= 15:
     st.warning(f"⚡ {remaining}/{DAILY_LIMIT} requêtes restantes aujourd'hui")
 else:
     st.info(f"✅ {remaining}/{DAILY_LIMIT} requêtes restantes aujourd'hui")
+
+gh_token = os.environ.get("GITHUB_TOKEN") or ""
+if gh_token and _github_repo():
+    st.caption(
+        "💾 Sauvegarde GitHub activée — l'historique est conservé entre les sessions"
+    )
+else:
+    st.caption(
+        "ℹ️ Ajoute GITHUB_TOKEN dans Settings → Secrets pour sauvegarder l'historique en permanence"
+    )
 
 tab_search, tab_history = st.tabs(["🔍 Recherche", "📋 Historique"])
 
