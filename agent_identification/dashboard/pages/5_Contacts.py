@@ -478,33 +478,33 @@ with tab_company:
 
                     for i, c in enumerate(companies[:5]):
                         c_name_r = c.get("name", "?")
-                        c_domain_r = c.get("domain", "")
-                        c_industry_r = c.get("industry", "")
-                        c_size_r = c.get("estimated_num_employees", "")
-                        c_location_r = c.get("location", "")
-                        c_linkedin_r = c.get("linkedin_url", "")
+                        c_domain_r = c.get("email_domain", "") or c.get("domain", "")
+                        c_industry_r = c.get("industry_str", "") or c.get(
+                            "industry", ""
+                        )
+                        c_id_r = c.get("id", "")
+                        c_city_r = c.get("city", "")
+                        c_region_r = c.get("region", "")
+                        c_country_r = c.get("country_code", "")
+                        c_location_r = ", ".join(
+                            p for p in [c_city_r, c_region_r, c_country_r] if p
+                        )
 
                         with st.container(border=True):
-                            # Company info header
                             label = f"**{c_name_r}**"
                             if c_domain_r:
                                 label += f" · {c_domain_r}"
                             if c_industry_r:
                                 label += f" · {c_industry_r}"
-                            if c_size_r:
-                                label += f" · {c_size_r} employés"
                             if c_location_r:
                                 label += f" · {c_location_r}"
                             st.markdown(label)
-
-                            if c_linkedin_r:
-                                st.caption(f"[🔗 LinkedIn entreprise]({c_linkedin_r})")
 
                             # Step 2: Search employees at this company (free)
                             emp_search_name = c_name_r
                             if st.button(
                                 "👥 Voir les employés / décideurs",
-                                key=f"co_emp_{i}_{c_domain_r}",
+                                key=f"co_emp_{i}_{c_id_r}",
                             ):
                                 with st.spinner(
                                     f"Recherche de profils chez {c_name_r}..."

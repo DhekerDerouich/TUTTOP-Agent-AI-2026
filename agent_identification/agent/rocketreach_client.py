@@ -240,15 +240,17 @@ class RocketReachClient:
     def search_company(
         self, name: str = "", domain: str = "", industry: str = "", location: str = ""
     ) -> dict:
-        """Search companies by criteria. FREE — no credit consumed."""
+        """Search companies by criteria. FREE — no credit consumed.
+        Returns a list of companies (array directly).
+        """
         if not self.api_key:
             return {"error": "ROCKETREACH_API_KEY non configurée"}
 
         query = {}
         if name:
-            query["q_organization_name"] = name
+            query["name"] = [name]
         if domain:
-            query["q_organization_domain"] = domain
+            query["domain"] = [domain]
         if industry:
             query["industry"] = [industry]
         if location:
@@ -273,7 +275,10 @@ class RocketReachClient:
         if resp.status_code == 401:
             return {"error": "Clé API invalide. Vérifie ROCKETREACH_API_KEY."}
         if resp.status_code in (200, 201):
-            return resp.json()
+            data = resp.json()
+            if isinstance(data, list):
+                return {"accounts": data}
+            return data
         return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
 
     # ---- Company API: Lookup (costs 1 company_export credit) ----
