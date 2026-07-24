@@ -12,6 +12,7 @@ from agent.rocketreach_client import (
     RocketReachClient,
     extract_person_info,
     extract_company_info,
+    fetch_account_credits,
     DAILY_LIMIT,
     COMPANY_DAILY_LIMIT,
 )
@@ -275,27 +276,36 @@ st.title("🔍 Recherche de contacts RocketReach")
 
 rr = RocketReachClient()
 
-# ---- Header: quota info + GitHub status ----
-remaining = rr.remaining
-used = rr.used_today
-co_remaining = rr.company_remaining
-co_used = rr.company_used_today
+# ---- Header: real credits from API ----
+credits = fetch_account_credits(rr.api_key)
+person_lookup = credits.get("person_lookup", {})
+company_export = credits.get("company_export", {})
+person_search_rl = credits.get("person_search", {})
 
-col_q1, col_q2 = st.columns(2)
+pl_remaining = person_lookup.get("remaining", "?")
+pl_allocated = person_lookup.get("allocated", "?")
+ce_remaining = company_export.get("remaining", "?")
+ce_allocated = company_export.get("allocated", "?")
+ps_remaining = person_search_rl.get("remaining", "?")
+ps_allocated = person_search_rl.get("allocated", "?")
+
+col_q1, col_q2, col_q3 = st.columns(3)
 with col_q1:
-    if remaining <= 5:
-        st.error(f"⚠️ Person search: {remaining}/{DAILY_LIMIT} restants")
-    elif remaining <= 15:
-        st.warning(f"⚡ Person search: {remaining}/{DAILY_LIMIT} restants")
+    if isinstance(pl_remaining, int) and pl_remaining <= 5:
+        st.error(f"⚠️ Person lookup: {pl_remaining}/{pl_allocated}")
+    elif isinstance(pl_remaining, int) and pl_remaining <= 20:
+        st.warning(f"⚡ Person lookup: {pl_remaining}/{pl_allocated}")
     else:
-        st.info(f"✅ Person search: {remaining}/{DAILY_LIMIT} restants")
+        st.info(f"✅ Person lookup: {pl_remaining}/{pl_allocated}")
 with col_q2:
-    if co_remaining <= 5:
-        st.error(f"⚠️ Company export: {co_remaining}/{COMPANY_DAILY_LIMIT} restants")
-    elif co_remaining <= 20:
-        st.warning(f"⚡ Company export: {co_remaining}/{COMPANY_DAILY_LIMIT} restants")
+    if isinstance(ce_remaining, int) and ce_remaining <= 5:
+        st.error(f"⚠️ Company export: {ce_remaining}/{ce_allocated}")
+    elif isinstance(ce_remaining, int) and ce_remaining <= 20:
+        st.warning(f"⚡ Company export: {ce_remaining}/{ce_allocated}")
     else:
-        st.info(f"✅ Company export: {co_remaining}/{COMPANY_DAILY_LIMIT} restants")
+        st.info(f"✅ Company export: {ce_remaining}/{ce_allocated}")
+with col_q3:
+    st.info(f"🔍 Person search: {ps_remaining}/{ps_allocated}/jour")
 
 gh_token = os.environ.get("GITHUB_TOKEN") or ""
 if gh_token and _github_repo():

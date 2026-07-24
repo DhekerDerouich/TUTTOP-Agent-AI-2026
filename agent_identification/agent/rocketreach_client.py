@@ -14,6 +14,31 @@ COMPANY_DAILY_LIMIT = 105
 API_BASE = "https://api.rocketreach.co/api/v2"
 
 
+def fetch_account_credits(api_key: str) -> dict:
+    """Fetch real credit usage from RocketReach API account endpoint."""
+    if not api_key:
+        return {}
+    try:
+        resp = requests.get(
+            f"{API_BASE}/account",
+            headers={"Api-Key": api_key},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            data = resp.json()
+            credits = {}
+            for c in data.get("credit_usage", []):
+                credits[c["credit_type"]] = {
+                    "allocated": c.get("allocated", 0),
+                    "used": c.get("used", 0),
+                    "remaining": c.get("remaining", 0),
+                }
+            return credits
+    except Exception:
+        pass
+    return {}
+
+
 class RocketReachClient:
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key or os.environ.get("ROCKETREACH_API_KEY", "")
