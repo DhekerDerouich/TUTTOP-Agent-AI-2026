@@ -399,6 +399,7 @@ with tab_search:
                             ).get("name", "")
                             p_location = p.get("location", "")
                             p_linkedin = p.get("linkedin_url", "")
+                            p_id = p.get("id") or p.get("profile_id")
 
                             label = f"**{p_name}**"
                             if p_title:
@@ -413,41 +414,110 @@ with tab_search:
                                 if p_linkedin:
                                     st.caption(f"[🔗 LinkedIn]({p_linkedin})")
 
-                                # Save to history
-                                now = datetime.now().strftime("%Y-%m-%d %H:%M")
-                                today_str = date.today().isoformat()
-                                hist = _load_history()
-                                dup = False
-                                if p_linkedin:
-                                    dup = not hist[
-                                        hist["linkedin_url"] == p_linkedin
-                                    ].empty
-                                elif p_name:
-                                    dup = not hist[
-                                        (hist["name"] == p_name)
-                                        & (hist["company"] == p_company)
-                                    ].empty
-                                if not dup:
-                                    new_row = {
-                                        "name": p_name,
-                                        "title": p_title,
-                                        "company": p_company,
-                                        "location": p_location,
-                                        "email": "",
-                                        "has_email": "Non",
-                                        "linkedin_url": p_linkedin,
-                                        "search_mode": "company_search",
-                                        "found_at": now,
-                                        "found_date": today_str,
-                                    }
-                                    for col in new_row:
-                                        if col not in hist.columns:
-                                            hist[col] = ""
-                                    hist = pd.concat(
-                                        [hist, pd.DataFrame([new_row])],
-                                        ignore_index=True,
-                                    )
-                                    _save_history(hist)
+                                btn_col1, btn_col2 = st.columns([1, 3])
+                                with btn_col1:
+                                    if p_id:
+                                        if st.button(
+                                            "📧 Voir coordonnées",
+                                            key=f"lookup_{i}_{p_id}",
+                                        ):
+                                            with st.spinner(
+                                                "Récupération... (1 crédit standard_lookup)"
+                                            ):
+                                                raw = rr.lookup_by_id(p_id)
+                                                info = extract_person_info(raw)
+
+                                            if "error" in info:
+                                                st.error(f"❌ {info['error']}")
+                                            else:
+                                                email_str = "; ".join(
+                                                    e["email"]
+                                                    for e in info.get("emails", [])
+                                                    if e["email"]
+                                                )
+                                                phones = info.get("phones", [])
+
+                                                if email_str:
+                                                    st.success(f"📧 {email_str}")
+                                                else:
+                                                    st.info("Aucun email trouvé")
+
+                                                if phones:
+                                                    for ph in phones:
+                                                        st.caption(
+                                                            f"📞 {ph['phone']} ({ph['type']})"
+                                                        )
+
+                                                # Save to history with email
+                                                now = datetime.now().strftime(
+                                                    "%Y-%m-%d %H:%M"
+                                                )
+                                                today_str = date.today().isoformat()
+                                                hist = _load_history()
+                                                new_row = {
+                                                    "name": p_name,
+                                                    "title": p_title,
+                                                    "company": p_company,
+                                                    "location": p_location,
+                                                    "email": email_str,
+                                                    "has_email": "Oui"
+                                                    if email_str
+                                                    else "Non",
+                                                    "linkedin_url": p_linkedin,
+                                                    "search_mode": "person_lookup",
+                                                    "found_at": now,
+                                                    "found_date": today_str,
+                                                }
+                                                for col in new_row:
+                                                    if col not in hist.columns:
+                                                        hist[col] = ""
+                                                hist = pd.concat(
+                                                    [hist, pd.DataFrame([new_row])],
+                                                    ignore_index=True,
+                                                )
+                                                _save_history(hist)
+                                                st.success(
+                                                    "💾 Sauvegardé dans l'historique"
+                                                )
+                                    else:
+                                        st.caption("⚠️ Pas d'ID disponible")
+
+                                with btn_col2:
+                                    # Save to history (gratuit)
+                                    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+                                    today_str = date.today().isoformat()
+                                    hist = _load_history()
+                                    dup = False
+                                    if p_linkedin:
+                                        dup = not hist[
+                                            hist["linkedin_url"] == p_linkedin
+                                        ].empty
+                                    elif p_name:
+                                        dup = not hist[
+                                            (hist["name"] == p_name)
+                                            & (hist["company"] == p_company)
+                                        ].empty
+                                    if not dup:
+                                        new_row = {
+                                            "name": p_name,
+                                            "title": p_title,
+                                            "company": p_company,
+                                            "location": p_location,
+                                            "email": "",
+                                            "has_email": "Non",
+                                            "linkedin_url": p_linkedin,
+                                            "search_mode": "company_search",
+                                            "found_at": now,
+                                            "found_date": today_str,
+                                        }
+                                        for col in new_row:
+                                            if col not in hist.columns:
+                                                hist[col] = ""
+                                        hist = pd.concat(
+                                            [hist, pd.DataFrame([new_row])],
+                                            ignore_index=True,
+                                        )
+                                        _save_history(hist)
 
                         saved_count = len(profiles[:25])
                         st.success(
@@ -532,18 +602,77 @@ with tab_company:
                                 label += f" · {c_location_r}"
                             st.markdown(label)
 
-                            # Step 2: Search employees at this company (free)
-                            emp_search_name = c_name_r
-                            if st.button(
-                                "👥 Voir les employés / décideurs",
-                                key=f"co_emp_{i}_{c_id_r}",
-                            ):
-                                with st.spinner(
-                                    f"Recherche de profils chez {c_name_r}..."
+                            # Company lookup button (uses 1 company_export credit)
+                            btn_co1, btn_co2 = st.columns(2)
+                            with btn_co1:
+                                if st.button(
+                                    "🏢 Voir détails entreprise",
+                                    key=f"co_lookup_{i}_{c_id_r}",
                                 ):
-                                    emp_result = rr.search_person(
-                                        company=emp_search_name,
-                                    )
+                                    with st.spinner(
+                                        "Récupération des détails... (1 crédit company_export)"
+                                    ):
+                                        if c_domain_r:
+                                            raw_co = rr.lookup_company_by_domain(
+                                                c_domain_r
+                                            )
+                                        elif c_name_r:
+                                            raw_co = rr.lookup_company_by_name(c_name_r)
+                                        else:
+                                            raw_co = {"error": "Pas de domaine ni nom"}
+
+                                    info_co = extract_company_info(raw_co)
+
+                                    if "error" in info_co:
+                                        st.error(f"❌ {info_co['error']}")
+                                    else:
+                                        st.success(
+                                            "✅ Détails récupérés"
+                                            + (
+                                                " (cache)"
+                                                if info_co.get("_cached")
+                                                else ""
+                                            )
+                                        )
+                                        with st.container(border=True):
+                                            st.markdown(f"### {info_co['name']}")
+                                            if info_co["domain"]:
+                                                st.caption(f"🌐 {info_co['domain']}")
+                                            if info_co["industry"]:
+                                                st.caption(f"🏭 {info_co['industry']}")
+                                            if info_co["size"]:
+                                                st.caption(
+                                                    f"👥 {info_co['size']} employés"
+                                                )
+                                            if info_co["revenue"]:
+                                                st.caption(f"💰 {info_co['revenue']}")
+                                            if info_co["location"]:
+                                                st.caption(f"📍 {info_co['location']}")
+                                            if info_co["founded_year"]:
+                                                st.caption(
+                                                    f"📅 Fondée en {info_co['founded_year']}"
+                                                )
+                                            if info_co["linkedin_url"]:
+                                                st.markdown(
+                                                    f"[🔗 LinkedIn]({info_co['linkedin_url']})"
+                                                )
+                                            if info_co["description"]:
+                                                st.markdown("---")
+                                                st.markdown(info_co["description"])
+
+                            with btn_co2:
+                                # Step 2: Search employees at this company (free)
+                                emp_search_name = c_name_r
+                                if st.button(
+                                    "👥 Voir les employés / décideurs",
+                                    key=f"co_emp_{i}_{c_id_r}",
+                                ):
+                                    with st.spinner(
+                                        f"Recherche de profils chez {c_name_r}..."
+                                    ):
+                                        emp_result = rr.search_person(
+                                            company=emp_search_name,
+                                        )
 
                                 if "error" in emp_result:
                                     st.error(f"❌ {emp_result['error']}")
@@ -567,6 +696,7 @@ with tab_company:
                                             p_title = p.get("current_title", "")
                                             p_location = p.get("location", "")
                                             p_linkedin = p.get("linkedin_url", "")
+                                            p_id = p.get("id") or p.get("profile_id")
 
                                             emp_label = f"**{p_name}**"
                                             if p_title:
@@ -574,17 +704,105 @@ with tab_company:
                                             if p_location:
                                                 emp_label += f" · {p_location}"
 
-                                            with st.container():
+                                            with st.container(border=True):
                                                 st.markdown(emp_label)
-                                                emp_cols = st.columns([1, 3])
-                                                with emp_cols[0]:
+                                                emp_col1, emp_col2 = st.columns([1, 3])
+                                                with emp_col1:
                                                     if p_linkedin:
                                                         st.caption(
                                                             f"[🔗 LinkedIn]({p_linkedin})"
                                                         )
+                                                    if p_id:
+                                                        if st.button(
+                                                            "📧 Voir coordonnées",
+                                                            key=f"emp_lookup_{j}_{p_id}",
+                                                        ):
+                                                            with st.spinner(
+                                                                "Récupération... (1 crédit standard_lookup)"
+                                                            ):
+                                                                raw = rr.lookup_by_id(
+                                                                    p_id
+                                                                )
+                                                                info = (
+                                                                    extract_person_info(
+                                                                        raw
+                                                                    )
+                                                                )
+
+                                                            if "error" in info:
+                                                                st.error(
+                                                                    f"❌ {info['error']}"
+                                                                )
+                                                            else:
+                                                                email_str = "; ".join(
+                                                                    e["email"]
+                                                                    for e in info.get(
+                                                                        "emails", []
+                                                                    )
+                                                                    if e["email"]
+                                                                )
+                                                                phones = info.get(
+                                                                    "phones", []
+                                                                )
+
+                                                                if email_str:
+                                                                    st.success(
+                                                                        f"📧 {email_str}"
+                                                                    )
+                                                                else:
+                                                                    st.info(
+                                                                        "Aucun email trouvé"
+                                                                    )
+
+                                                                if phones:
+                                                                    for ph in phones:
+                                                                        st.caption(
+                                                                            f"📞 {ph['phone']} ({ph['type']})"
+                                                                        )
+
+                                                                # Save with email
+                                                                now = datetime.now().strftime(
+                                                                    "%Y-%m-%d %H:%M"
+                                                                )
+                                                                today_str = date.today().isoformat()
+                                                                hist = _load_history()
+                                                                new_row = {
+                                                                    "name": p_name,
+                                                                    "title": p_title,
+                                                                    "company": c_name_r,
+                                                                    "location": p_location,
+                                                                    "email": email_str,
+                                                                    "has_email": "Oui"
+                                                                    if email_str
+                                                                    else "Non",
+                                                                    "linkedin_url": p_linkedin,
+                                                                    "search_mode": "person_lookup",
+                                                                    "found_at": now,
+                                                                    "found_date": today_str,
+                                                                }
+                                                                for col in new_row:
+                                                                    if (
+                                                                        col
+                                                                        not in hist.columns
+                                                                    ):
+                                                                        hist[col] = ""
+                                                                hist = pd.concat(
+                                                                    [
+                                                                        hist,
+                                                                        pd.DataFrame(
+                                                                            [new_row]
+                                                                        ),
+                                                                    ],
+                                                                    ignore_index=True,
+                                                                )
+                                                                _save_history(hist)
+                                                                st.success(
+                                                                    "💾 Sauvegardé dans l'historique"
+                                                                )
                                                     else:
-                                                        st.caption("Pas de LinkedIn")
-                                                with emp_cols[1]:
+                                                        st.caption("⚠️ Pas d'ID")
+
+                                                with emp_col2:
                                                     pass  # spacing
 
                                         # Save all employees to history
