@@ -133,10 +133,17 @@ class RocketReachClient:
     # ---- API: Search (FREE, no credits) ----
 
     def search_person(
-        self, name: str = "", company: str = "", title: str = "", location: str = ""
+        self,
+        name: str = "",
+        company: str = "",
+        title: str = "",
+        location: str = "",
+        page_size: int = 25,
+        order_by: str = "popularity",
     ) -> dict:
         """Search for people by criteria. FREE — no credit consumed.
         Returns list of matching profiles WITHOUT contact details (no emails).
+        order_by: "popularity" (decision makers first) or "relevance"
         """
         if not self.api_key:
             return {"error": "ROCKETREACH_API_KEY non configurée"}
@@ -147,9 +154,15 @@ class RocketReachClient:
         if company:
             query["current_employer"] = [company]
         if title:
-            query["current_title"] = [title]
+            # Support "OR" syntax: split into array of alternatives
+            if " OR " in title:
+                query["current_title"] = [t.strip() for t in title.split(" OR ")]
+            else:
+                query["current_title"] = [title]
         if location:
             query["location"] = [location]
+
+        payload = {"query": query, "page_size": page_size, "order_by": order_by}
 
         try:
             resp = requests.post(
@@ -158,7 +171,7 @@ class RocketReachClient:
                     "Api-Key": self.api_key,
                     "Content-Type": "application/json",
                 },
-                json={"query": query},
+                json=payload,
                 timeout=30,
             )
         except requests.RequestException as e:

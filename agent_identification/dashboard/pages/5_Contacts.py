@@ -351,21 +351,32 @@ with tab_search:
                     _save_search(info, "LinkedIn URL")
 
     else:
-        col1, col2 = st.columns(2)
-        with col1:
+        col_f1, col_f2 = st.columns(2)
+        with col_f1:
             company = st.text_input("Nom entreprise *", placeholder="Acme Corp")
-        with col2:
+        with col_f2:
             location = st.text_input("Localisation", placeholder="Paris, France")
+
+        filter_decision = st.checkbox(
+            "🎯 Décideurs uniquement (Directeur, Proviseur, Chef, Responsable, Président)",
+            value=True,
+        )
 
         if st.button("🔍 Chercher", type="primary", use_container_width=True):
             if not company:
                 st.warning("Entre le nom d'une entreprise")
             else:
-                with st.spinner("Recherche de profils..."):
-                    search_result = rr.search_person(
-                        company=company.strip(),
-                        location=location.strip(),
+                search_kwargs = dict(
+                    company=company.strip(),
+                    location=location.strip(),
+                )
+                if filter_decision:
+                    search_kwargs["title"] = (
+                        "directeur OR proviseur OR chef OR responsable OR président OR directrice OR principal OR coordinateur"
                     )
+
+                with st.spinner("Recherche de profils..."):
+                    search_result = rr.search_person(**search_kwargs)
 
                 if "error" in search_result:
                     st.error(f"❌ {search_result['error']}")
@@ -380,7 +391,7 @@ with tab_search:
                     else:
                         st.success(f"🔍 {len(profiles)} profil(s) trouvé(s)")
 
-                        for i, p in enumerate(profiles[:10]):
+                        for i, p in enumerate(profiles[:25]):
                             p_name = p.get("name", "?")
                             p_title = p.get("current_title", "")
                             p_company = p.get("current_employer", "") or (
@@ -438,7 +449,7 @@ with tab_search:
                                     )
                                     _save_history(hist)
 
-                        saved_count = len(profiles[:10])
+                        saved_count = len(profiles[:25])
                         st.success(
                             f"💾 {saved_count} profil(s) sauvegardé(s) dans l'historique"
                         )
@@ -551,7 +562,7 @@ with tab_company:
                                             f"👥 {len(profiles)} profil(s) trouvé(s) chez {c_name_r}"
                                         )
 
-                                        for j, p in enumerate(profiles[:10]):
+                                        for j, p in enumerate(profiles[:25]):
                                             p_name = p.get("name", "?")
                                             p_title = p.get("current_title", "")
                                             p_location = p.get("location", "")
