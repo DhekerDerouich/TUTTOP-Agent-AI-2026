@@ -423,42 +423,34 @@ with tab_search:
                                     )
 
 # ==============================
-# TAB 2 : ENTREPRISES
+# TAB 2 : ENTREPRISES + EMPLOYES
 # ==============================
 with tab_company:
-    st.subheader("Recherche d'entreprises")
-    st.caption("Recherche gratuite · Lookup = 1 crédit company_export")
-
-    # Quota info
-    if rr.company_remaining <= 5:
-        st.error(
-            f"⚠️ {rr.company_remaining}/{COMPANY_DAILY_LIMIT} crédits company restants"
-        )
-    elif rr.company_remaining <= 20:
-        st.warning(
-            f"⚡ {rr.company_remaining}/{COMPANY_DAILY_LIMIT} crédits company restants"
-        )
-    else:
-        st.info(
-            f"✅ {rr.company_remaining}/{COMPANY_DAILY_LIMIT} crédits company restants"
-        )
+    st.subheader("Recherche d'entreprises et employés")
+    st.caption("Tout est gratuit — recherche entreprise + recherche profils employés")
 
     co_col1, co_col2 = st.columns(2)
     with co_col1:
         co_name = st.text_input(
             "Nom entreprise", placeholder="Acme Corp", key="co_name"
         )
-        co_domain = st.text_input("Domaine", placeholder="acme.com", key="co_domain")
     with co_col2:
-        co_industry = st.text_input(
-            "Industrie", placeholder="Education", key="co_industry"
+        co_domain = st.text_input(
+            "Domaine (optionnel)", placeholder="acme.com", key="co_domain"
         )
+
+    co_col3, co_col4 = st.columns(2)
+    with co_col3:
+        co_industry = st.text_input(
+            "Industrie (optionnel)", placeholder="Education", key="co_industry"
+        )
+    with co_col4:
         co_location = st.text_input(
-            "Localisation", placeholder="Paris, France", key="co_location"
+            "Localisation (optionnel)", placeholder="Paris, France", key="co_location"
         )
 
     if st.button(
-        "🔍 Chercher entreprises",
+        "🔍 Chercher",
         type="primary",
         use_container_width=True,
         key="btn_co_search",
@@ -466,6 +458,7 @@ with tab_company:
         if not co_name and not co_domain:
             st.warning("Entre au moins un nom ou un domaine")
         else:
+            # Step 1: Search companies (free)
             with st.spinner("Recherche d'entreprises..."):
                 co_result = rr.search_company(
                     name=co_name.strip(),
@@ -482,107 +475,143 @@ with tab_company:
                     st.warning("Aucune entreprise trouvée pour ces critères.")
                 else:
                     st.success(f"🔍 {len(companies)} entreprise(s) trouvée(s)")
-                    st.caption(
-                        "Clique sur « Voir détails » pour obtenir les infos complètes (1 crédit)"
-                    )
 
-                    for i, c in enumerate(companies[:10]):
-                        c_name = c.get("name", "?")
-                        c_domain = c.get("domain", "")
-                        c_industry = c.get("industry", "")
-                        c_size = c.get("estimated_num_employees", "")
-                        c_location = c.get("location", "")
-                        c_linkedin = c.get("linkedin_url", "")
-                        c_id = c.get("id")
-
-                        label = f"**{c_name}**"
-                        if c_domain:
-                            label += f" · {c_domain}"
-                        if c_industry:
-                            label += f" · {c_industry}"
-                        if c_size:
-                            label += f" · {c_size} employés"
-                        if c_location:
-                            label += f" · {c_location}"
+                    for i, c in enumerate(companies[:5]):
+                        c_name_r = c.get("name", "?")
+                        c_domain_r = c.get("domain", "")
+                        c_industry_r = c.get("industry", "")
+                        c_size_r = c.get("estimated_num_employees", "")
+                        c_location_r = c.get("location", "")
+                        c_linkedin_r = c.get("linkedin_url", "")
 
                         with st.container(border=True):
+                            # Company info header
+                            label = f"**{c_name_r}**"
+                            if c_domain_r:
+                                label += f" · {c_domain_r}"
+                            if c_industry_r:
+                                label += f" · {c_industry_r}"
+                            if c_size_r:
+                                label += f" · {c_size_r} employés"
+                            if c_location_r:
+                                label += f" · {c_location_r}"
                             st.markdown(label)
-                            if c_linkedin:
-                                st.caption(f"[🔗 LinkedIn]({c_linkedin})")
 
+                            if c_linkedin_r:
+                                st.caption(f"[🔗 LinkedIn entreprise]({c_linkedin_r})")
+
+                            # Step 2: Search employees at this company (free)
+                            emp_search_name = c_name_r
                             if st.button(
-                                "📋 Voir détails", key=f"co_detail_{i}_{c_id}"
+                                "👥 Voir les employés / décideurs",
+                                key=f"co_emp_{i}_{c_domain_r}",
                             ):
                                 with st.spinner(
-                                    "Récupération des détails... (1 crédit)"
+                                    f"Recherche de profils chez {c_name_r}..."
                                 ):
-                                    if c_domain:
-                                        raw_co = rr.lookup_company_by_domain(c_domain)
-                                    elif c_name:
-                                        raw_co = rr.lookup_company_by_name(c_name)
-                                    else:
-                                        raw_co = {"error": "Pas de domaine ni nom"}
+                                    emp_result = rr.search_person(
+                                        company=emp_search_name,
+                                    )
 
-                                info_co = extract_company_info(raw_co)
-
-                                if "error" in info_co:
-                                    st.error(f"❌ {info_co['error']}")
+                                if "error" in emp_result:
+                                    st.error(f"❌ {emp_result['error']}")
                                 else:
-                                    st.success(
-                                        "✅ Détails récupérés"
-                                        + (" (cache)" if info_co.get("_cached") else "")
+                                    profiles = (
+                                        emp_result.get("profiles")
+                                        or emp_result.get("results")
+                                        or []
                                     )
-                                    with st.container(border=True):
-                                        st.markdown(f"### {info_co['name']}")
-                                        if info_co["domain"]:
-                                            st.caption(f"🌐 {info_co['domain']}")
-                                        if info_co["industry"]:
-                                            st.caption(f"🏭 {info_co['industry']}")
-                                        if info_co["size"]:
-                                            st.caption(f"👥 {info_co['size']} employés")
-                                        if info_co["revenue"]:
-                                            st.caption(f"💰 {info_co['revenue']}")
-                                        if info_co["location"]:
-                                            st.caption(f"📍 {info_co['location']}")
-                                        if info_co["founded_year"]:
-                                            st.caption(
-                                                f"📅 Fondée en {info_co['founded_year']}"
-                                            )
-                                        if info_co["linkedin_url"]:
-                                            st.markdown(
-                                                f"[🔗 LinkedIn]({info_co['linkedin_url']})"
-                                            )
-                                        if info_co["description"]:
-                                            st.markdown("---")
-                                            st.markdown(info_co["description"])
+                                    if not profiles:
+                                        st.info(
+                                            "Aucun profil trouvé pour cette entreprise."
+                                        )
+                                    else:
+                                        st.success(
+                                            f"👥 {len(profiles)} profil(s) trouvé(s) chez {c_name_r}"
+                                        )
 
-                                    # Save to history
-                                    now = datetime.now().strftime("%Y-%m-%d %H:%M")
-                                    today_str = date.today().isoformat()
-                                    hist = _load_history()
-                                    new_row = {
-                                        "name": info_co["name"],
-                                        "title": "",
-                                        "company": info_co["name"],
-                                        "location": info_co["location"],
-                                        "email": "",
-                                        "has_email": "Non",
-                                        "linkedin_url": info_co["linkedin_url"],
-                                        "search_mode": "company_lookup",
-                                        "found_at": now,
-                                        "found_date": today_str,
-                                    }
-                                    for col in new_row:
-                                        if col not in hist.columns:
-                                            hist[col] = ""
-                                    hist = pd.concat(
-                                        [hist, pd.DataFrame([new_row])],
-                                        ignore_index=True,
-                                    )
-                                    _save_history(hist)
-                                    st.success(
-                                        "💾 Entreprise sauvegardée dans l'historique"
-                                    )
+                                        for j, p in enumerate(profiles[:10]):
+                                            p_name = p.get("name", "?")
+                                            p_title = p.get("current_title", "")
+                                            p_location = p.get("location", "")
+                                            p_linkedin = p.get("linkedin_url", "")
+
+                                            emp_label = f"**{p_name}**"
+                                            if p_title:
+                                                emp_label += f" — {p_title}"
+                                            if p_location:
+                                                emp_label += f" · {p_location}"
+
+                                            with st.container():
+                                                st.markdown(emp_label)
+                                                emp_cols = st.columns([1, 3])
+                                                with emp_cols[0]:
+                                                    if p_linkedin:
+                                                        st.caption(
+                                                            f"[🔗 LinkedIn]({p_linkedin})"
+                                                        )
+                                                    else:
+                                                        st.caption("Pas de LinkedIn")
+                                                with emp_cols[1]:
+                                                    pass  # spacing
+
+                                        # Save all employees to history
+                                        now = datetime.now().strftime("%Y-%m-%d %H:%M")
+                                        today_str = date.today().isoformat()
+                                        hist = _load_history()
+                                        saved_count = 0
+                                        for p in profiles:
+                                            p_name = p.get("name", "")
+                                            p_title = p.get("current_title", "")
+                                            p_linkedin = p.get("linkedin_url", "")
+                                            p_location = p.get("location", "")
+
+                                            if not p_name:
+                                                continue
+
+                                            new_row = {
+                                                "name": p_name,
+                                                "title": p_title,
+                                                "company": c_name_r,
+                                                "location": p_location,
+                                                "email": "",
+                                                "has_email": "Non",
+                                                "linkedin_url": p_linkedin,
+                                                "search_mode": "company_employees",
+                                                "found_at": now,
+                                                "found_date": today_str,
+                                            }
+
+                                            # Dedup
+                                            dup = False
+                                            if p_linkedin:
+                                                dup = not hist[
+                                                    hist["linkedin_url"] == p_linkedin
+                                                ].empty
+                                            elif p_name:
+                                                dup = not hist[
+                                                    (hist["name"] == p_name)
+                                                    & (hist["company"] == c_name_r)
+                                                ].empty
+
+                                            if not dup:
+                                                for col in new_row:
+                                                    if col not in hist.columns:
+                                                        hist[col] = ""
+                                                hist = pd.concat(
+                                                    [
+                                                        hist,
+                                                        pd.DataFrame([new_row]),
+                                                    ],
+                                                    ignore_index=True,
+                                                )
+                                                saved_count += 1
+
+                                        if saved_count > 0:
+                                            _save_history(hist)
+                                            st.success(
+                                                f"💾 {saved_count} employé(s) sauvegardé(s) dans l'historique"
+                                            )
 
 # ==============================
 # TAB 3 : HISTORIQUE
