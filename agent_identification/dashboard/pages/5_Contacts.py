@@ -317,7 +317,7 @@ tab_search, tab_company, tab_history = st.tabs(
 with tab_search:
     mode = st.radio(
         "Mode de recherche",
-        ["LinkedIn URL", "Nom + Établissement"],
+        ["LinkedIn URL", "Company"],
         horizontal=True,
     )
 
@@ -343,26 +343,17 @@ with tab_search:
     else:
         col1, col2 = st.columns(2)
         with col1:
-            name = st.text_input("Nom complet *", placeholder="Jean Dupont")
+            company = st.text_input("Nom entreprise *", placeholder="Acme Corp")
         with col2:
-            title = st.text_input("Titre / Poste", placeholder="Directeur IT")
-        col3, col4 = st.columns(2)
-        with col3:
-            company = st.text_input(
-                "Entreprise / Établissement", placeholder="Acme Corp"
-            )
-        with col4:
-            location = st.text_input("Localisation", placeholder="Nice, France")
+            location = st.text_input("Localisation", placeholder="Paris, France")
 
         if st.button("🔍 Chercher", type="primary", use_container_width=True):
-            if not name:
-                st.warning("Entre au moins un nom")
+            if not company:
+                st.warning("Entre le nom d'une entreprise")
             else:
                 with st.spinner("Recherche de profils..."):
                     search_result = rr.search_person(
-                        name=name.strip(),
                         company=company.strip(),
-                        title=title.strip(),
                         location=location.strip(),
                     )
 
@@ -378,9 +369,6 @@ with tab_search:
                         st.warning("Aucun profil trouvé pour ces critères.")
                     else:
                         st.success(f"🔍 {len(profiles)} profil(s) trouvé(s)")
-                        st.caption(
-                            "Sélectionne un profil pour voir ses coordonnées (1 crédit)"
-                        )
 
                         for i, p in enumerate(profiles[:10]):
                             p_name = p.get("name", "?")
@@ -390,7 +378,6 @@ with tab_search:
                             ).get("name", "")
                             p_location = p.get("location", "")
                             p_linkedin = p.get("linkedin_url", "")
-                            p_id = p.get("id") or p.get("profile_id")
 
                             label = f"**{p_name}**"
                             if p_title:
@@ -404,23 +391,47 @@ with tab_search:
                                 st.markdown(label)
                                 if p_linkedin:
                                     st.caption(f"[🔗 LinkedIn]({p_linkedin})")
-                                if p_id:
-                                    if st.button(
-                                        f"🔍 Voir coordonnées", key=f"select_{i}_{p_id}"
-                                    ):
-                                        with st.spinner(
-                                            "Récupération des coordonnées... (1 crédit)"
-                                        ):
-                                            raw = rr.lookup_by_id(p_id)
-                                            info = extract_person_info(raw)
 
-                                        info = _display_person(info)
-                                        if info.get("name"):
-                                            _save_search(info, "Nom+Établissement")
-                                else:
-                                    st.caption(
-                                        "⚠️ Pas d'ID — impossible de récupérer les coordonnées"
+                                # Save to history
+                                now = datetime.now().strftime("%Y-%m-%d %H:%M")
+                                today_str = date.today().isoformat()
+                                hist = _load_history()
+                                dup = False
+                                if p_linkedin:
+                                    dup = not hist[
+                                        hist["linkedin_url"] == p_linkedin
+                                    ].empty
+                                elif p_name:
+                                    dup = not hist[
+                                        (hist["name"] == p_name)
+                                        & (hist["company"] == p_company)
+                                    ].empty
+                                if not dup:
+                                    new_row = {
+                                        "name": p_name,
+                                        "title": p_title,
+                                        "company": p_company,
+                                        "location": p_location,
+                                        "email": "",
+                                        "has_email": "Non",
+                                        "linkedin_url": p_linkedin,
+                                        "search_mode": "company_search",
+                                        "found_at": now,
+                                        "found_date": today_str,
+                                    }
+                                    for col in new_row:
+                                        if col not in hist.columns:
+                                            hist[col] = ""
+                                    hist = pd.concat(
+                                        [hist, pd.DataFrame([new_row])],
+                                        ignore_index=True,
                                     )
+                                    _save_history(hist)
+
+                        saved_count = len(profiles[:10])
+                        st.success(
+                            f"💾 {saved_count} profil(s) sauvegardé(s) dans l'historique"
+                        )
 
 # ==============================
 # TAB 2 : ENTREPRISES + EMPLOYES
