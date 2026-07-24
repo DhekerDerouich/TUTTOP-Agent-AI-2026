@@ -470,7 +470,7 @@ with tab_company:
             if "error" in co_result:
                 st.error(f"❌ {co_result['error']}")
             else:
-                companies = co_result.get("accounts") or co_result.get("results") or []
+                companies = co_result.get("companies") or []
                 if not companies:
                     st.warning("Aucune entreprise trouvée pour ces critères.")
                 else:

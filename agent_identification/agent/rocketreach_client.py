@@ -108,7 +108,7 @@ class RocketReachClient:
     # ---- API: Search (FREE, no credits) ----
 
     def search_person(
-        self, name: str, company: str = "", title: str = "", location: str = ""
+        self, name: str = "", company: str = "", title: str = "", location: str = ""
     ) -> dict:
         """Search for people by criteria. FREE — no credit consumed.
         Returns list of matching profiles WITHOUT contact details (no emails).
@@ -116,7 +116,9 @@ class RocketReachClient:
         if not self.api_key:
             return {"error": "ROCKETREACH_API_KEY non configurée"}
 
-        query = {"name": [name]}
+        query = {}
+        if name:
+            query["name"] = [name]
         if company:
             query["current_employer"] = [company]
         if title:
@@ -277,7 +279,9 @@ class RocketReachClient:
         if resp.status_code in (200, 201):
             data = resp.json()
             if isinstance(data, list):
-                return {"accounts": data}
+                return {"companies": data}
+            if "companies" not in data and isinstance(data, dict):
+                data["companies"] = data.get("accounts") or data.get("results") or []
             return data
         return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
 
