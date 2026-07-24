@@ -11,7 +11,9 @@ import requests
 from agent.rocketreach_client import (
     RocketReachClient,
     extract_person_info,
+    extract_company_info,
     DAILY_LIMIT,
+    COMPANY_DAILY_LIMIT,
 )
 
 DATA = Path(__file__).resolve().parent.parent.parent / "data"
@@ -276,12 +278,24 @@ rr = RocketReachClient()
 # ---- Header: quota info + GitHub status ----
 remaining = rr.remaining
 used = rr.used_today
-if remaining <= 5:
-    st.error(f"⚠️ {remaining}/{DAILY_LIMIT} requêtes restantes aujourd'hui")
-elif remaining <= 15:
-    st.warning(f"⚡ {remaining}/{DAILY_LIMIT} requêtes restantes aujourd'hui")
-else:
-    st.info(f"✅ {remaining}/{DAILY_LIMIT} requêtes restantes aujourd'hui")
+co_remaining = rr.company_remaining
+co_used = rr.company_used_today
+
+col_q1, col_q2 = st.columns(2)
+with col_q1:
+    if remaining <= 5:
+        st.error(f"⚠️ Person search: {remaining}/{DAILY_LIMIT} restants")
+    elif remaining <= 15:
+        st.warning(f"⚡ Person search: {remaining}/{DAILY_LIMIT} restants")
+    else:
+        st.info(f"✅ Person search: {remaining}/{DAILY_LIMIT} restants")
+with col_q2:
+    if co_remaining <= 5:
+        st.error(f"⚠️ Company export: {co_remaining}/{COMPANY_DAILY_LIMIT} restants")
+    elif co_remaining <= 20:
+        st.warning(f"⚡ Company export: {co_remaining}/{COMPANY_DAILY_LIMIT} restants")
+    else:
+        st.info(f"✅ Company export: {co_remaining}/{COMPANY_DAILY_LIMIT} restants")
 
 gh_token = os.environ.get("GITHUB_TOKEN") or ""
 if gh_token and _github_repo():
@@ -293,7 +307,9 @@ else:
         "ℹ️ Ajoute GITHUB_TOKEN dans Settings → Secrets pour sauvegarder l'historique en permanence"
     )
 
-tab_search, tab_history = st.tabs(["🔍 Recherche", "📋 Historique"])
+tab_search, tab_company, tab_history = st.tabs(
+    ["🔍 Recherche", "🏢 Entreprises", "📋 Historique"]
+)
 
 # ==============================
 # TAB 1 : RECHERCHE
@@ -407,7 +423,169 @@ with tab_search:
                                     )
 
 # ==============================
-# TAB 2 : HISTORIQUE
+# TAB 2 : ENTREPRISES
+# ==============================
+with tab_company:
+    st.subheader("Recherche d'entreprises")
+    st.caption("Recherche gratuite · Lookup = 1 crédit company_export")
+
+    # Quota info
+    if rr.company_remaining <= 5:
+        st.error(
+            f"⚠️ {rr.company_remaining}/{COMPANY_DAILY_LIMIT} crédits company restants"
+        )
+    elif rr.company_remaining <= 20:
+        st.warning(
+            f"⚡ {rr.company_remaining}/{COMPANY_DAILY_LIMIT} crédits company restants"
+        )
+    else:
+        st.info(
+            f"✅ {rr.company_remaining}/{COMPANY_DAILY_LIMIT} crédits company restants"
+        )
+
+    co_col1, co_col2 = st.columns(2)
+    with co_col1:
+        co_name = st.text_input(
+            "Nom entreprise", placeholder="Acme Corp", key="co_name"
+        )
+        co_domain = st.text_input("Domaine", placeholder="acme.com", key="co_domain")
+    with co_col2:
+        co_industry = st.text_input(
+            "Industrie", placeholder="Education", key="co_industry"
+        )
+        co_location = st.text_input(
+            "Localisation", placeholder="Paris, France", key="co_location"
+        )
+
+    if st.button(
+        "🔍 Chercher entreprises",
+        type="primary",
+        use_container_width=True,
+        key="btn_co_search",
+    ):
+        if not co_name and not co_domain:
+            st.warning("Entre au moins un nom ou un domaine")
+        else:
+            with st.spinner("Recherche d'entreprises..."):
+                co_result = rr.search_company(
+                    name=co_name.strip(),
+                    domain=co_domain.strip(),
+                    industry=co_industry.strip(),
+                    location=co_location.strip(),
+                )
+
+            if "error" in co_result:
+                st.error(f"❌ {co_result['error']}")
+            else:
+                companies = co_result.get("accounts") or co_result.get("results") or []
+                if not companies:
+                    st.warning("Aucune entreprise trouvée pour ces critères.")
+                else:
+                    st.success(f"🔍 {len(companies)} entreprise(s) trouvée(s)")
+                    st.caption(
+                        "Clique sur « Voir détails » pour obtenir les infos complètes (1 crédit)"
+                    )
+
+                    for i, c in enumerate(companies[:10]):
+                        c_name = c.get("name", "?")
+                        c_domain = c.get("domain", "")
+                        c_industry = c.get("industry", "")
+                        c_size = c.get("estimated_num_employees", "")
+                        c_location = c.get("location", "")
+                        c_linkedin = c.get("linkedin_url", "")
+                        c_id = c.get("id")
+
+                        label = f"**{c_name}**"
+                        if c_domain:
+                            label += f" · {c_domain}"
+                        if c_industry:
+                            label += f" · {c_industry}"
+                        if c_size:
+                            label += f" · {c_size} employés"
+                        if c_location:
+                            label += f" · {c_location}"
+
+                        with st.container(border=True):
+                            st.markdown(label)
+                            if c_linkedin:
+                                st.caption(f"[🔗 LinkedIn]({c_linkedin})")
+
+                            if st.button(
+                                "📋 Voir détails", key=f"co_detail_{i}_{c_id}"
+                            ):
+                                with st.spinner(
+                                    "Récupération des détails... (1 crédit)"
+                                ):
+                                    if c_domain:
+                                        raw_co = rr.lookup_company_by_domain(c_domain)
+                                    elif c_name:
+                                        raw_co = rr.lookup_company_by_name(c_name)
+                                    else:
+                                        raw_co = {"error": "Pas de domaine ni nom"}
+
+                                info_co = extract_company_info(raw_co)
+
+                                if "error" in info_co:
+                                    st.error(f"❌ {info_co['error']}")
+                                else:
+                                    st.success(
+                                        "✅ Détails récupérés"
+                                        + (" (cache)" if info_co.get("_cached") else "")
+                                    )
+                                    with st.container(border=True):
+                                        st.markdown(f"### {info_co['name']}")
+                                        if info_co["domain"]:
+                                            st.caption(f"🌐 {info_co['domain']}")
+                                        if info_co["industry"]:
+                                            st.caption(f"🏭 {info_co['industry']}")
+                                        if info_co["size"]:
+                                            st.caption(f"👥 {info_co['size']} employés")
+                                        if info_co["revenue"]:
+                                            st.caption(f"💰 {info_co['revenue']}")
+                                        if info_co["location"]:
+                                            st.caption(f"📍 {info_co['location']}")
+                                        if info_co["founded_year"]:
+                                            st.caption(
+                                                f"📅 Fondée en {info_co['founded_year']}"
+                                            )
+                                        if info_co["linkedin_url"]:
+                                            st.markdown(
+                                                f"[🔗 LinkedIn]({info_co['linkedin_url']})"
+                                            )
+                                        if info_co["description"]:
+                                            st.markdown("---")
+                                            st.markdown(info_co["description"])
+
+                                    # Save to history
+                                    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+                                    today_str = date.today().isoformat()
+                                    hist = _load_history()
+                                    new_row = {
+                                        "name": info_co["name"],
+                                        "title": "",
+                                        "company": info_co["name"],
+                                        "location": info_co["location"],
+                                        "email": "",
+                                        "has_email": "Non",
+                                        "linkedin_url": info_co["linkedin_url"],
+                                        "search_mode": "company_lookup",
+                                        "found_at": now,
+                                        "found_date": today_str,
+                                    }
+                                    for col in new_row:
+                                        if col not in hist.columns:
+                                            hist[col] = ""
+                                    hist = pd.concat(
+                                        [hist, pd.DataFrame([new_row])],
+                                        ignore_index=True,
+                                    )
+                                    _save_history(hist)
+                                    st.success(
+                                        "💾 Entreprise sauvegardée dans l'historique"
+                                    )
+
+# ==============================
+# TAB 3 : HISTORIQUE
 # ==============================
 with tab_history:
     st.subheader("Contacts déjà trouvés")

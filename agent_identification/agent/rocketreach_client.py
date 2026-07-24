@@ -9,6 +9,7 @@ import requests
 CACHE_FILE = Path(__file__).resolve().parent.parent / "data" / "rocketreach_cache.json"
 USAGE_FILE = Path(__file__).resolve().parent.parent / "data" / "rocketreach_usage.json"
 DAILY_LIMIT = 40
+COMPANY_DAILY_LIMIT = 105
 
 API_BASE = "https://api.rocketreach.co/api/v2"
 
@@ -87,6 +88,22 @@ class RocketReachClient:
         usage["count"] = usage.get("count", 0) + 1
         self._usage = usage
         self._save_usage()
+
+    def _increment_company_usage(self):
+        usage = self._load_usage()
+        usage["company_count"] = usage.get("company_count", 0) + 1
+        self._usage = usage
+        self._save_usage()
+
+    @property
+    def company_remaining(self) -> int:
+        usage = self._load_usage()
+        return max(0, COMPANY_DAILY_LIMIT - usage.get("company_count", 0))
+
+    @property
+    def company_used_today(self) -> int:
+        usage = self._load_usage()
+        return usage.get("company_count", 0)
 
     # ---- API: Search (FREE, no credits) ----
 
@@ -218,6 +235,102 @@ class RocketReachClient:
         )
         return combined
 
+    # ---- Company API: Search (FREE) ----
+
+    def search_company(
+        self, name: str = "", domain: str = "", industry: str = "", location: str = ""
+    ) -> dict:
+        """Search companies by criteria. FREE — no credit consumed."""
+        if not self.api_key:
+            return {"error": "ROCKETREACH_API_KEY non configurée"}
+
+        query = {}
+        if name:
+            query["q_organization_name"] = name
+        if domain:
+            query["q_organization_domain"] = domain
+        if industry:
+            query["industry"] = [industry]
+        if location:
+            query["location"] = [location]
+
+        if not query:
+            return {"error": "Au moins un critère de recherche requis"}
+
+        try:
+            resp = requests.post(
+                f"{API_BASE}/searchCompany",
+                headers={
+                    "Api-Key": self.api_key,
+                    "Content-Type": "application/json",
+                },
+                json={"query": query},
+                timeout=30,
+            )
+        except requests.RequestException as e:
+            return {"error": f"Erreur réseau: {e}"}
+
+        if resp.status_code == 401:
+            return {"error": "Clé API invalide. Vérifie ROCKETREACH_API_KEY."}
+        if resp.status_code in (200, 201):
+            return resp.json()
+        return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
+
+    # ---- Company API: Lookup (costs 1 company_export credit) ----
+
+    def _company_lookup(self, **params) -> dict:
+        """GET /company/lookup with query params. Costs 1 company_export credit."""
+        if not self.api_key:
+            return {"error": "ROCKETREACH_API_KEY non configurée"}
+        if self.company_remaining <= 0:
+            return {"error": "Quota company_export épuisé (105/105). Réessaie demain."}
+
+        try:
+            resp = requests.get(
+                f"{API_BASE}/company/lookup",
+                headers={"Api-Key": self.api_key},
+                params=params,
+                timeout=30,
+            )
+        except requests.RequestException as e:
+            return {"error": f"Erreur réseau: {e}"}
+
+        if resp.status_code == 429:
+            return {
+                "error": "Quota API dépassé (rate limit). Réessaie dans quelques minutes."
+            }
+        if resp.status_code == 401:
+            return {"error": "Clé API invalide. Vérifie ROCKETREACH_API_KEY."}
+        if resp.status_code == 404:
+            return {"error": "Aucune entreprise trouvée pour ces critères."}
+        if resp.status_code != 200:
+            return {"error": f"Erreur API {resp.status_code}: {resp.text[:300]}"}
+
+        self._increment_company_usage()
+        return resp.json()
+
+    def lookup_company_by_domain(self, domain: str) -> dict:
+        """Lookup company by domain. Costs 1 company_export credit."""
+        cached = self._get_from_cache(company_domain=domain)
+        if cached:
+            return {**cached, "_cached": True}
+
+        result = self._company_lookup(domain=domain)
+        if result and "error" not in result:
+            self._set_cache(result, company_domain=domain)
+        return result
+
+    def lookup_company_by_name(self, name: str) -> dict:
+        """Lookup company by name. Costs 1 company_export credit."""
+        cached = self._get_from_cache(company_name=name)
+        if cached:
+            return {**cached, "_cached": True}
+
+        result = self._company_lookup(name=name)
+        if result and "error" not in result:
+            self._set_cache(result, company_name=name)
+        return result
+
     # ---- Cache management ----
 
     def list_cache(self) -> list[dict]:
@@ -298,6 +411,36 @@ def extract_person_info(api_result: dict) -> dict:
         "profile_url": person.get("rr_profile_url", ""),
         "skills": person.get("skills", []),
         "industry": person.get("industry", ""),
+        "_cached": api_result.get("_cached", False),
+    }
+    return info
+
+
+def extract_company_info(api_result: dict) -> dict:
+    """Extract useful fields from a company lookup API response."""
+    if not api_result or "error" in api_result:
+        return {"error": api_result.get("error", "Réponse vide")}
+
+    company = api_result.get("company", api_result)
+    if not company:
+        return {"error": "Aucune entreprise dans la réponse"}
+
+    info = {
+        "name": company.get("name", ""),
+        "domain": company.get("domain", ""),
+        "industry": company.get("industry", ""),
+        "sub_industry": company.get("sub_industry", ""),
+        "size": company.get("estimated_num_employees", ""),
+        "revenue": company.get("revenue", ""),
+        "location": company.get("location", ""),
+        "country": company.get("country", ""),
+        "city": company.get("city", ""),
+        "linkedin_url": company.get("linkedin_url", ""),
+        "description": (company.get("description") or "")[:500],
+        "founded_year": company.get("founded_year", ""),
+        "phone": company.get("phone", ""),
+        "twitter": company.get("twitter_url", ""),
+        "facebook": company.get("facebook_url", ""),
         "_cached": api_result.get("_cached", False),
     }
     return info
