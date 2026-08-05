@@ -1,5 +1,10 @@
 import streamlit as st
 import os
+import sys
+from pathlib import Path
+
+# Ensure the app package dir is importable (dashboard.*, agent.*) in any context
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 # Inject Streamlit secrets into os.environ for subprocesses and module imports
 try:
